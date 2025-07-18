@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 智能創客營：點亮未來，從「說」開始程式設計！</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* 淡灰色背景 */
+            color: #333;
+        }
+        .header-bg {
+            background: linear-gradient(135deg, #a7e0ff 0%, #76c0f8 100%); /* 藍色漸變 */
+        }
+        .section-gradient {
+            background: linear-gradient(45deg, #ffffff 0%, #f9f9f9 100%);
+        }
+        .btn-primary {
+            background-color: #007bff; /* 藍色按鈕 */
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        }
+        .feature-icon {
+            color: #007bff;
+        }
+        .course-card-bg {
+            background-color: #f8fbfd;
+        }
+        .course-title-gradient {
+            background: linear-gradient(to right, #6EE7B7, #3B82F6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .footer-bg {
+            background-color: #2c3e50; /* 深藍灰色 */
+            color: #ecf0f1;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="header-bg text-white py-16 px-4 sm:px-6 lg:px-8 text-center rounded-b-3xl">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 animate-fade-in-down">
+                AI 智能創客營：點亮未來，從「說」開始程式設計！
+            </h1>
+            <p class="text-xl sm:text-2xl font-light mb-8 animate-fade-in-up">
+                國小五、六年級專屬，激發科技潛能，培養未來 AI 創新者！
+            </p>
+            <a href="#about" class="inline-block bg-white text-blue-600 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transform hover:scale-105 transition duration-300">
+                立即探索課程
+            </a>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 px-4 sm:px-6 lg:px-8 section-gradient">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12 text-gray-800">
+                營隊目標：讓孩子用「說」的方式，控制硬體！
+            </h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <p class="text-lg leading-relaxed text-gray-700">
+                        在 AI 智能創客營，我們相信每個孩子都潛藏著科技發明的火花。透過生動有趣的 <span class="font-semibold text-blue-600">Arduino 硬體實作</span>，結合 <span class="font-semibold text-purple-600">Vibe Coding (AI 驅動的自然語言編程)</span>，我們將引導國小五、六年級的學員，親手打造屬於自己的智能裝置。
+                    </p>
+                    <p class="text-lg leading-relaxed text-gray-700">
+                        我們獨特的教學方法，讓孩子們擺脫複雜的程式碼，學會用最直覺的 <span class="font-bold text-green-600">「說」</span> 的方式來控制硬體！想像一下，只要說出指令，燈光就會亮起、機器人就會移動，這將是多麼奇妙的體驗！
+                    </p>
+                    <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+                        <li><span class="font-medium text-blue-500">激發科技潛能：</span> 從玩樂中培養對科學與工程的熱愛。</li>
+                        <li><span class="font-medium text-blue-500">培養創造力：</span> 鼓勵孩子動手實作，將想像力轉化為現實。</li>
+                        <li><span class="font-medium text-blue-500">訓練邏輯思維：</span> 學習解決問題的步驟與方法。</li>
+                    </ul>
+                </div>
+                <div class="flex justify-center">
+                    <img src="https://cdn.store-assets.com/s/236824/i/47494529.jpeg?width=1024" alt="AI 和程式設計" class="rounded-xl shadow-xl border-4 border-blue-200">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Modules Section -->
+    <section id="courses" class="py-16 px-4 sm:px-6 lg:px-8 bg-blue-50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12 text-gray-800">
+                精彩課程模組：探索 AI 智慧應用！
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+
+                <!-- AI 智能燈光設計師 -->
+                <div class="card p-6 rounded-lg course-card-bg">
+                    <h3 class="text-2xl font-bold mb-4 course-title-gradient">AI 智能燈光設計師</h3>
+                    <p class="text-gray-700 mb-4">
+                        探索智能燈光的奧秘，培養創造力、邏輯思維與解決問題的能力。學生將主要透過給予 Vibe Coding 中文指令來控制燈光，理解 AI 如何將語言轉化為行動。
+                    </p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        <li>點亮你的第一盞燈： Vibe Coding 初體驗</li>
+                        <li>燈具的眼睛： 光線感知與智能互動</li>
+                        <li>聲音的指揮家： 偵測聲音與條件判斷</li>
+                        <li>色彩的魔法師： RGB LED 與情緒燈光</li>
+                        <li>我的智慧按鈕： 互動按鈕與燈光模式切換</li>
+                        <li>智慧情境燈： 綜合感測器與複合邏輯</li>
+                        <li>燈光藝術家： 進階互動與動畫效果</li>
+                        <li>我的智慧生活助理： 創意應用與原型設計</li>
+                        <li>專案衝刺與功能擴充： 進階實作工作坊</li>
+                        <li>智能光影創新挑戰與成果展演</li>
+                    </ul>
+                </div>
+
+                <!-- AI 智能自走車探險隊 -->
+                <div class="card p-6 rounded-lg course-card-bg">
+                    <h3 class="text-2xl font-bold mb-4 course-title-gradient">AI 智能自走車探險隊</h3>
+                    <p class="text-gray-700 mb-4">
+                        探索機械控制、感測器應用與智慧避障的奧秘，培養邏輯思維、問題解決與團隊合作能力。學生將學習如何透過 Vibe Coding 指令，讓自走車感知環境並做出智能反應。
+                    </p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        <li>小車動起來！ Vibe Coding 基礎驅動與馬達原理</li>
+                        <li>Vibe Coding 讓小車舞動： 基本運動控制</li>
+                        <li>小車的眼睛： 超音波感測器與距離測量</li>
+                        <li>小車的警報器： 紅外線避障與基礎自動避障</li>
+                        <li>追蹤黑線的勇士： 循跡感測器與循線運動</li>
+                        <li>探險隊的智慧： 綜合避障與循跡應用</li>
+                        <li>無線指揮官： 藍牙通訊模組與基礎連結</li>
+                        <li>我的手控智能車： 藍牙遙控與指令應用</li>
+                        <li>探險隊總動員： 專案整合與進階功能擴充</li>
+                        <li>AI 自走車創新挑戰與成果展演</li>
+                    </ul>
+                </div>
+
+                <!-- AI 智慧居家小幫手 -->
+                <div class="card p-6 rounded-lg course-card-bg">
+                    <h3 class="text-2xl font-bold mb-4 course-title-gradient">AI 智慧居家小幫手</h3>
+                    <p class="text-gray-700 mb-4">
+                        學習居家常用感測器與執行器的原理與應用，設計並製作具備感應、控制、識別、警報及自動化功能的智慧居家裝置。
+                    </p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        <li>智能居家第一步： 超音波感測與距離偵測</li>
+                        <li>會思考的垃圾桶： 伺服馬達與智慧開合</li>
+                        <li>我的智能鎖： RFID 無線識別基礎</li>
+                        <li>安全管家： 智慧門鎖與警報系統</li>
+                        <li>植物守護者： 土壤濕度感測與智能澆水</li>
+                        <li>環境守護者： 溫濕度監測與環境警示</li>
+                        <li>智慧空間感應： 人體紅外線偵測</li>
+                        <li>智能響應： 聲光情境與警示</li>
+                        <li>AI 智慧居家整合專案衝刺與功能擴充</li>
+                        <li>AI 智慧居家創新挑戰與成果展演</li>
+                    </ul>
+                </div>
+
+                <!-- AI 智能安全守護者 -->
+                <div class="card p-6 rounded-lg course-card-bg">
+                    <h3 class="text-2xl font-bold mb-4 course-title-gradient">AI 智能安全守護者</h3>
+                    <p class="text-gray-700 mb-4">
+                        打造你的智慧保全，學會用 Vibe Coding 實現 AI 感知與判斷，提升居家安全意識與科技應用能力。
+                    </p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        <li>安全第一步： 偵測移動的眼睛</li>
+                        <li>距離守衛者： 建立隱形防線</li>
+                        <li>震動感知者： 警報的觸角</li>
+                        <li>多重防線： 整合感測器的智慧判斷</li>
+                        <li>智能警報中心： 聲光視覺化</li>
+                        <li>AI 決策樹： 減少誤報的智慧</li>
+                        <li>安全日誌： 誰來過，何時來？</li>
+                        <li>門禁小管家： 模擬智能門禁</li>
+                        <li>AI 程式魔法： Vibe Coding 智能協作</li>
+                        <li>我的終極安全守護者： 專案發表與優化</li>
+                    </ul>
+                </div>
+
+                <!-- AI 智能氣象站與環境監測 -->
+                <div class="card p-6 rounded-lg course-card-bg">
+                    <h3 class="text-2xl font-bold mb-4 course-title-gradient">AI 智能氣象站與環境監測</h3>
+                    <p class="text-gray-700 mb-4">
+                        成為小小氣象專家，用 Vibe Coding 探索環境奧秘，學習數據採集與分析，設計智慧預警系統。
+                    </p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        <li>環境初探： 溫濕度偵測</li>
+                        <li>空中密碼： 氣壓與高度</li>
+                        <li>光影變化： 辨識日夜與環境亮度</li>
+                        <li>雨水警示： 智慧防雨滴</li>
+                        <li>迷你氣象站： 數據整合與初次顯示</li>
+                        <li>AI 環境預警： 天氣變化早知道</li>
+                        <li>空氣品質監測： 呼吸的守護者</li>
+                        <li>歷史數據與趨勢： 數據的秘密</li>
+                        <li>AI 程式魔法： Vibe Coding 智能協作</li>
+                        <li>我的智能環境站： 專案發表與創新</li>
+                    </ul>
+                </div>
+
+                 <!-- AI 小小機器人工程師 -->
+                 <div class="card p-6 rounded-lg course-card-bg">
+                    <h3 class="text-2xl font-bold mb-4 course-title-gradient">AI 小小機器人工程師</h3>
+                    <p class="text-gray-700 mb-4">
+                        打造會動的機器朋友，用 Vibe Coding 探索機電與程式的奧秘，培養解決問題與團隊合作能力。
+                    </p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        <li>機器人初體驗： 我是工程師</li>
+                        <li>讓機器人動起來： 馬達與電力</li>
+                        <li>機器人的眼睛： 循線感測器</li>
+                        <li>線條舞者： 自動循線機器人</li>
+                        <li>機器人的觸碰： 觸碰感測器</li>
+                        <li>閃爍與歌唱： 機器人的表情與聲音</li>
+                        <li>偵測距離： 超音波避障機器人</li>
+                        <li>聰明的關節： 伺服馬達與擺動</li>
+                        <li>我的機器人任務： 綜合挑戰</li>
+                        <li>我的機器人朋友： 專案發表與分享</li>
+                    </ul>
+                </div>
+
+                 <!-- 程式碼與創意：Vibe Coding 數位探險家 -->
+                 <div class="card p-6 rounded-lg course-card-bg">
+                    <h3 class="text-2xl font-bold mb-4 course-title-gradient">程式碼與創意：Vibe Coding 數位探險家</h3>
+                    <p class="text-gray-700 mb-4">
+                        點亮創意火花，用 Vibe Coding 設計你的數位世界，從基礎程式概念到互動專案，培養計算思維。
+                    </p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        <li>程式初探： Vibe Coding 和電腦說話</li>
+                        <li>重複的力量： 燈光魔術師</li>
+                        <li>按下我： 按鈕互動樂</li>
+                        <li>音樂盒製造者： 聲音的魔法</li>
+                        <li>光線偵探： 感應環境亮度</li>
+                        <li>無段式控制： 電位器</li>
+                        <li>我的反應遊戲： 綜合應用</li>
+                        <li>我的數位故事： 創意表達</li>
+                        <li>程式碼偵探： 除錯與優化</li>
+                        <li>我的數位探險作品集： 專案發表與分享</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Materials Section -->
+    <section id="materials" class="py-16 px-4 sm:px-6 lg:px-8 section-gradient">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-gray-800">
+                探索科技的材料：我們提供最完整的學習套件！
+            </h2>
+            <p class="text-lg leading-relaxed text-gray-700 mb-8">
+                為確保每位學員都能順暢地進行實作，我們提供精選的學習材料。這些都是你親手打造智能世界的基石！
+            </p>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 主控板 -->
+                <div class="card p-6 rounded-lg text-left">
+                    <div class="flex items-center mb-4">
+                        <span class="text-4xl feature-icon mr-4">&#128187;</span> <!-- Computer emoji -->
+                        <h3 class="text-xl font-semibold text-gray-800">主控板與連接</h3>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li>Arduino Uno 或 ESP32 開發板 x1</li>
+                        <li>USB 傳輸線 x1</li>
+                    </ul>
+                </div>
+                <!-- 電子元件 -->
+                <div class="card p-6 rounded-lg text-left">
+                    <div class="flex items-center mb-4">
+                        <span class="text-4xl feature-icon mr-4">&#x1F50C;</span> <!-- Electric Plug emoji -->
+                        <h3 class="text-xl font-semibold text-gray-800">基礎電子元件</h3>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li>LED 燈 (多色) x5-10</li>
+                        <li>RGB LED 模組 x1</li>
+                        <li>電阻 (220Ω, 10kΩ) 足夠數量</li>
+                        <li>光敏電阻 x1</li>
+                        <li>按鈕開關 x2-3</li>
+                        <li>主動/被動式蜂鳴器 x1</li>
+                        <li>聲音感測器模組 x1</li>
+                    </ul>
+                </div>
+                <!-- 連接與工具 -->
+                <div class="card p-6 rounded-lg text-left">
+                    <div class="flex items-center mb-4">
+                        <span class="text-4xl feature-icon mr-4">&#x1F4BB;</span> <!-- Laptop emoji -->
+                        <h3 class="text-xl font-semibold text-gray-800">組裝與輔助工具</h3>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li>小型麵包板 x1-2</li>
+                        <li>杜邦線 (公對公、公對母) 足夠數量</li>
+                        <li>電腦/筆記型電腦 x1 (需安裝 Vibe Coding 軟體)</li>
+                        <li>(選配) 電源供應器、基礎工具、創意組裝材料</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="text-sm text-gray-500 mt-8">
+                *實際材料將依課程模組與教學套件調整。
+            </p>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-blue-600 text-white text-center rounded-t-3xl">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-6">
+                別再猶豫，讓孩子成為未來的創客！
+            </h2>
+            <p class="text-lg mb-8">
+                名額有限，立即報名，開啟孩子的 AI 智能創客之旅！
+            </p>
+            <a href="#" class="inline-block bg-white text-blue-600 font-bold py-4 px-10 rounded-full shadow-xl hover:bg-gray-100 transform hover:scale-105 transition duration-300">
+                立即報名！
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-bg py-8 px-4 sm:px-6 lg:px-8 text-center text-sm">
+        <p>&copy; 2025 AI 智能創客營. 版權所有.</p>
+        <p>聯繫我們：<a href="mailto:info@physical-ai-1-2beaa9.ingress-florina.ewp.live" class="text-blue-300 hover:underline">info@physical-ai-1-2beaa9.ingress-florina.ewp.live</a></p>
+    </footer>
+
+</body>
+</html>
