@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 小小 Robotaxi 工程師 - 探索自動駕駛的未來</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Light blue-gray background */
+            color: #334155; /* Darker text */
+        }
+        .hero-section {
+            position: relative; /* Needed for absolute positioning of video */
+            overflow: hidden; /* Hide video overflow */
+            background: linear-gradient(to right, #60a5fa, #3b82f6); /* Blue gradient fallback */
+            /* Ensure content is above the video */
+            z-index: 1; /* Keep content above the video */
+        }
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1; /* Place video behind content */
+            transform: translate(-50%, -50%);
+            /* Optional: Add a subtle overlay for better text readability */
+            background: rgba(0, 0, 0, 0.3); /* Dark overlay */
+        }
+        .hero-section iframe {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            /* Scale iframe to cover the entire section without distortion */
+            transform: scale(1.5); /* Adjust scale to ensure full coverage */
+            /* Further ensure cover, especially for aspect ratio differences */
+            min-width: 100vw;
+            min-height: 56.25vw; /* 100vw * 9 / 16 */
+            max-height: 100vh;
+            max-width: 177.78vh; /* 100vh * 16 / 9 */
+        }
+
+        /* Responsive adjustments for video to ensure it always covers */
+        @media (min-aspect-ratio: 16/9) {
+            .hero-video iframe {
+                height: 100%;
+                width: auto;
+            }
+        }
+        @media (max-aspect-ratio: 16/9) {
+            .hero-video iframe {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .section-title {
+            color: #1e3a8a; /* Dark blue for titles */
+        }
+        .card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .btn-primary {
+            background-color: #3b82f6; /* Blue */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #2563eb; /* Darker blue */
+        }
+        .testimonial-card {
+            background-color: white;
+            border-left: 4px solid #3b82f6; /* Blue border */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow-md py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="text-3xl font-bold text-gray-800">
+                <span class="text-blue-600">Robotaxi</span><span class="text-gray-800">工程師</span>
+            </a>
+            <nav class="hidden md:flex space-x-6">
+                <a href="#about" class="text-gray-600 hover:text-blue-600 font-semibold">關於課程</a>
+                <a href="#curriculum" class="text-gray-600 hover:text-blue-600 font-semibold">課程大綱</a>
+                <a href="#features" class="text-gray-600 hover:text-blue-600 font-semibold">課程特色</a>
+                <a href="#testimonials" class="text-gray-600 hover:text-blue-600 font-semibold">學員見證</a>
+                <a href="#enroll" class="btn-primary">立即報名</a>
+            </nav>
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button class="md:hidden text-gray-800 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-white py-20 md:py-32 rounded-b-lg">
+        <!-- Background Video -->
+        <div class="hero-video">
+            <iframe
+                src="https://www.youtube.com/embed/ypLwacbff3s?autoplay=1&mute=1&loop=1&playlist=ypLwacbff3s&controls=0&modestbranding=1&rel=0"
+                frameborder="0"
+                allow="autoplay; encrypted-media"
+                allowfullscreen
+            ></iframe>
+        </div>
+
+        <div class="container mx-auto px-6 text-center relative z-10"> <!-- z-index to bring content to front -->
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                <span class="text-yellow-300">成為 AI 小小 Robotaxi 工程師</span>
+            </h1>
+            <p class="text-lg md:text-2xl mb-10 max-w-3xl mx-auto opacity-90">
+                探索自動駕駛的奧秘，親手打造你的智能 Robotaxi，預見未來交通！
+            </p>
+            <a href="#enroll" class="btn-primary inline-block py-3 px-8 text-xl">
+                立即開啟你的 AI 之旅！
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-gray-50 rounded-lg mx-6 md:mx-auto mt-[-50px] relative z-10 p-8 shadow-lg">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">
+                關於 AI 小小 Robotaxi 工程師課程
+            </h2>
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
+                <div class="md:w-1/2">
+                    <p class="text-lg leading-relaxed mb-6">
+                        本課程專為對機器人與未來科技充滿好奇的學員設計。我們將從零開始，透過 <a href="https://www.vibecoding.com" target="_blank" class="font-bold text-blue-600 hover:underline">Vibe Coding</a> 視覺化程式設計平台，帶領你一步步深入自動駕駛車輛 (Robotaxi) 的核心技術。
+                    </p>
+                    <p class="text-lg leading-relaxed">
+                        你將親手組裝智能小車，學習如何讓它「看見」環境、「思考」路徑、「避開」障礙，最終實現從乘客接送、交通號誌識別到自動回充的完整 Robotaxi 服務流程模擬。
+                    </p>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <img src="https://www.shop4tesla.com/cdn/shop/articles/tesla-robotaxi-palo-alto-plant-test-auf-stadtstrassen-500606.jpg?v=1729923789" alt="AI Robotaxi 課程概念圖" class="rounded-lg shadow-xl w-full max-w-md">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curriculum Section -->
+    <section id="curriculum" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">
+                10 堂課，成就你的 Robotaxi 夢想！
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Lesson 1 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 1 堂：Robotaxi 初體驗 - 硬體與基本移動</h3>
+                    <p class="text-gray-700">認識 Robotaxi 構造，學習馬達原理與 Vibe Coding 基礎移動控制。</p>
+                </div>
+                <!-- Lesson 2 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 2 堂：導航之眼 - 感測器與環境感知</h3>
+                    <p class="text-gray-700">運用超音波感測器，讓 Robotaxi 學會偵測距離與基礎避障。</p>
+                </div>
+                <!-- Lesson 3 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 3 堂：路線規劃師 - 循線與基礎路徑追蹤</h3>
+                    <p class="text-gray-700">學習循線感測器，讓 Robotaxi 能夠識別路徑並自動循線行駛。</p>
+                </div>
+                <!-- Lesson 4 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 4 堂：地圖探險家 - 軌跡記錄與地圖建構</h3>
+                    <p class="text-gray-700">透過 Robotaxi 的移動軌跡，學習概念性地圖的建構原理。</p>
+                </div>
+                <!-- Lesson 5 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 5 堂：避障高手 - 進階避障與決策</h3>
+                    <p class="text-gray-700">深入多感測器融合避障策略，讓 Robotaxi 更智慧地應對障礙。</p>
+                </div>
+                <!-- Lesson 6 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 6 堂：無線指揮中心 - 藍牙通訊與遙控</h3>
+                    <p class="text-gray-700">學習藍牙通訊，讓 Robotaxi 能夠無線接收指令並進行遙控。</p>
+                </div>
+                <!-- Lesson 7 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 7 堂：智能交通 - 交通號誌識別與反應</h3>
+                    <p class="text-gray-700">讓 Robotaxi 學會識別簡單交通號誌，並做出相應的行駛決策。</p>
+                </div>
+                <!-- Lesson 8 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 8 堂：乘客接送 - 定位導航與目標抵達</h3>
+                    <p class="text-gray-700">利用地圖概念，實現 Robotaxi 從一點到另一個目標點的導航。</p>
+                </div>
+                <!-- Lesson 9 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 9 堂：電力管理員 - 自動回充與能源補充</h3>
+                    <p class="text-gray-700">設計 Robotaxi 自主管理電力，實現自動尋找充電站並回充的功能。</p>
+                </div>
+                <!-- Lesson 10 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 10 堂：Robotaxi 總動員 - 綜合專案與創新挑戰</h3>
+                    <p class="text-gray-700">整合所有技能，設計完整 Robotaxi 服務流程，並進行創新挑戰。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">
+                課程特色
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div class="card bg-white p-8 rounded-lg text-center">
+                    <div class="text-blue-600 text-5xl mb-4">🚗</div>
+                    <h3 class="text-xl font-bold mb-3">從零開始，動手實作</h3>
+                    <p class="text-gray-700">無需程式基礎，一步步引導你組裝 Robotaxi 並編寫程式。</p>
+                </div>
+                <div class="card bg-white p-8 rounded-lg text-center">
+                    <div class="text-blue-600 text-5xl mb-4">🧠</div>
+                    <h3 class="text-xl font-bold mb-3">理解自動駕駛核心</h3>
+                    <p class="text-gray-700">深入感知、決策、控制、定位與導航等自駕車關鍵技術。</p>
+                </div>
+                <div class="card bg-white p-8 rounded-lg text-center">
+                    <div class="text-blue-600 text-5xl mb-4">🌐</div>
+                    <h3 class="text-xl font-bold mb-3">連結真實世界應用</h3>
+                    <p class="text-gray-700">課程內容緊密結合 Robotaxi 實際運作原理與未來趨勢。</p>
+                </div>
+                <div class="card bg-white p-8 rounded-lg text-center">
+                    <div class="text-blue-600 text-5xl mb-4">💡</div>
+                    <h3 class="text-xl font-bold mb-3">激發創意與解決問題</h3>
+                    <p class="text-gray-700">透過挑戰任務，培養邏輯思維與獨立解決問題的能力。</p>
+                </div>
+                <div class="card bg-white p-8 rounded-lg text-center">
+                    <div class="text-blue-600 text-5xl mb-4">👩‍💻</div>
+                    <h3 class="text-xl font-bold mb-3">Vibe Coding 輕鬆入門</h3>
+                    <p class="text-gray-700">直觀的視覺化程式設計，讓學習過程更有趣、更有效率。</p>
+                </div>
+                <div class="card bg-white p-8 rounded-lg text-center">
+                    <div class="text-blue-600 text-5xl mb-4">🏅</div>
+                    <h3 class="text-xl font-bold mb-3">完成專案，成果豐碩</h3>
+                    <p class="text-gray-700">最終將完成一個能模擬 Robotaxi 服務流程的智能作品。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-16 bg-blue-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">
+                學員見證
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="testimonial-card p-8 rounded-lg">
+                    <p class="text-gray-800 text-lg italic mb-4">
+                        「以前覺得自動駕駛很遙遠，上完課後發現我也可以設計自己的智能車！Vibe Coding 真的讓程式變得好簡單！」
+                    </p>
+                    <p class="font-bold text-blue-800">- 小明 (國小五年級)</p>
+                </div>
+                <div class="testimonial-card p-8 rounded-lg">
+                    <p class="text-gray-800 text-lg italic mb-4">
+                        「我最喜歡建構地圖和自動回充那幾堂課，原來掃地機器人的原理是這樣！現在看 Robotaxi 都覺得它像我的小夥伴了！」
+                    </p>
+                    <p class="font-bold text-blue-800">- 小華 (國小六年級)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action / Enrollment Section -->
+    <section id="enroll" class="py-16 bg-blue-600 text-white rounded-t-lg">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6">
+                準備好成為未來的 Robotaxi 工程師了嗎？
+            </h2>
+            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">
+                名額有限，立即報名，探索自動駕駛的無限可能！
+            </p>
+            <a href="#" class="btn-primary inline-block py-3 px-8 text-xl bg-white text-blue-600 hover:bg-gray-200">
+                立即報名課程！
+            </a>
+            <p class="mt-4 text-sm opacity-80">早鳥優惠實施中，詳情請洽官方網站。</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center text-sm">
+            <p>&copy; 2025 AI 小小 Robotaxi 工程師課程. 版權所有.</p>
+            <p class="mt-2">聯繫我們：info@physical-ai-1-2beaa9.ingress-florina.ewp.live | 電話：(02) 2213-1081</p>
+        </div>
+    </footer>
+
+</body>
+</html>

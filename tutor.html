@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Coding x Arduino 智能創客導師班：培養未來科技教育家！</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light gray background */
+            color: #333;
+        }
+        .header-bg {
+            background: linear-gradient(135deg, #4A00E0 0%, #8E2DE2 100%); /* Deep purple gradient */
+        }
+        .section-gradient {
+            background: linear-gradient(45deg, #ffffff 0%, #f9f9f9 100%);
+        }
+        .btn-primary {
+            background-color: #007bff; /* Blue button */
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        }
+        .feature-icon {
+            color: #8E2DE2; /* Purple icon */
+        }
+        .course-card-bg {
+            background-color: #f8fbfd;
+        }
+        .phase-title-gradient {
+            background: linear-gradient(to right, #6EE7B7, #8E2DE2); /* Green to purple gradient */
+            /* -webkit-background-clip: text; */
+            -webkit-text-fill-color: transparent;
+        }
+        .lesson-title-color {
+            color: #5B21B6; /* Darker purple for lesson titles */
+        }
+        .footer-bg {
+            background-color: #2c3e50; /* Dark blue-gray */
+            color: #ecf0f1;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="header-bg text-white py-16 px-4 sm:px-6 lg:px-8 text-center rounded-b-3xl">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 animate-fade-in-down">
+                Vibe Coding x Arduino 智能創客導師班
+            </h1>
+            <p class="text-xl sm:text-2xl font-light mb-8 animate-fade-in-up">
+                培養新世代科技教育家，引導學員透過自然語言探索創新！
+            </p>
+            <a href="#about" class="inline-block bg-white text-purple-700 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transform hover:scale-105 transition duration-300">
+                立即了解課程
+            </a>
+        </div>
+    </header>
+
+    <!-- Course Purpose Section -->
+    <section id="about" class="py-16 px-4 sm:px-6 lg:px-8 section-gradient">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12 text-gray-800">
+                課程宗旨：引領未來，對話科技
+            </h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="flex justify-center">
+                    <img src="https://m.media-amazon.com/images/I/71zw+PlsDQL._UF894,1000_QL80_.jpg" alt="AI輔助編程" class="rounded-xl shadow-xl border-4 border-purple-200">
+                </div>
+                <div class="space-y-6">
+                    <p class="text-lg leading-relaxed text-gray-700">
+                        本課程旨在培養對 <span class="font-semibold text-blue-600">Arduino 硬體實作</span> 與 <span class="font-semibold text-purple-600">AI 輔助編程 (Vibe Coding)</span> 教學有熱忱之講師。我們將賦予您引導學員透過 <span class="font-bold text-green-600">自然語言指令</span> 驅動程式碼生成的能力。
+                    </p>
+                    <p class="text-lg leading-relaxed text-gray-700">
+                        課程設計循序漸進，從基礎電子概念到複雜專案整合，並全面融入 Vibe Coding 的應用，讓程式設計如同對話般直覺。您將具備引導學生進行科技探索、培養創新思維及解決問題的專業素養。
+                    </p>
+                    <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+                        <li><span class="font-medium text-purple-500">掌握 AI 編程：</span> 利用 Vibe Coding 簡化程式設計，專注於創意實現。</li>
+                        <li><span class="font-medium text-purple-500">深入硬體實作：</span> 從基礎電子到複雜專案的完整學習路徑。</li>
+                        <li><span class="font-medium text-purple-500">培養教學專業：</span> 學習有效引導學員探索科技與解決問題。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Required Materials Section -->
+    <section id="materials" class="py-16 px-4 sm:px-6 lg:px-8 bg-purple-50">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-gray-800">
+                所需材料：您的創客工具箱
+            </h2>
+            <p class="text-lg leading-relaxed text-gray-700 mb-8">
+                為確保您在學習與教學過程中暢行無阻，我們提供以下建議材料清單：
+            </p>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 主控板與基礎元件 -->
+                <div class="card p-6 rounded-lg text-left">
+                    <div class="flex items-center mb-4">
+                        <span class="text-4xl feature-icon mr-4">&#128187;</span> <!-- Computer emoji -->
+                        <h3 class="text-xl font-semibold text-gray-800">主控板與基礎電子元件</h3>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li>Arduino Uno 或 ESP32 開發板 x1</li>
+                        <li>USB 傳輸線 x1</li>
+                        <li>LED 燈 (多色) x10-15</li>
+                        <li>RGB LED 模組 x1</li>
+                        <li>電阻 (220Ω, 1kΩ, 10kΩ) 足夠數量</li>
+                        <li>按鈕開關 x3-5</li>
+                        <li>蜂鳴器 x1</li>
+                        <li>小型麵包板 x2-3</li>
+                        <li>杜邦線 (公對公、公對母、母對母) 足夠數量</li>
+                        <li>可變電阻 x2</li>
+                        <li>電容器 (10uF, 100uF) x 各2</li>
+                    </ul>
+                </div>
+                <!-- 感測器與模組 -->
+                <div class="card p-6 rounded-lg text-left">
+                    <div class="flex items-center mb-4">
+                        <span class="text-4xl feature-icon mr-4">&#128269;</span> <!-- Magnifying Glass Tilted Left emoji -->
+                        <h3 class="text-xl font-semibold text-gray-800">感測器與智能模組</h3>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li>光敏電阻 x1</li>
+                        <li>熱敏電阻 (或 DHT11) x1</li>
+                        <li>超音波感測器 (HC-SR04) x1</li>
+                        <li>伺服馬達 (SG90) x1</li>
+                        <li>直流馬達 x1</li>
+                        <li>L298N 馬達驅動模組 x1</li>
+                        <li>藍牙模組 (HC-05/HC-06) x1</li>
+                        <li>LCD 顯示器 (1602 I2C) x1</li>
+                        <li>麵包板電源模組 (可選) x1</li>
+                        <li>麵包板專用穩壓模組 (可選) x1</li>
+                    </ul>
+                </div>
+                <!-- 其他工具 -->
+                <div class="card p-6 rounded-lg text-left">
+                    <div class="flex items-center mb-4">
+                        <span class="text-4xl feature-icon mr-4">&#128241;</span> <!-- Mobile Phone emoji -->
+                        <h3 class="text-xl font-semibold text-gray-800">其他輔助與工具</h3>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li>9V 電池扣 或 USB 行動電源</li>
+                        <li>小風扇或相關配件</li>
+                        <li>智慧型手機/平板 (用於藍牙控制)</li>
+                        <li>電腦/筆記型電腦 x1 (需有網路連線，用於 Vibe Coding)</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="text-sm text-gray-500 mt-8">
+                *實際材料將依實際教學套件與課程進度調整。
+            </p>
+        </div>
+    </section>
+
+    <!-- Course Content Sections -->
+    <section id="courses" class="py-16 px-4 sm:px-6 lg:px-8 section-gradient">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12 text-gray-800">
+                課程內容：從基礎到專家，全面培養
+            </h2>
+
+            <!-- Phase 1 -->
+            <div class="mb-16">
+                <h3 class="text-3xl font-bold text-center mb-8 phase-title-gradient">第一階段：Arduino 硬體與 Vibe Coding 入門 (3 堂)</h3>
+                <p class="text-lg leading-relaxed text-gray-700 text-center mb-8">
+                    透過 Arduino 實作，引導學員認識基本電學概念、電子元件，學習數位與類比訊號的輸入與輸出，並以 Vibe Coding 為核心，學會如何用直覺的中文指令控制硬體。
+                </p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 1 堂：Arduino 簡介與 Vibe Coding 初探：點亮你的第一盞燈</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：Arduino 簡介、Vibe Coding 角色、開發環境準備、電路基礎。</li>
+                            <li>實作練習：Vibe Coding 初體驗，點亮板載 LED 與外部 LED。</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 2 堂：Vibe Coding 與多個 LED 控制：打造你的燈光秀</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：數位輸出延伸、時間序列、Vibe Coding 邏輯處理能力。</li>
+                            <li>實作練習：多個 LED 接線、Vibe Coding 控制多個 LED、紅綠燈模擬。</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 3 堂：Vibe Coding 與數位輸入：按鈕控制</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：數位輸入、按鈕原理、下拉電阻的重要性。</li>
+                            <li>實作練習：連接按鈕與下拉電阻、Vibe Coding 讀取按鈕狀態與控制 LED。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="mb-16">
+                <h3 class="text-3xl font-bold text-center mb-8 phase-title-gradient">第二階段：感測器與執行器：讓 Arduino 感知與行動 (4 堂)</h3>
+                <p class="text-lg leading-relaxed text-gray-700 text-center mb-8">
+                    學習不同類型的感測器 (類比輸入) 和執行器，並透過 Vibe Coding 實現 Arduino 對環境的感知和反應，讓專案更加智慧化。
+                </p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 4 堂：Vibe Coding 與類比輸入：可變電阻</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：類比輸入、可變電阻、PWM 概念。</li>
+                            <li>實作練習：連接可變電阻、讀取類比值、控制 LED 亮度。</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 5 堂：Vibe Coding 與光線感測：光敏電阻</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：光敏電阻、分壓電路。</li>
+                            <li>實作練習：連接光敏電阻、讀取光線值、實現自動夜燈。</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 6 堂：Vibe Coding 與聲音反應：蜂鳴器</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：蜂鳴器原理、聲音輸出、聲音頻率控制。</li>
+                            <li>實作練習：連接蜂鳴器、播放簡單音效、模擬警報聲。</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 7 堂：Vibe Coding 與運動控制：伺服馬達</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：伺服馬達、PWM 訊號控制。</li>
+                            <li>實作練習：連接伺服馬達、控制伺服馬達轉動、結合可變電阻控制角度。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="mb-16">
+                <h3 class="text-3xl font-bold text-center mb-8 phase-title-gradient">第三階段：進階感測與資料處理：讓 Arduino 更聰明 (4 堂)</h3>
+                <p class="text-lg leading-relaxed text-gray-700 text-center mb-8">
+                    學習更複雜的感測器應用，如溫濕度、距離感測，並透過 Vibe Coding 處理感測資料，實現更精確的環境感知與智能反應。
+                </p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 8 堂：Vibe Coding 與溫濕度感測：DHT11</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：DHT11 原理、數位通訊。</li>
+                            <li>實作練習：連接 DHT11、讀取溫濕度、實現簡易環境監測與警示。</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 9 堂：Vibe Coding 與距離感測：超音波模組</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：HC-SR04 原理、聲速計算。</li>
+                            <li>實作練習：連接超音波模組、讀取距離、實現簡易防盜警報。</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 10 堂：Vibe Coding 與 RGB LED：色彩變幻</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：RGB LED 原理、PWM 與混色。</li>
+                            <li>實作練習：連接 RGB LED、控制單一顏色、實現多種顏色切換與呼吸燈效果。</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 11 堂：Vibe Coding 與馬達控制：直流馬達</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：直流馬達原理、L298N 馬達驅動模組。</li>
+                            <li>實作練習：連接直流馬達與 L298N、控制馬達轉動、結合按鈕控制馬達。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 4 -->
+            <div class="mb-16">
+                <h3 class="text-3xl font-bold text-center mb-8 phase-title-gradient">第四階段：物聯網基礎與進階互動：讓 Arduino 互聯互通 (4 堂)</h3>
+                <p class="text-lg leading-relaxed text-gray-700 text-center mb-8">
+                    引入物聯網概念，學習藍牙通訊，並透過 Vibe Coding 實現 Arduino 與手機的無線互動，理解智慧裝置的運作原理。
+                </p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 12 堂：Vibe Coding 與 OLED 顯示器：文字與圖形輸出</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：OLED 顯示器、I2C 通訊協議。</li>
+                            <li>實作練習：連接 OLED 顯示器、顯示文字與感測器數據。</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 13 堂：Vibe Coding 與藍牙模組通訊：基礎連結</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：藍牙通訊基本概念、HC-05/06 模組、序列埠通訊。</li>
+                            <li>實作練習：連接藍牙模組、藍牙配對與測試、藍牙傳送接收數據。</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 14 堂：Vibe Coding 實現手機遙控 Arduino：遠端控制</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：指令解析、狀態判斷與控制。</li>
+                            <li>實作練習：藍牙遙控燈、藍牙遙控風扇。</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 15 堂：Vibe Coding 與專案整合：智能安全門</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：專案整合挑戰、Vibe Coding 進階邏輯串聯。</li>
+                            <li>實作練習：智能安全門設計與逐步實現、測試與除錯。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 5 -->
+            <div class="mb-16">
+                <h3 class="text-3xl font-bold text-center mb-8 phase-title-gradient">第五階段：進階感測與資料處理：讓 Arduino 更聰明 (4 堂)</h3>
+                <p class="text-lg leading-relaxed text-gray-700 text-center mb-8">
+                    學習更複雜的感測器應用，如溫濕度、距離感測，並透過 Vibe Coding 處理感測資料，實現更精確的環境感知與智能反應。
+                </p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 16 堂：Vibe Coding 與網路通訊：ESP32 Wi-Fi 基礎</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：物聯網 (IoT)、ESP32 簡介、Wi-Fi 連線基礎。</li>
+                            <li>實作練習：ESP32 環境建置、連接 Wi-Fi、透過 Wi-Fi 控制 LED。</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 17 堂：Vibe Coding 與網路數據發送：ThingSpeak 雲端平台</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：雲端數據平台、API Key 與數據上傳。</li>
+                            <li>實作練習：ThingSpeak 設定、上傳溫濕度數據到 ThingSpeak。</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 18 堂：Vibe Coding 與智慧家庭整合：簡易智能燈</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：智慧家庭概念、MQTT 協議 (可選)、Vibe Coding 整合多重條件。</li>
+                            <li>實作練習：整合多個感測器與執行器、實現智能夜燈。</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 19 堂：專案衝刺與 Vibe Coding 輔助除錯</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：專案整合挑戰、模組化思維、Vibe Coding 進階應用、除錯技巧。</li>
+                            <li>實作練習：學員自選專案實作、Vibe Coding 輔助除錯。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 6 -->
+            <div class="mb-16">
+                <h3 class="text-3xl font-bold text-center mb-8 phase-title-gradient">第六階段：專案整合與教學實踐：成為智能創客導師 (2 堂)</h3>
+                <p class="text-lg leading-relaxed text-gray-700 text-center mb-8">
+                    綜合運用所學知識，完成綜合專案，並學習如何有效地輔導他人使用 Vibe Coding 進行創作，培養成為智能創客導師的專業素養。
+                </p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+                    <div class="card p-6 rounded-lg course-card-bg">
+                        <h4 class="text-xl font-semibold mb-2 lesson-title-color">第 20 堂：教學法與成果發表</h4>
+                        <ul class="list-disc list-inside text-gray-600 text-sm">
+                            <li>概念講解：智能創客教學法、Vibe Coding 在教學中的應用、問題解決策略。</li>
+                            <li>實作練習：專案成果發表、教學模擬與回饋、未來展望。</li>
+                        </ul>
+                    </div>
+                     <div class="card p-6 rounded-lg course-card-bg flex items-center justify-center">
+                        <div class="text-center">
+                            <span class="text-6xl text-purple-700 mb-4 block">&#127891;</span> <!-- Graduation Cap emoji -->
+                            <p class="text-lg font-bold text-gray-800">結業與頒證</p>
+                            <p class="text-gray-600 text-sm">成功完成所有課程，您將獲得智能創客導師班結業證書！</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-purple-700 text-white text-center rounded-t-3xl">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-6">
+                立即加入，成為 AI 創客教育的引領者！
+            </h2>
+            <p class="text-lg mb-8">
+                名額有限，把握機會，共同點亮新世代的科技潛能！
+            </p>
+            <a href="#" class="inline-block bg-white text-purple-700 font-bold py-4 px-10 rounded-full shadow-xl hover:bg-gray-100 transform hover:scale-105 transition duration-300">
+                立即報名導師班
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-bg py-8 px-4 sm:px-6 lg:px-8 text-center text-sm">
+        <p>&copy; 2025 Vibe Coding x Arduino 智能創客導師班. 版權所有.</p>
+        <p>聯繫我們：<a href="mailto:info@physical-ai-1-2beaa9.ingress-florina.ewp.live" class="text-blue-300 hover:underline">info@physical-ai-1-2beaa9.ingress-florina.ewp.live</a></p>
+    </footer>
+
+</body>
+</html>
