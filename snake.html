@@ -346,7 +346,7 @@
 
             drawGame();
         }
-
+/*
         function checkCollision() {
             if (snakeCollidesWithWall() || snakeCollidesWithSelf()) {
                 // 延遲處理死亡邏輯
@@ -361,7 +361,7 @@
             document.getElementById('gameOverlay').style.display = 'block';
             document.getElementById('overlayText').innerText = '遊戲結束！';
         }
-/*
+*/
         // 檢查碰撞 (頭部與身體)
         function checkCollision(head, body) {
             return body.some(segment => segment.x === head.x && segment.y === head.y);
@@ -375,7 +375,7 @@
             startButton.textContent = '重新開始';
             gameOverlay.style.display = 'flex'; // 顯示遊戲結束覆蓋層
         }
-*/
+
         // 處理鍵盤輸入和觸控按鈕
         function changeDirection(event) {
             if (changingDirection || gameOver) return;
