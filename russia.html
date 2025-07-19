@@ -1,81 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>俄羅斯方塊遊戲</title>
+  <title>俄羅斯方塊</title>
   <style>
     body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
       background-color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       font-family: Arial, sans-serif;
+      user-select: none;
+      touch-action: manipulation;
     }
-    canvas {
+    #gameCanvas {
       border: 2px solid #000;
       background-color: #fff;
+    }
+    #startButton {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 16px 32px;
+      font-size: 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      z-index: 10;
+    }
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .controls-row {
+      display: flex;
+      gap: 20px;
+      margin: 5px;
+    }
+    .control-btn {
+      padding: 20px;
+      font-size: 20px;
+      border-radius: 10px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      min-width: 60px;
     }
   </style>
 </head>
 <body>
+  <button id="startButton">開始遊戲</button>
   <canvas id="gameCanvas" width="300" height="600"></canvas>
+
+  <div class="controls">
+    <div class="controls-row">
+      <button class="control-btn" id="rotateBtn">↻</button>
+    </div>
+    <div class="controls-row">
+      <button class="control-btn" id="leftBtn">←</button>
+      <button class="control-btn" id="downBtn">↓</button>
+      <button class="control-btn" id="rightBtn">→</button>
+    </div>
+  </div>
+
   <script>
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
+    const startButton = document.getElementById('startButton');
 
-    const ROWS = 20; // 遊戲區域的行數
-    const COLS = 10; // 遊戲區域的列數
-    const BLOCK_SIZE = 30; // 每個方塊的大小
-    const EMPTY_COLOR = '#fff'; // 空格顏色
-    const BORDER_COLOR = '#000'; // 邊框顏色
+    const ROWS = 20, COLS = 10, BLOCK_SIZE = 30;
+    const EMPTY_COLOR = '#fff', BORDER_COLOR = '#000';
 
-    // 定義方塊形狀
     const SHAPES = [
-      [[1, 1, 1, 1]], // I 形
-      [[1, 1], [1, 1]], // O 形
-      [[0, 1, 0], [1, 1, 1]], // T 形
-      [[1, 1, 0], [0, 1, 1]], // S 形
-      [[0, 1, 1], [1, 1, 0]], // Z 形
-      [[1, 1, 1], [1, 0, 0]], // L 形
-      [[1, 1, 1], [0, 0, 1]]  // J 形
+      [[1, 1, 1, 1]], // I
+      [[1, 1], [1, 1]], // O
+      [[0, 1, 0], [1, 1, 1]], // T
+      [[1, 1, 0], [0, 1, 1]], // S
+      [[0, 1, 1], [1, 1, 0]], // Z
+      [[1, 1, 1], [1, 0, 0]], // L
+      [[1, 1, 1], [0, 0, 1]]  // J
     ];
-
     const COLORS = ['cyan', 'yellow', 'purple', 'green', 'red', 'orange', 'blue'];
 
-    let board = Array.from({ length: ROWS }, () => Array(COLS).fill(0)); // 初始化遊戲區域
-    let currentShape = getRandomShape(); // 當前方塊
-    let currentX = 3; // 當前方塊的 X 座標
-    let currentY = 0; // 當前方塊的 Y 座標
+    let board = [];
+    let currentShape = null;
+    let currentX = 0, currentY = 0;
     let gameOver = false;
+    let intervalId;
 
-    // 遊戲主循環
-    function gameLoop() {
-      if (gameOver) {
-        ctx.fillStyle = 'red';
-        ctx.font = '20px Arial';
-        ctx.fillText('遊戲結束！按 F5 重玩', canvas.width / 4, canvas.height / 2);
-        return;
-      }
-
-      moveDown();
+    function initGame() {
+      board = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
+      gameOver = false;
+      currentShape = getRandomShape();
+      currentX = 3;
+      currentY = 0;
+      if (intervalId) clearInterval(intervalId);
+      intervalId = setInterval(gameLoop, 500);
       drawBoard();
     }
 
-    // 繪製遊戲區域
+    function getRandomShape() {
+      const index = Math.floor(Math.random() * SHAPES.length);
+      return { shape: SHAPES[index], color: index };
+    }
+
     function drawBoard() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // 繪製遊戲區域
       for (let row = 0; row < ROWS; row++) {
         for (let col = 0; col < COLS; col++) {
           drawBlock(col, row, board[row][col] ? COLORS[board[row][col] - 1] : EMPTY_COLOR);
         }
       }
 
-      // 繪製當前方塊
       currentShape.shape.forEach((row, y) => {
         row.forEach((cell, x) => {
           if (cell) {
@@ -85,7 +128,6 @@
       });
     }
 
-    // 繪製單個方塊
     function drawBlock(x, y, color) {
       ctx.fillStyle = color;
       ctx.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
@@ -93,47 +135,10 @@
       ctx.strokeRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
     }
 
-    // 隨機生成方塊
-    function getRandomShape() {
-      const index = Math.floor(Math.random() * SHAPES.length);
-      return { shape: SHAPES[index], color: index };
-    }
-
-    // 方塊下移
-    function moveDown() {
-      if (!canMove(currentX, currentY + 1, currentShape.shape)) {
-        // 無法下移，將方塊固定到遊戲區域
-        currentShape.shape.forEach((row, y) => {
-          row.forEach((cell, x) => {
-            if (cell) {
-              board[currentY + y][currentX + x] = currentShape.color + 1;
-            }
-          });
-        });
-
-        // 檢查是否有完整的行
-        clearLines();
-
-        // 生成新方塊
-        currentShape = getRandomShape();
-        currentX = 3;
-        currentY = 0;
-
-        // 檢查遊戲是否結束
-        if (!canMove(currentX, currentY, currentShape.shape)) {
-          gameOver = true;
-        }
-      } else {
-        currentY++;
-      }
-    }
-
-    // 檢查是否可以移動
     function canMove(x, y, shape) {
       return shape.every((row, dy) =>
         row.every((cell, dx) => {
-          const newX = x + dx;
-          const newY = y + dy;
+          const newX = x + dx, newY = y + dy;
           return (
             !cell ||
             (newX >= 0 && newX < COLS && newY >= 0 && newY < ROWS && !board[newY][newX])
@@ -142,17 +147,45 @@
       );
     }
 
-    // 清除完整的行
-    function clearLines() {
-      board = board.filter(row => row.some(cell => !cell));
-      while (board.length < ROWS) {
-        board.unshift(Array(COLS).fill(0));
+    function moveDown() {
+      if (!canMove(currentX, currentY + 1, currentShape.shape)) {
+        currentShape.shape.forEach((row, y) => {
+          row.forEach((cell, x) => {
+            if (cell) board[currentY + y][currentX + x] = currentShape.color + 1;
+          });
+        });
+        clearLines();
+        currentShape = getRandomShape();
+        currentX = 3; currentY = 0;
+        if (!canMove(currentX, currentY, currentShape.shape)) {
+          gameOver = true;
+          clearInterval(intervalId);
+          startButton.style.display = 'block';
+          alert('遊戲結束！');
+        }
+      } else {
+        currentY++;
       }
+      drawBoard();
     }
 
-    // 處理鍵盤輸入
-    document.addEventListener('keydown', event => {
-      switch (event.key) {
+    function clearLines() {
+      board = board.filter(row => row.some(cell => !cell));
+      while (board.length < ROWS) board.unshift(Array(COLS).fill(0));
+    }
+
+    function rotate(shape) {
+      return shape[0].map((_, i) => shape.map(row => row[i]).reverse());
+    }
+
+    function gameLoop() {
+      if (!gameOver) moveDown();
+    }
+
+    // 鍵盤控制
+    document.addEventListener('keydown', e => {
+      if (gameOver) return;
+      switch (e.key) {
         case 'ArrowLeft':
           if (canMove(currentX - 1, currentY, currentShape.shape)) currentX--;
           break;
@@ -170,13 +203,29 @@
       drawBoard();
     });
 
-    // 旋轉方塊
-    function rotate(shape) {
-      return shape[0].map((_, i) => shape.map(row => row[i]).reverse());
-    }
+    // 手機按鈕控制
+    document.getElementById('leftBtn').onclick = () => {
+      if (canMove(currentX - 1, currentY, currentShape.shape)) currentX--;
+      drawBoard();
+    };
+    document.getElementById('rightBtn').onclick = () => {
+      if (canMove(currentX + 1, currentY, currentShape.shape)) currentX++;
+      drawBoard();
+    };
+    document.getElementById('downBtn').onclick = () => {
+      moveDown();
+    };
+    document.getElementById('rotateBtn').onclick = () => {
+      const rotated = rotate(currentShape.shape);
+      if (canMove(currentX, currentY, rotated)) currentShape.shape = rotated;
+      drawBoard();
+    };
 
-    // 啟動遊戲
-    setInterval(gameLoop, 500);
+    // 開始遊戲按鈕
+    startButton.addEventListener('click', () => {
+      startButton.style.display = 'none';
+      initGame();
+    });
   </script>
 </body>
 </html>
