@@ -196,8 +196,6 @@
 </head>
 <body>
     <div class="game-container">
-        <h1>貪吃蛇</h1>
-        <div id="scoreDisplay">分數: 0</div>
         <canvas id="gameCanvas" width="400" height="400"></canvas>
 
         <div id="gameOverlay">
@@ -347,22 +345,7 @@
 
             drawGame();
         }
-/*
-        function checkCollision() {
-            if (snakeCollidesWithWall() || snakeCollidesWithSelf()) {
-                // 延遲處理死亡邏輯
-                setTimeout(() => {
-                    endGame(); // 執行遊戲結束邏輯
-                }, 500); // 延遲 500 毫秒
-            }
-        }
 
-        function endGame() {
-            // 顯示遊戲結束畫面或重置遊戲
-            document.getElementById('gameOverlay').style.display = 'block';
-            document.getElementById('overlayText').innerText = '遊戲結束！';
-        }
-*/
         // 檢查碰撞 (頭部與身體)
         function checkCollision(head, body) {
             return body.some(segment => segment.x === head.x && segment.y === head.y);
