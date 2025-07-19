@@ -18,6 +18,10 @@
             overflow: hidden; /* 防止滾動條 */
             color: #ecf0f1; /* 淺色文字 */
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            -webkit-user-select: none; /* Prevent text selection on mobile */
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
         }
 
         /* 遊戲容器 */
@@ -33,6 +37,9 @@
             gap: 20px;
             position: relative;
             z-index: 1;
+            width: 90%; /* Make container responsive */
+            max-width: 450px; /* Limit max width for desktop */
+            box-sizing: border-box; /* Include padding in width */
         }
 
         /* 遊戲標題 */
@@ -60,6 +67,9 @@
             border: 4px solid #7f8c8d; /* 灰色邊框 */
             border-radius: 10px; /* 畫布圓角 */
             display: block; /* 移除預設的 inline 邊距 */
+            width: 100%; /* Make canvas responsive */
+            height: auto; /* Maintain aspect ratio */
+            aspect-ratio: 1 / 1; /* Ensure it's always square */
         }
 
         /* 遊戲結束/開始訊息 */
@@ -114,11 +124,47 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
+        /* 手機控制按鈕容器 */
+        .mobile-controls {
+            display: grid; /* 使用網格佈局 */
+            grid-template-areas:
+                ". up ."
+                "left . right"
+                ". down ."; /* 定義按鈕的佈局區域 */
+            gap: 10px; /* 按鈕間距 */
+            width: 100%;
+            max-width: 250px; /* 限制按鈕區域的最大寬度 */
+            margin-top: 20px;
+            /* 預設在桌面隱藏，在手機顯示 */
+            display: none;
+        }
+
+        .mobile-controls button {
+            padding: 15px 0; /* 調整按鈕內邊距 */
+            font-size: 1.2em;
+            background-color: #4CAF50; /* 綠色按鈕 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .mobile-controls button:hover {
+            background-color: #45a049;
+        }
+
+        .mobile-controls button:active {
+            background-color: #3e8e41;
+        }
+
+        /* 網格區域分配 */
+        .mobile-controls .up-btn { grid-area: up; }
+        .mobile-controls .left-btn { grid-area: left; }
+        .mobile-controls .right-btn { grid-area: right; }
+        .mobile-controls .down-btn { grid-area: down; }
+
         /* 響應式設計 */
         @media (max-width: 600px) {
             .game-container {
-                width: 95%;
-                padding: 15px;
+                width: 98%; /* 更寬的容器 */
+                padding: 10px; /* 減少內邊距 */
             }
             h1 {
                 font-size: 1.8em;
@@ -130,7 +176,16 @@
                 font-size: 1em;
             }
             button {
-                padding: 12px 25px;
+                padding: 12px 20px;
+                font-size: 1em;
+            }
+            .mobile-controls {
+                display: grid; /* 在小螢幕上顯示 */
+                max-width: 300px; /* 調整手機控制按鈕的最大寬度 */
+                margin-top: 15px;
+            }
+            .mobile-controls button {
+                padding: 12px 0; /* 調整手機按鈕內邊距 */
                 font-size: 1em;
             }
         }
@@ -149,6 +204,14 @@
             <p id="overlayText">點擊開始遊戲</p>
             <button id="startButton">開始遊戲</button>
         </div>
+
+        <!-- 手機控制按鈕 -->
+        <div class="mobile-controls">
+            <button class="up-btn" data-direction="up">↑</button>
+            <button class="left-btn" data-direction="left">←</button>
+            <button class="right-btn" data-direction="right">→</button>
+            <button class="down-btn" data-direction="down">↓</button>
+        </div>
     </div>
 
     <script>
@@ -159,9 +222,15 @@
         const overlayText = document.getElementById('overlayText');
         const startButton = document.getElementById('startButton');
 
+        // 新增手機控制按鈕的參考
+        const upButton = document.querySelector('.up-btn');
+        const leftButton = document.querySelector('.left-btn');
+        const rightButton = document.querySelector('.right-btn');
+        const downButton = document.querySelector('.down-btn');
+
         // 遊戲設定
         const gridSize = 20; // 每個方塊的大小
-        const tileCount = canvas.width / gridSize; // 網格數量 (20x20)
+        let tileCount; // 網格數量，將根據 canvas 實際大小計算
         let snake = [];
         let food = {};
         let score = 0;
@@ -171,8 +240,32 @@
         let gameOver = true;
         let gameInterval; // 遊戲循環的計時器
 
+        // 調整 Canvas 大小並重新繪製
+        function resizeCanvas() {
+            // 讓 canvas 的實際繪圖尺寸與其 CSS 尺寸同步
+            const containerWidth = canvas.offsetWidth;
+            canvas.width = containerWidth;
+            canvas.height = containerWidth; // 保持正方形
+
+            tileCount = canvas.width / gridSize; // 重新計算網格數量
+
+            // 如果遊戲正在進行，需要重新繪製以適應新尺寸
+            if (!gameOver) {
+                drawGame();
+            }
+            // 如果遊戲結束，也需要重新繪製覆蓋層
+            if (gameOver && gameOverlay.style.display === 'flex') {
+                // 由於 overlay 是絕對定位且寬高100%，它會自動適應
+                // 但如果遊戲結束時 canvas 尺寸變化，可能需要重新調整蛇和食物位置
+                // 這裡我們在 initGame 時才設定蛇和食物，所以結束後重設尺寸不會影響遊戲邏輯
+            }
+        }
+
         // 初始化遊戲
         function initGame() {
+            // 確保 canvas 尺寸在遊戲開始前正確設置
+            resizeCanvas();
+
             snake = [
                 { x: 10 * gridSize, y: 10 * gridSize }, // 蛇頭
                 { x: 9 * gridSize, y: 10 * gridSize },
@@ -268,12 +361,26 @@
             gameOverlay.style.display = 'flex'; // 顯示遊戲結束覆蓋層
         }
 
-        // 處理鍵盤輸入
+        // 處理鍵盤輸入和觸控按鈕
         function changeDirection(event) {
             if (changingDirection || gameOver) return;
             changingDirection = true;
 
-            const keyPressed = event.keyCode;
+            let keyPressed;
+            if (event.type === 'keydown') {
+                keyPressed = event.keyCode;
+            } else if (event.type === 'click' || event.type === 'touchstart') {
+                const direction = event.currentTarget.dataset.direction;
+                switch (direction) {
+                    case 'up': keyPressed = 38; break;
+                    case 'down': keyPressed = 40; break;
+                    case 'left': keyPressed = 37; break;
+                    case 'right': keyPressed = 39; break;
+                }
+            } else {
+                return; // 不處理其他事件類型
+            }
+
             const LEFT_KEY = 37;
             const UP_KEY = 38;
             const RIGHT_KEY = 39;
@@ -312,8 +419,20 @@
             startGameLoop();
         });
 
-        // 初始繪製 (顯示初始狀態)
-        drawGame();
+        // 為手機控制按鈕添加事件監聽器
+        upButton.addEventListener('click', changeDirection);
+        leftButton.addEventListener('click', changeDirection);
+        rightButton.addEventListener('click', changeDirection);
+        downButton.addEventListener('click', changeDirection);
+
+        // 監聽視窗大小變化，調整 canvas 尺寸
+        window.addEventListener('resize', resizeCanvas);
+
+        // 初始繪製和設置 canvas 尺寸
+        document.addEventListener('DOMContentLoaded', () => {
+            resizeCanvas(); // 首次載入時設定 canvas 尺寸
+            drawGame(); // 初始繪製遊戲畫面
+        });
     </script>
 </body>
 </html>
