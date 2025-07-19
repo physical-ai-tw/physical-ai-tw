@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>手機版俄羅斯方塊</title>
+  <style>
+    body { margin: 0; font-family: sans-serif; background: #111; color: white; display: flex; flex-direction: column; align-items: center; }
+    canvas { border: 2px solid #ccc; background: #222; margin-top: 10px; }
+    #buttons { margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    button { font-size: 18px; padding: 10px 20px; }
+  </style>
+</head>
+<body>
+  <h1>📦 手機俄羅斯方塊</h1>
+  <canvas id="game" width="200" height="400"></canvas>
+  <div id="buttons">
+    <button onclick="move(-1)">←</button>
+    <button onclick="rotate()">⟳</button>
+    <button onclick="move(1)">→</button>
+    <button onclick="drop()">↓</button>
+  </div>
+  <script src="tetris.js"></script>
+</body>
+</html>
