@@ -1,24 +1,211 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>手機可玩的俄羅斯方塊</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>俄羅斯方塊</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+
+    #gameCanvas {
+      border: 2px solid #000;
+      background-color: #fff;
+      margin-top: 10px;
+      touch-action: none;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .control-btn {
+      font-size: 18px;
+      padding: 10px 12px;
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      border: none;
+      background-color: #007bff;
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .control-btn:active {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <div id="game-container">
-    <canvas id="tetris" width="300" height="600"></canvas>
-    <button id="start-button">開始遊戲</button>
+  <canvas id="gameCanvas" width="300" height="600"></canvas>
+
+  <div class="controls">
+    <button class="control-btn" id="leftBtn">←</button>
+    <button class="control-btn" id="rotateBtn">⟳</button>
+    <button class="control-btn" id="rightBtn">→</button>
+    <button class="control-btn" id="downBtn">↓</button>
   </div>
 
-  <div id="controls">
-    <button id="left">←</button>
-    <button id="down">↓</button>
-    <button id="right">→</button>
-    <button id="rotate">⟳</button>
-  </div>
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
 
-  <script src="tetris.js"></script>
+    const ROWS = 20;
+    const COLS = 10;
+    const BLOCK_SIZE = 30;
+    const EMPTY_COLOR = '#fff';
+    const BORDER_COLOR = '#000';
+
+    const SHAPES = [
+      [[1, 1, 1, 1]],
+      [[1, 1], [1, 1]],
+      [[0, 1, 0], [1, 1, 1]],
+      [[1, 1, 0], [0, 1, 1]],
+      [[0, 1, 1], [1, 1, 0]],
+      [[1, 1, 1], [1, 0, 0]],
+      [[1, 1, 1], [0, 0, 1]]
+    ];
+
+    const COLORS = ['cyan', 'yellow', 'purple', 'green', 'red', 'orange', 'blue'];
+
+    let board = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
+    let currentShape = getRandomShape();
+    let currentX = 3;
+    let currentY = 0;
+    let gameOver = false;
+
+    function gameLoop() {
+      if (gameOver) {
+        ctx.fillStyle = 'red';
+        ctx.font = '20px Arial';
+        ctx.fillText('遊戲結束！', canvas.width / 3.5, canvas.height / 2);
+        return;
+      }
+      moveDown();
+      drawBoard();
+    }
+
+    function drawBoard() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let row = 0; row < ROWS; row++) {
+        for (let col = 0; col < COLS; col++) {
+          drawBlock(col, row, board[row][col] ? COLORS[board[row][col] - 1] : EMPTY_COLOR);
+        }
+      }
+      currentShape.shape.forEach((row, y) => {
+        row.forEach((cell, x) => {
+          if (cell) {
+            drawBlock(currentX + x, currentY + y, COLORS[currentShape.color]);
+          }
+        });
+      });
+    }
+
+    function drawBlock(x, y, color) {
+      ctx.fillStyle = color;
+      ctx.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+      ctx.strokeStyle = BORDER_COLOR;
+      ctx.strokeRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+    }
+
+    function getRandomShape() {
+      const index = Math.floor(Math.random() * SHAPES.length);
+      return { shape: SHAPES[index], color: index };
+    }
+
+    function moveDown() {
+      if (!canMove(currentX, currentY + 1, currentShape.shape)) {
+        currentShape.shape.forEach((row, y) => {
+          row.forEach((cell, x) => {
+            if (cell) board[currentY + y][currentX + x] = currentShape.color + 1;
+          });
+        });
+        clearLines();
+        currentShape = getRandomShape();
+        currentX = 3;
+        currentY = 0;
+        if (!canMove(currentX, currentY, currentShape.shape)) gameOver = true;
+      } else {
+        currentY++;
+      }
+    }
+
+    function canMove(x, y, shape) {
+      return shape.every((row, dy) =>
+        row.every((cell, dx) => {
+          const newX = x + dx;
+          const newY = y + dy;
+          return (
+            !cell ||
+            (newX >= 0 && newX < COLS && newY >= 0 && newY < ROWS && !board[newY][newX])
+          );
+        })
+      );
+    }
+
+    function clearLines() {
+      board = board.filter(row => row.some(cell => !cell));
+      while (board.length < ROWS) {
+        board.unshift(Array(COLS).fill(0));
+      }
+    }
+
+    function rotate(shape) {
+      return shape[0].map((_, i) => shape.map(row => row[i]).reverse());
+    }
+
+    document.addEventListener('keydown', event => {
+      if (gameOver) return;
+      switch (event.key) {
+        case 'ArrowLeft':
+          if (canMove(currentX - 1, currentY, currentShape.shape)) currentX--;
+          break;
+        case 'ArrowRight':
+          if (canMove(currentX + 1, currentY, currentShape.shape)) currentX++;
+          break;
+        case 'ArrowDown':
+          moveDown();
+          break;
+        case 'ArrowUp':
+          const rotated = rotate(currentShape.shape);
+          if (canMove(currentX, currentY, rotated)) currentShape.shape = rotated;
+          break;
+      }
+      drawBoard();
+    });
+
+    document.getElementById('leftBtn').addEventListener('click', () => {
+      if (canMove(currentX - 1, currentY, currentShape.shape)) currentX--;
+      drawBoard();
+    });
+
+    document.getElementById('rightBtn').addEventListener('click', () => {
+      if (canMove(currentX + 1, currentY, currentShape.shape)) currentX++;
+      drawBoard();
+    });
+
+    document.getElementById('downBtn').addEventListener('click', () => {
+      moveDown();
+      drawBoard();
+    });
+
+    document.getElementById('rotateBtn').addEventListener('click', () => {
+      const rotated = rotate(currentShape.shape);
+      if (canMove(currentX, currentY, rotated)) currentShape.shape = rotated;
+      drawBoard();
+    });
+
+    setInterval(gameLoop, 500);
+  </script>
 </body>
 </html>
