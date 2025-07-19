@@ -33,21 +33,17 @@
             background-color: #2a2a4a; /* 遊戲區域背景 */
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 8px rgba(255, 255, 255, 0.08);
-            padding: 20px;
+            padding: 15px; /* 調整為更緊湊的內邊距 */
             max-width: 90%; /* 限制最大寬度 */
             box-sizing: border-box;
+            gap: 15px; /* 調整為更緊湊的間距 */
         }
 
-        h1 {
-            font-size: 2.8em;
-            color: #ff6b6b; /* 亮紅色標題 */
-            margin-bottom: 15px;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-        }
+        /* 移除了 h1 的樣式，因為 h1 標籤本身已被移除 */
 
         .game-area {
             display: flex;
-            gap: 20px;
+            gap: 10px; /* 調整為更緊湊的間距 */
             margin-bottom: 20px;
             flex-wrap: wrap; /* 允許在小螢幕上換行 */
             justify-content: center;
@@ -60,13 +56,18 @@
             border-radius: 8px;
             display: block;
             touch-action: none; /* 防止 canvas 上的預設觸控行為 */
+            width: 100%; /* 確保畫布響應式 */
+            height: auto; /* 維持長寬比 */
+            aspect-ratio: 1 / 2; /* 俄羅斯方塊是 10x20，所以是 1:2 的比例 */
+            max-width: calc(30px * 10); /* 限制最大寬度為 10 個方塊 */
+            max-height: calc(30px * 20); /* 限制最大高度為 20 個方塊 */
         }
 
         .sidebar {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 10px; /* 調整為更緊湊的間距 */
             min-width: 120px; /* 側邊欄最小寬度 */
         }
 
@@ -208,57 +209,62 @@
 
         /* 響應式調整 */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2em;
+            /* 移除了 h1 的樣式，因為 h1 標籤本身已被移除 */
+            .game-wrapper {
+                padding: 10px; /* 更小的內邊距 */
+                gap: 10px;
             }
             .game-area {
                 flex-direction: column; /* 在小螢幕上垂直堆疊 */
                 align-items: center;
+                gap: 8px; /* 更緊湊的間距 */
             }
             .sidebar {
                 flex-direction: row; /* 側邊欄內容橫向排列 */
                 width: 100%;
                 justify-content: center;
-                gap: 10px;
+                gap: 8px; /* 更緊湊的間距 */
             }
             .score-box h2, .next-piece-box h2 {
-                font-size: 1em; /* Adjust font size for smaller screens */
+                font-size: 0.9em; /* 調整字體大小 */
+                margin-bottom: 5px;
             }
             .score-box, .next-piece-box {
                 flex: 1; /* 平均分配寬度 */
-                padding: 10px;
+                padding: 8px; /* 更小的內邊距 */
             }
             #scoreDisplay {
-                font-size: 1.5em;
+                font-size: 1.2em; /* 調整字體大小 */
             }
             #nextPieceCanvas {
-                width: 80px;
-                height: 80px;
+                width: 70px; /* 調整預覽尺寸 */
+                height: 70px;
             }
             .mobile-controls {
                 display: grid; /* 在小螢幕上顯示手機控制按鈕 */
+                max-width: 250px; /* 調整按鈕區域的最大寬度 */
+                gap: 8px; /* 更緊湊的間距 */
+            }
+            .mobile-controls button {
+                padding: 10px 0; /* 調整手機按鈕內邊距 */
+                font-size: 1.1em;
             }
             .keyboard-hint {
                 display: none; /* 在小螢幕上隱藏鍵盤提示 */
             }
-            .game-wrapper {
-                padding: 15px;
-            }
             .overlay-text {
-                font-size: 1.2em;
+                font-size: 1.1em;
             }
             .start-button {
-                padding: 12px 25px;
-                font-size: 1em;
+                padding: 10px 20px;
+                font-size: 0.9em;
             }
         }
 
         @media (max-width: 480px) {
-            h1 {
-                font-size: 1.5em;
-            }
             .game-wrapper {
-                padding: 10px;
+                padding: 8px;
+                gap: 8px;
             }
             .sidebar {
                 flex-wrap: wrap; /* 側邊欄內容在更小的螢幕上換行 */
@@ -267,19 +273,19 @@
                 width: 48%; /* 讓它們並排顯示 */
             }
             .mobile-controls {
-                max-width: 250px; /* 進一步縮小按鈕區域 */
-                gap: 8px;
+                max-width: 200px; /* 進一步縮小按鈕區域 */
+                gap: 6px;
             }
             .mobile-controls button {
-                font-size: 1.2em;
-                padding: 10px 0;
+                font-size: 1em;
+                padding: 8px 0;
             }
         }
     </style>
 </head>
 <body>
     <div class="game-wrapper">
-        <h1>俄羅斯方塊</h1>
+        <!-- 移除了 h1 遊戲標題 -->
         <div class="game-area">
             <canvas id="gameCanvas"></canvas>
             <div class="sidebar">
@@ -334,7 +340,8 @@
         // 遊戲設定
         const COLS = 10;
         const ROWS = 20;
-        const BLOCK_SIZE = 30; // 預設方塊大小，會根據 canvas 尺寸調整
+        // BLOCK_SIZE 將根據 canvas 實際尺寸動態計算，此處為初始參考值
+        // const BLOCK_SIZE = 30; 
 
         let board = [];
         let currentPiece;
@@ -359,13 +366,17 @@
 
         // 調整 Canvas 大小以適應響應式設計
         function resizeCanvas() {
-            const containerWidth = gameCanvas.offsetWidth;
+            // 確保 gameCanvas 的實際繪圖尺寸與其 CSS 尺寸同步
+            // 使用 clientWidth 而非 offsetWidth 以避免邊框和滾動條影響
+            const containerWidth = gameCanvas.clientWidth;
             const newBlockSize = Math.floor(containerWidth / COLS); // 根據容器寬度計算新的方塊大小
             gameCanvas.width = COLS * newBlockSize;
             gameCanvas.height = ROWS * newBlockSize;
 
             // 調整 nextPieceCanvas 的大小
-            nextPieceCanvas.width = newBlockSize * 4; // 預留足夠空間顯示最大方塊
+            // nextPieceCanvas 的尺寸應該獨立於主遊戲板的 block size，或者使用一個較小的固定比例
+            // 這裡我們讓它也根據 newBlockSize 調整，但只顯示 4x4 的區域
+            nextPieceCanvas.width = newBlockSize * 4;
             nextPieceCanvas.height = newBlockSize * 4;
 
             // 如果遊戲正在進行，重新繪製以適應新尺寸
@@ -380,13 +391,23 @@
 
         // 初始化遊戲板
         function initBoard() {
-            board = Array(ROWS).fill(0).map(() => Array(COLS).fill(0));
+            board = [];
+            for (let r = 0; r < ROWS; r++) {
+                board[r] = [];
+                for (let c = 0; c < COLS; c++) {
+                    board[r][c] = 0;
+                }
+            }
+            console.log("Board initialized:", board); // 增加日誌以確認初始化
         }
 
         // 繪製方塊
         function drawBlock(x, y, color, context) {
-            // 根據上下文獲取正確的 block size。這裡應該使用 gameCanvas.width / COLS 作為基礎
-            const currentBlockSize = context.canvas.width / (context === ctx ? COLS : 4);
+            // 根據上下文獲取正確的 block size。
+            // 對於主遊戲板，使用 gameCanvas 的寬度除以列數
+            // 對於下一個方塊預覽，使用 nextPieceCanvas 的寬度除以 4 (因為預覽區是 4x4)
+            const currentBlockSize = context === ctx ? gameCanvas.width / COLS : nextPieceCanvas.width / 4;
+            
             context.fillStyle = color;
             context.strokeStyle = '#333';
             context.lineWidth = 1;
@@ -398,6 +419,11 @@
         function drawBoard() {
             ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
             for (let r = 0; r < ROWS; r++) {
+                // 增加檢查以避免 TypeError: Cannot read properties of undefined
+                if (!board[r]) {
+                    console.error(`Error: board[${r}] is undefined. Board state:`, board);
+                    continue; // 跳過此行以防止錯誤
+                }
                 for (let c = 0; c < COLS; c++) {
                     if (board[r][c] !== 0) {
                         drawBlock(c, r, board[r][c], ctx);
@@ -409,8 +435,9 @@
         // 繪製當前方塊或下一個方塊
         function drawPiece(piece, context, isNextPiece = false) {
             context.clearRect(0, 0, context.canvas.width, context.canvas.height); // 清空預覽區或當前方塊區域
-            // 根據上下文獲取正確的 block size
-            const currentBlockSize = context.canvas.width / (context === ctx ? COLS : 4);
+            const currentBlockSize = context === ctx ? gameCanvas.width / COLS : nextPieceCanvas.width / 4;
+
+            // 計算預覽方塊的起始位置，使其在預覽畫布中居中
             const startX = isNextPiece ? (context.canvas.width / currentBlockSize / 2) - (piece.shape[0].length / 2) : piece.x;
             const startY = isNextPiece ? (context.canvas.height / currentBlockSize / 2) - (piece.shape.length / 2) : piece.y;
 
@@ -520,14 +547,22 @@
                     if (currentPiece.shape[r][c] === 1) {
                         const boardX = currentPiece.x + c;
                         const boardY = currentPiece.y + r;
-                        if (boardY < 0) { // 方塊鎖定在最頂部，遊戲結束
-                            endGame();
-                            return;
+                        // 確保 boardY 和 boardX 在有效範圍內
+                        if (boardY >= 0 && boardY < ROWS && boardX >= 0 && boardX < COLS) {
+                            board[boardY][boardX] = currentPiece.color;
+                            console.log(`Locked block at [${boardY}, ${boardX}] with color ${currentPiece.color}`); // 增加日誌
+                        } else {
+                            // 如果方塊在板子上方鎖定，則遊戲結束
+                            if (boardY < 0) {
+                                endGame();
+                                return;
+                            }
+                            console.warn(`Attempting to lock piece out of board bounds: [${boardY}, ${boardX}]`);
                         }
-                        board[boardY][boardX] = currentPiece.color;
                     }
                 }
             }
+            console.log("Board state after locking:", board); // 增加日誌
             clearLines();
             currentPiece = nextPiece;
             nextPiece = generateNewPiece();
@@ -595,7 +630,7 @@
 
         // 開始遊戲
         function startGame() {
-            initBoard();
+            initBoard(); // 確保 board 在遊戲開始前被初始化
             score = 0;
             level = 1;
             dropInterval = 500;
@@ -629,9 +664,13 @@
                     movePiece(1, 0);
                     break;
                 case 'ArrowDown':
+                    // 軟降落：每格加1分，並加速下落
                     movePiece(0, 1);
-                    score += 1; // 軟降落每格加1分
+                    score += 1;
                     scoreDisplay.textContent = score;
+                    // 重置下落計時器，讓方塊立即下落
+                    clearInterval(gameInterval);
+                    gameInterval = setInterval(gameLoop, dropInterval);
                     break;
                 case ' ': // 空白鍵旋轉
                     rotatePiece();
@@ -640,6 +679,7 @@
                     hardDrop();
                     break;
                 case 'p': // 暫停/恢復
+                case 'P':
                     if (gameInterval) {
                         clearInterval(gameInterval);
                         gameInterval = null;
@@ -652,6 +692,7 @@
                     }
                     break;
                 case 'r': // 重置 (僅在遊戲結束時有效)
+                case 'R':
                     if (gameOver) {
                         startGame();
                     }
@@ -673,9 +714,13 @@
                     movePiece(1, 0);
                     break;
                 case 'down':
+                    // 軟降落：每格加1分，並加速下落
                     movePiece(0, 1);
                     score += 1;
                     scoreDisplay.textContent = score;
+                    // 重置下落計時器，讓方塊立即下落
+                    clearInterval(gameInterval);
+                    gameInterval = setInterval(gameLoop, dropInterval);
                     break;
                 case 'rotate':
                     rotatePiece();
@@ -689,6 +734,8 @@
         // 初始設定
         startButton.addEventListener('click', startGame);
         window.addEventListener('resize', resizeCanvas); // 監聽視窗大小變化
+
+        // 當頁面載入完成後執行
         document.addEventListener('DOMContentLoaded', () => {
             initBoard(); // 確保 board 在 resizeCanvas 和 drawBoard 之前初始化
             resizeCanvas(); // 首次載入時設定 canvas 尺寸
