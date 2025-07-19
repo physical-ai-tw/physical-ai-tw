@@ -325,7 +325,8 @@
             if (
                 head.x < 0 || head.x >= canvas.width || // 撞牆
                 head.y < 0 || head.y >= canvas.height ||
-                checkCollision(head, snake.slice(1)) // 撞到自己
+                //checkCollision(head, snake.slice(1)) // 撞到自己
+                handleCollision(head, snake.slice(1)) // 撞到自己
             ) {
                 endGame();
                 return;
@@ -374,6 +375,16 @@
             overlayText.textContent = `遊戲結束！你的分數是: ${score}`;
             startButton.textContent = '重新開始';
             gameOverlay.style.display = 'flex'; // 顯示遊戲結束覆蓋層
+        }
+
+        // 在遊戲邏輯中檢測碰撞並延遲結束遊戲
+        function handleCollision(head, body) {
+            if (checkCollision(head, body)) {
+                // 延遲 500 毫秒後執行結束遊戲
+                setTimeout(() => {
+                    endGame();
+                }, 500);
+            }
         }
 
         // 處理鍵盤輸入和觸控按鈕
