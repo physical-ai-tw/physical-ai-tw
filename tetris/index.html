@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tetris Game</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <canvas id="tetris" width="240" height="400"></canvas>
+  <canvas id="tetris" width="360" height="600"></canvas>
 
   <div class="controls">
     <button id="left">◀</button>
     <button id="rotate">🔄</button>
     <button id="right">▶</button>
     <button id="down">▼</button>
+  </div>
+
+  <div class="menu">
+    <button id="start">▶ 開始遊戲</button>
   </div>
 
   <script src="tetris.js"></script>
