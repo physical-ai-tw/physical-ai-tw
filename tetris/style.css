@@ -1,28 +1,31 @@
 body {
-    margin: 0;
-    background: #111;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    background: #222;
+    color: #fff;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     height: 100vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #eee;
-    -webkit-user-select: none;
+    margin: 0;
+    padding: 20px;
     user-select: none;
   }
   
   #game-container {
     position: relative;
     width: 300px;
+    height: 600px;
+    border: 3px solid #0ff;
+    border-radius: 12px;
+    background: #000;
   }
   
-  canvas {
-    border: 4px solid #444;
-    background: #000;
+  #tetris {
     display: block;
+    background: #000;
     margin: 0 auto;
-    border-radius: 10px;
-    touch-action: none; /* 防止手機觸控滾動 */
+    border-radius: 8px;
+    box-shadow: 0 0 15px #0ff;
   }
   
   #start-button {
@@ -30,42 +33,39 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 24px;
-    padding: 14px 30px;
+    font-size: 26px;
+    padding: 16px 36px;
     background: #28a745;
     border: none;
     border-radius: 12px;
     color: white;
     cursor: pointer;
     user-select: none;
-    z-index: 10;
-  }
-  
-  #start-button.hidden {
-    display: none;
+    z-index: 20;
   }
   
   #controls {
-    margin-top: 15px;
+    margin-top: 20px;
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 12px;
   }
   
   #controls button {
-    font-size: 28px;
     width: 60px;
     height: 60px;
+    font-size: 28px;
+    border-radius: 12px;
     border: none;
-    border-radius: 10px;
-    background: #444;
-    color: #eee;
+    background: #0ff;
+    color: #000;
     cursor: pointer;
     user-select: none;
-    transition: background 0.2s;
+    box-shadow: 0 0 10px #0ff;
+    transition: background-color 0.2s ease;
   }
   
   #controls button:active {
-    background: #28a745;
+    background-color: #0cc;
   }
   
