@@ -1,23 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tetris Game</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>俄羅斯方塊</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <canvas id="tetris" width="360" height="600"></canvas>
-
-  <div class="controls">
-    <button id="left">◀</button>
-    <button id="rotate">🔄</button>
-    <button id="right">▶</button>
-    <button id="down">▼</button>
-  </div>
-
-  <div class="menu">
-    <button id="start">▶ 開始遊戲</button>
+  <div id="game-container">
+    <canvas id="tetris" width="300" height="600"></canvas>
+    <button id="start-button">開始遊戲</button>
+    <div id="controls">
+      <button id="left">←</button>
+      <button id="down">↓</button>
+      <button id="right">→</button>
+      <button id="rotate">⟳</button>
+    </div>
   </div>
 
   <script src="tetris.js"></script>
