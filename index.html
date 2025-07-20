@@ -406,60 +406,63 @@
         .footer-nav a:hover {
             color: #007bff;
         }
+/* 隱藏漢堡菜單按鈕（桌面版） */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    color: white;
+    cursor: pointer;
+}
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .navbar .container {
-                flex-direction: column;
-            }
-            .navbar nav ul {
-                flex-direction: column;
-                width: 100%;
-            }
-            .navbar nav ul li {
-                float: none;
-                width: 100%;
-            }
-            .navbar nav a {
-                padding: 10px 16px;
-                text-align: left;
-            }
-            .hero-section h1 {
-                font-size: 2em;
-            }
-            .hero-section p {
-                font-size: 1em;
-            }
-            .hero-actions {
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-            }
-            .hero-actions .btn {
-                margin: 0; /* Remove horizontal margin for vertical stack */
-            }
-            .content-wrapper, .about-content, .contact-info-form {
-                flex-direction: column;
-                gap: 30px;
-            }
-            .content-wrapper .image-content, .about-content .team-photo {
-                min-width: unset; /* Remove min-width on small screens */
-                max-width: 100%; /* Allow image to fill container */
-            }
-            .section {
-                padding: 25px;
-                margin: 20px auto;
-            }
-            .section h2 {
-                font-size: 1.8em;
-                margin-bottom: 25px;
-            }
-            .tech-grid, .applications-grid {
-                grid-template-columns: 1fr; /* Single column on small screens */
-                gap: 20px;
-            }
-        }
+/* 手機版樣式 */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block; /* 顯示漢堡菜單按鈕 */
+    }
+    nav {
+        display: none; /* 預設隱藏導航欄 */
+    }
+    nav.active {
+        display: block; /* 點擊後顯示導航欄 */
+        background-color: #333; /* 背景色 */
+        position: absolute;
+        top: 100%; /* 放在按鈕下方 */
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    .nav-links {
+        flex-direction: column; /* 垂直排列 */
+        padding: 0;
+    }
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+    }
+    .nav-links a {
+        padding: 10px 0;
+        display: block;
+        color: white;
+        text-decoration: none;
+        border-bottom: 1px solid #444;
+    }
+    .nav-links a:hover {
+        background-color: #444;
+    }
+}
     </style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active'); // 切換顯示/隱藏
+        });
+    });
+</script>
 </head>
 <body>
 
