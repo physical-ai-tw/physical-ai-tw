@@ -4,8 +4,455 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Physical AI: 賦能真實世界，連結智慧與行動</title>
-    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex; /* For header and other flexible layouts */
+            justify-content: space-between; /* For header */
+            align-items: center; /* For header */
+        }
+        /* Header & Navigation */
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .navbar .container {
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 0;
+            text-decoration: none;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .navbar nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .navbar nav ul li {
+            float: left;
+        }
+        .navbar nav a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .navbar nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/The_robot_Kirobo_at_the_International_Space_Station.jpg/1200px-The_robot_Kirobo_at_the_International_Space_Station.jpg'); /* Placeholder image, replace with a relevant one */
+            background-size: cover;
+            background-position: center 30%; /* Adjusted for better focus */
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .hero-section::before { /* Overlay for better text readability */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4); /* Darker overlay */
+        }
+        .hero-section .container {
+            flex-direction: column;
+            position: relative; /* Bring content to front of overlay */
+            z-index: 1;
+        }
+        .hero-section h1 {
+            font-size: 2.8em;
+            margin: 0 0 15px 0;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+        }
+        .hero-section p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+        }
+        .hero-actions .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn.primary-btn {
+            background-color: #007bff;
+            color: white;
+            border: 2px solid #007bff;
+        }
+        .btn.primary-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        .btn.secondary-btn {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        .btn.secondary-btn:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* General Section Styling */
+        .section {
+            background-color: white;
+            margin: 30px auto; /* More vertical margin */
+            padding: 40px; /* Increased padding */
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1); /* Stronger shadow */
+        }
+        .section .container {
+            display: block; /* Override flex for general section content */
+        }
+        .section h2 {
+            color: #0056b3;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 15px;
+            font-size: 2.2em; /* Slightly larger */
+            margin-top: 0;
+            margin-bottom: 30px;
+            text-align: center; /* Center section titles */
+        }
+        .section h3 {
+            color: #007bff;
+            font-size: 1.6em; /* Adjusted */
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        /* Content Blocks & Images */
+        .content-wrapper {
+            display: flex;
+            align-items: flex-start; /* Align top of text and image */
+            gap: 40px; /* Space between text and image */
+        }
+        .content-wrapper .text-content {
+            flex: 2; /* Takes more space */
+        }
+        .content-wrapper .image-content {
+            flex: 1; /* Takes less space */
+            min-width: 300px; /* Ensure image doesn't get too small */
+        }
+        .content-wrapper img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: block;
+            margin: 0 auto; /* Center image within its container */
+        }
+        ul {
+            margin-bottom: 15px;
+            padding-left: 25px; /* Ensure padding for lists */
+        }
+        ul li {
+            margin-bottom: 8px;
+        }
+
+        /* Highlight/Warning Style */
+        .highlight { /* Renamed from .warning for broader use */
+            background-color: #e6f7ff; /* Lighter blue for emphasis */
+            border-left: 6px solid #007bff; /* Blue border */
+            padding: 20px; /* More padding */
+            margin: 30px 0; /* More margin */
+            border-radius: 4px;
+            color: #0056b3; /* Darker blue text */
+        }
+        .highlight strong {
+            color: #003366; /* Even darker blue for strong text */
+        }
+
+        /* Tech Solutions Grid */
+        .tech-section p {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px; /* Space between grid items */
+            text-align: center;
+        }
+        .tech-item {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .tech-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .tech-item i {
+            font-size: 3em;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        .tech-item h3 {
+            font-size: 1.3em;
+            margin-top: 0;
+            color: #333;
+        }
+        .tech-item p {
+            font-size: 0.95em;
+            color: #555;
+            text-align: center; /* Ensure text is centered */
+        }
+
+        /* Applications Grid */
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .app-item {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures image corners are rounded */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .app-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .app-item img {
+            width: 100%;
+            height: 200px; /* Fixed height for consistency */
+            object-fit: cover; /* Ensures images cover the area without distortion */
+            border-bottom: 1px solid #eee;
+        }
+        .app-item h3 {
+            padding: 15px 20px 0;
+            font-size: 1.3em;
+            color: #0056b3;
+            margin-top: 0;
+        }
+        .app-item p {
+            padding: 0 20px 20px;
+            font-size: 0.95em;
+            color: #555;
+        }
+
+        /* Partners Section */
+        .partners-section .container {
+            flex-direction: column;
+            text-align: center;
+        }
+        .partner-logos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        .partner-logos img {
+            max-height: 80px; /* Standardize logo height */
+            width: auto;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        .partner-logos img:hover {
+            opacity: 1;
+        }
+
+        /* About Us Section */
+        .about-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+        }
+        .about-content .team-photo {
+            flex: 1;
+            max-width: 350px; /* Control image size */
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .about-content p {
+            flex: 2;
+            font-size: 1em;
+            color: #444;
+        }
+
+        /* Contact Us Section */
+        .contact-us-section p {
+            text-align: center;
+            font-size: 1.1em;
+            margin-bottom: 40px;
+        }
+        .contact-info-form {
+            display: flex;
+            gap: 50px;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            justify-content: center;
+        }
+        .contact-info, .contact-form {
+            flex: 1;
+            min-width: 300px; /* Ensure forms don't get too small */
+        }
+        .contact-info p {
+            text-align: left;
+            margin-bottom: 15px;
+            font-size: 1em;
+            color: #555;
+        }
+        .contact-info p i {
+            color: #007bff;
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        .social-links {
+            margin-top: 25px;
+            display: flex;
+            gap: 15px;
+        }
+        .social-links a {
+            color: #007bff;
+            font-size: 2em;
+            transition: color 0.3s ease;
+        }
+        .social-links a:hover {
+            color: #0056b3;
+        }
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: calc(100% - 20px); /* Account for padding */
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box; /* Include padding in width */
+        }
+        .contact-form textarea {
+            resize: vertical; /* Allow vertical resizing */
+        }
+        .contact-form .btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #333;
+            color: white;
+            font-size: 0.9em;
+            margin-top: 40px;
+        }
+        .footer .container {
+            flex-direction: column;
+        }
+        .footer-nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        .footer-nav a:hover {
+            color: #007bff;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+            }
+            .navbar nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+            .navbar nav ul li {
+                float: none;
+                width: 100%;
+            }
+            .navbar nav a {
+                padding: 10px 16px;
+                text-align: left;
+            }
+            .hero-section h1 {
+                font-size: 2em;
+            }
+            .hero-section p {
+                font-size: 1em;
+            }
+            .hero-actions {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            .hero-actions .btn {
+                margin: 0; /* Remove horizontal margin for vertical stack */
+            }
+            .content-wrapper, .about-content, .contact-info-form {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .content-wrapper .image-content, .about-content .team-photo {
+                min-width: unset; /* Remove min-width on small screens */
+                max-width: 100%; /* Allow image to fill container */
+            }
+            .section {
+                padding: 25px;
+                margin: 20px auto;
+            }
+            .section h2 {
+                font-size: 1.8em;
+                margin-bottom: 25px;
+            }
+            .tech-grid, .applications-grid {
+                grid-template-columns: 1fr; /* Single column on small screens */
+                gap: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -37,7 +484,7 @@
         </div>
     </section>
 
-    <section id="what-is-physical-ai" class="section what-is-section">
+    <section id="what-is-physical-ai" class="section">
         <div class="container">
             <h2>AI 的下一步：從思考到行動</h2>
             <div class="content-wrapper">
@@ -53,13 +500,13 @@
                     </ul>
                 </div>
                 <div class="image-content">
-                    <img src="images/physical-ai-concept.png" alt="Physical AI Concept Diagram">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/Robotics_and_AI.jpg" alt="Physical AI Concept Diagram: Robot hand interacting with digital interface">
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="our-solutions" class="section tech-section">
+    <section id="our-solutions" class="section">
         <div class="container">
             <h2>AI 與硬體的完美協奏</h2>
             <p>我們結合頂尖的 AI 演算法與先進的硬體工程，為客戶提供領先的 Physical AI 解決方案。</p>
@@ -84,37 +531,37 @@
         </div>
     </section>
 
-    <section id="applications" class="section applications-section">
+    <section id="applications" class="section">
         <div class="container">
             <h2>Physical AI 的無限可能</h2>
             <div class="applications-grid">
                 <div class="app-item">
-                    <img src="images/manufacturing.jpg" alt="智慧製造">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/A_robot_arm_in_a_factory_%28cropped%29.jpg/800px-A_robot_arm_in_a_factory_%28cropped%29.jpg" alt="智慧製造">
                     <h3>智慧製造與自動化</h3>
                     <p>智能機器人在工廠中執行複雜的組裝、檢測和物流任務，大幅提升生產效率與彈性。</p>
                 </div>
                 <div class="app-item">
-                    <img src="images/autonomous-driving.jpg" alt="自動駕駛">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Waymo_self-driving_car_in_Austin%2C_Texas%2C_April_2023_%2801%29.jpg/800px-Waymo_self-driving_car_in_Austin%2C_Texas%2C_April_2023_%2801%29.jpg" alt="自動駕駛">
                     <h3>自動駕駛與智慧交通</h3>
                     <p>實現車輛的自主感知、決策與控制，提升道路安全與運輸效率。</p>
                 </div>
                 <div class="app-item">
-                    <img src="images/logistics.jpg" alt="物流與倉儲">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Automated_warehouse_in_Nuremberg_2018.jpg/800px-Automated_warehouse_in_Nuremberg_2018.jpg" alt="物流與倉儲">
                     <h3>物流與倉儲</h3>
                     <p>無人機與自動導引車 (AGV) 實現智慧倉儲管理、包裹分揀與末端配送。</p>
                 </div>
                 <div class="app-item">
-                    <img src="images/healthcare.jpg" alt="醫療與康復">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Robot_surgery.jpg/800px-Robot_surgery.jpg" alt="醫療與康復">
                     <h3>醫療與康復</h3>
                     <p>精密手術機器人、康復輔助機器人，為醫療領域提供創新解決方案。</p>
                 </div>
                 <div class="app-item">
-                    <img src="images/service-robot.jpg" alt="服務型機器人">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Humanoid_robot_Pepper_-_Paris_Robots_2016.jpg/800px-Humanoid_robot_Pepper_-_Paris_Robots_2016.jpg" alt="服務型機器人">
                     <h3>服務型機器人</h3>
                     <p>應用於零售、餐飲、清潔、陪伴等領域，改善生活品質。</p>
                 </div>
                 <div class="app-item">
-                    <img src="images/space-exploration.jpg" alt="空間探索">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Curiosity_rover_on_Mars_-_artist%27s_concept.jpg/800px-Curiosity_rover_on_Mars_-_artist%27s_concept.jpg" alt="空間探索">
                     <h3>空間探索與危險作業</h3>
                     <p>在極端或危險環境中執行探測、維護和救援任務。</p>
                 </div>
@@ -122,22 +569,22 @@
         </div>
     </section>
 
-    <section id="partners" class="section partners-section">
+    <section id="partners" class="section">
         <div class="container">
             <h2>攜手共創智慧未來</h2>
             <div class="partner-logos">
-                <img src="images/partner-logo1.png" alt="Partner 1">
-                <img src="images/partner-logo2.png" alt="Partner 2">
-                <img src="images/partner-logo3.png" alt="Partner 3">
-                </div>
+                <img src="https://via.placeholder.com/150x80/cccccc/ffffff?text=Partner+A" alt="Partner A Logo">
+                <img src="https://via.placeholder.com/150x80/cccccc/ffffff?text=Partner+B" alt="Partner B Logo">
+                <img src="https://via.placeholder.com/150x80/cccccc/ffffff?text=Partner+C" alt="Partner C Logo">
+            </div>
         </div>
     </section>
 
-    <section id="about-us" class="section about-us-section">
+    <section id="about-us" class="section">
         <div class="container">
             <h2>深耕 Physical AI，引領智能變革</h2>
             <div class="about-content">
-                <img src="images/team-photo.jpg" alt="我們的團隊" class="team-photo">
+                <img src="https://via.placeholder.com/400x300/e0e0e0/333333?text=Our+Team" alt="我們的團隊" class="team-photo">
                 <p>我們是一支充滿熱情與專業的團隊，致力於推動 Physical AI 技術的創新與應用。我們匯聚了機器人學、人工智慧、控制系統和硬體工程領域的頂尖人才，旨在為客戶提供從概念設計到實際部署的全方位解決方案。</p>
                 <p>我們的願景是讓智慧科技真正融入現實生活，賦予機器更強大的感知、理解和執行能力，從而解決人類社會面臨的複雜挑戰，創造更高效、安全、便捷的未來。</p>
                 <p>憑藉對技術的深刻理解和對產業趨勢的敏銳洞察，Physical-AI.tw 期待與您攜手，共同開創 Physical AI 的新紀元。</p>
@@ -145,19 +592,19 @@
         </div>
     </section>
 
-    <section id="contact-us" class="section contact-us-section">
+    <section id="contact-us" class="section">
         <div class="container">
             <h2>開啟您的 Physical AI 旅程</h2>
             <p>無論您是尋求創新解決方案，或對 Physical AI 技術充滿好奇，歡迎隨時與我們聯繫。</p>
             <div class="contact-info-form">
                 <div class="contact-info">
-                    <p><i class="fas fa-phone"></i> **電話：** (02) 1234-5678</p>
-                    <p><i class="fas fa-envelope"></i> **電子郵件：** info@physical-ai.tw</p>
-                    <p><i class="fas fa-map-marker-alt"></i> **地址：** 台灣新北市新店區[您的詳細地址]</p>
+                    <p><i class="fas fa-phone"></i> <strong>電話：</strong> (02) 1234-5678</p>
+                    <p><i class="fas fa-envelope"></i> <strong>電子郵件：</strong> info@physical-ai.tw</p>
+                    <p><i class="fas fa-map-marker-alt"></i> <strong>地址：</strong> 台灣新北市新店區[您的詳細地址]</p>
                     <div class="social-links">
-                        <a href="https://linkedin.com/yourcompany" target="_blank"><i class="fab fa-linkedin"></i></a>
-                        <a href="https://twitter.com/yourcompany" target="_blank"><i class="fab fa-twitter-square"></i></a>
-                        </div>
+                        <a href="https://linkedin.com/yourcompany" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://twitter.com/yourcompany" target="_blank" aria-label="Twitter"><i class="fab fa-twitter-square"></i></a>
+                    </div>
                 </div>
                 <form class="contact-form">
                     <input type="text" placeholder="您的姓名" required>
@@ -166,7 +613,7 @@
                     <button type="submit" class="btn primary-btn">發送訊息</button>
                 </form>
             </div>
-            </div>
+        </div>
     </section>
 
     <footer class="footer">
@@ -178,7 +625,5 @@
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
-</body>
+    </body>
 </html>
-
