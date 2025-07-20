@@ -406,63 +406,60 @@
         .footer-nav a:hover {
             color: #007bff;
         }
-/* 隱藏漢堡菜單按鈕（桌面版） */
-.menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.5em;
-    color: white;
-    cursor: pointer;
-}
 
-/* 手機版樣式 */
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: block; /* 顯示漢堡菜單按鈕 */
-    }
-    nav {
-        display: none; /* 預設隱藏導航欄 */
-    }
-    nav.active {
-        display: block; /* 點擊後顯示導航欄 */
-        background-color: #333; /* 背景色 */
-        position: absolute;
-        top: 100%; /* 放在按鈕下方 */
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-    }
-    .nav-links {
-        flex-direction: column; /* 垂直排列 */
-        padding: 0;
-    }
-    .nav-links li {
-        width: 100%;
-        text-align: center;
-    }
-    .nav-links a {
-        padding: 10px 0;
-        display: block;
-        color: white;
-        text-decoration: none;
-        border-bottom: 1px solid #444;
-    }
-    .nav-links a:hover {
-        background-color: #444;
-    }
-}
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+            }
+            .navbar nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+            .navbar nav ul li {
+                float: none;
+                width: 100%;
+            }
+            .navbar nav a {
+                padding: 10px 16px;
+                text-align: left;
+            }
+            .hero-section h1 {
+                font-size: 2em;
+            }
+            .hero-section p {
+                font-size: 1em;
+            }
+            .hero-actions {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            .hero-actions .btn {
+                margin: 0; /* Remove horizontal margin for vertical stack */
+            }
+            .content-wrapper, .about-content, .contact-info-form {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .content-wrapper .image-content, .about-content .team-photo {
+                min-width: unset; /* Remove min-width on small screens */
+                max-width: 100%; /* Allow image to fill container */
+            }
+            .section {
+                padding: 25px;
+                margin: 20px auto;
+            }
+            .section h2 {
+                font-size: 1.8em;
+                margin-bottom: 25px;
+            }
+            .tech-grid, .applications-grid {
+                grid-template-columns: 1fr; /* Single column on small screens */
+                gap: 20px;
+            }
+        }
     </style>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const menuToggle = document.querySelector('.menu-toggle');
-        const nav = document.querySelector('nav');
-
-        menuToggle.addEventListener('click', () => {
-            nav.classList.toggle('active'); // 切換顯示/隱藏
-        });
-    });
-</script>
 </head>
 <body>
 
@@ -545,32 +542,32 @@
             <h2>Physical AI 的無限可能</h2>
             <div class="applications-grid">
                 <div class="app-item">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/A_robot_arm_in_a_factory_%28cropped%29.jpg/800px-A_robot_arm_in_a_factory_%28cropped%29.jpg" alt="智慧製造">
+                    <img src="https://college.itri.org.tw/ashx/GetNASImagebyAttNo.ashx?attNo=611fac0c-5159-4900-a052-ba5e4620b1ac" alt="智慧製造">
                     <h3>智慧製造與自動化</h3>
                     <p>智能機器人在工廠中執行複雜的組裝、檢測和物流任務，大幅提升生產效率與彈性。</p>
                 </div>
                 <div class="app-item">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Waymo_self-driving_car_in_Austin%2C_Texas%2C_April_2023_%2801%29.jpg/800px-Waymo_self-driving_car_in_Austin%2C_Texas%2C_April_2023_%2801%29.jpg" alt="自動駕駛">
+                    <img src="https://img.technews.tw/wp-content/uploads/2018/12/20154528/shutterstock_1095831830.jpg" alt="自動駕駛">
                     <h3>自動駕駛與智慧交通</h3>
                     <p>實現車輛的自主感知、決策與控制，提升道路安全與運輸效率。</p>
                 </div>
                 <div class="app-item">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Automated_warehouse_in_Nuremberg_2018.jpg/800px-Automated_warehouse_in_Nuremberg_2018.jpg" alt="物流與倉儲">
+                    <img src="https://blog.104.com.tw/wp-content/uploads/2023/07/25160516/scznlg6rrhq-768x512.jpg" alt="物流與倉儲">
                     <h3>物流與倉儲</h3>
                     <p>無人機與自動導引車 (AGV) 實現智慧倉儲管理、包裹分揀與末端配送。</p>
                 </div>
                 <div class="app-item">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Robot_surgery.jpg/800px-Robot_surgery.jpg" alt="醫療與康復">
+                    <img src="https://dalian.runsky.com/images/2024-01/12/bc9abed1-9e56-46da-9d97-70231e6854ca.jpg" alt="醫療與康復">
                     <h3>醫療與康復</h3>
                     <p>精密手術機器人、康復輔助機器人，為醫療領域提供創新解決方案。</p>
                 </div>
                 <div class="app-item">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Humanoid_robot_Pepper_-_Paris_Robots_2016.jpg/800px-Humanoid_robot_Pepper_-_Paris_Robots_2016.jpg" alt="服務型機器人">
+                    <img src="https://img.shangyexinzhi.com/xztest-image/article/78182a5a1109fd0ceb5341a6552d2ec6.jpg?x-oss-process=image/resize,w_670" alt="服務型機器人">
                     <h3>服務型機器人</h3>
                     <p>應用於零售、餐飲、清潔、陪伴等領域，改善生活品質。</p>
                 </div>
                 <div class="app-item">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Curiosity_rover_on_Mars_-_artist%27s_concept.jpg/800px-Curiosity_rover_on_Mars_-_artist%27s_concept.jpg" alt="空間探索">
+                    <img src="https://www.asphericon.com/Header_Reconnaissance-&-Positioning_hu55b088459ba6ed3479679df89361418d_398844_1920x960_crop_q70_h2_box_smart1_3.webp" alt="空間探索">
                     <h3>空間探索與危險作業</h3>
                     <p>在極端或危險環境中執行探測、維護和救援任務。</p>
                 </div>
@@ -607,9 +604,9 @@
             <p>無論您是尋求創新解決方案，或對 Physical AI 技術充滿好奇，歡迎隨時與我們聯繫。</p>
             <div class="contact-info-form">
                 <div class="contact-info">
-                    <p><i class="fas fa-phone"></i> <strong>電話：</strong> (02) 1234-5678</p>
+                    <p><i class="fas fa-phone"></i> <strong>電話：</strong> (02) 2213-1081</p>
                     <p><i class="fas fa-envelope"></i> <strong>電子郵件：</strong> info@physical-ai.tw</p>
-                    <p><i class="fas fa-map-marker-alt"></i> <strong>地址：</strong> 台灣新北市新店區[您的詳細地址]</p>
+                    <p><i class="fas fa-map-marker-alt"></i> <strong>地址：</strong> 台灣新北市新店區</p>
                     <div class="social-links">
                         <a href="https://linkedin.com/yourcompany" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
                         <a href="https://twitter.com/yourcompany" target="_blank" aria-label="Twitter"><i class="fab fa-twitter-square"></i></a>
