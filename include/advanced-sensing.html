@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>先進感知系統：多模態感測器融合的未來</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f9fc; /* 輕柔的淺藍灰色背景 */
+            color: #333;
+            line-height: 1.8;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #0a2342; /* 深藍色 */
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.35);
+            margin-bottom: 30px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3.5em;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+        }
+        header p {
+            font-size: 1.5em;
+            margin-top: 15px;
+        }
+
+        .section {
+            background-color: white;
+            padding: 45px;
+            margin-bottom: 35px;
+            border-radius: 25px; /* 更圓潤的邊角 */
+            box-shadow: 0 10px 45px rgba(0, 0, 0, 0.18);
+        }
+        .section h2 {
+            color: #0a2342;
+            font-size: 3em;
+            border-bottom: 6px solid #4CAF50; /* 材質設計綠色 */
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .section h3 {
+            color: #4CAF50;
+            font-size: 2.5em;
+            margin-top: 40px;
+            margin-bottom: 25px;
+            border-left: 10px solid #FFC107; /* 材質設計琥珀色強調 */
+            padding-left: 20px;
+        }
+        .section p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        .section ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .section ul li {
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 15px;
+            font-size: 1.15em;
+        }
+        .section ul li::before {
+            content: '✅'; /* 使用勾選符號作為列表點 */
+            color: #0a2342;
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+        .section b {
+            color: #0d47a1; /* 深藍色，突出關鍵詞 */
+        }
+
+        .image-full-width {
+            width: 100%;
+            max-height: 550px;
+            object-fit: cover;
+            border-radius: 25px;
+            margin: 35px 0;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: -15px;
+            margin-bottom: 35px;
+            font-size: 1em;
+        }
+
+        /* 課程建議區塊特別樣式 */
+        .curriculum-stage {
+            background-color: #e8f5e9; /* 淺綠色背景 */
+            padding: 35px;
+            margin-bottom: 30px;
+            border-left: 12px solid #2196F3; /* 材質設計藍色強調 */
+            border-radius: 18px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .curriculum-stage:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 50px rgba(0, 0, 0, 0.25);
+        }
+        .curriculum-stage h3 {
+            color: #0a2342;
+            font-size: 2.2em;
+            border-left: none;
+            padding-left: 0;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .curriculum-stage ul {
+            list-style-type: disc;
+            padding-left: 35px;
+        }
+        .curriculum-stage ul li {
+            padding-left: 0;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        .curriculum-stage ul li::before {
+            content: '';
+        }
+
+        footer {
+            background-color: #0a2342;
+            color: white;
+            text-align: center;
+            padding: 35px 0;
+            margin-top: 60px;
+            font-size: 1em;
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
+        }
+        footer a {
+            color: #FFC107;
+            text-decoration: none;
+            margin: 0 12px;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.8em;
+            }
+            header p {
+                font-size: 1.2em;
+            }
+            .section {
+                padding: 30px;
+            }
+            .section h2 {
+                font-size: 2.4em;
+            }
+            .section h3 {
+                font-size: 2em;
+            }
+            .section p, .section ul li {
+                font-size: 1em;
+            }
+            .image-full-width {
+                max-height: 350px;
+            }
+            .curriculum-stage h3 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>先進感知系統：多模態感測器融合的未來</h1>
+            <p>洞察複雜環境，實現精準決策與自主運行</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h2>深入探討先進感知系統：多模態感測器融合</h2>
+            <p>在自動化、機器人技術、智慧交通、工業 4.0 乃至更廣泛的 Physical AI 應用中，<b>精準地理解周遭環境</b>是實現自主化和智慧化的基石。這正是<b>先進感知系統</b>的核心任務。它不僅僅是單一感測器的數據收集，更是透過<b>整合多模態感測器數據</b>（如視覺、雷達、慣性測量單元 IMU 等），來實現對複雜環境的精準感知與環境建模。</p>
+
+            <img src="https://via.placeholder.com/1200x500?text=Multi-Modal+Sensor+Fusion" alt="多模態感測器融合示意圖" class="image-full-width">
+            <p class="image-caption">透過整合不同感測器，系統能獲得更全面、魯棒的環境資訊。</p>
+
+            <h3>為何需要多模態感測器融合？</h3>
+            <p>單一感測器往往有其固有的局限性。例如：</p>
+            <ul>
+                <li><b>視覺（攝影機）：</b> 能提供豐富的紋理、顏色和語義資訊，但容易受光照、惡劣天氣（霧、雨、雪）影響，且難以直接測量深度資訊。</li>
+                <li><b>雷達（Radar）：</b> 不受光照和惡劣天氣影響，能精確測量距離和速度，但解析度相對較低，難以識別物體的精確形狀和類別。</li>
+                <li><b>光達（LiDAR）：</b> 能提供高精度的三維點雲數據，直接測量深度，但容易受雨雪影響，且成本相對較高。</li>
+                <li><b>慣性測量單元 (IMU)：</b> 測量自身的角速度和加速度，用於精確的運動姿態估計，但存在累積誤差。</li>
+                <li><b>超音波感測器：</b> 成本低，適合近距離障礙物檢測，但測量範圍有限且易受干擾。</li>
+            </ul>
+            <p><b>多模態感測器融合</b>的目標，就是結合不同感測器的優勢，彌補彼此的不足，從而獲得比任何單一感測器都更為<b>全面、精確、魯棒且冗餘</b>的環境感知能力。</p>
+
+            <h3>多模態感測器融合的實現方式</h3>
+            <p>感測器數據融合通常分為幾個層次：</p>
+            <ul>
+                <li><b>低層次融合 (Early Fusion)：</b> 直接在原始感測器數據層進行融合。例如，將不同感測器的原始數據輸入到同一個深度學習模型中進行處理，讓模型自行學習數據之間的關聯性。</li>
+                <li><b>中層次融合 (Mid-Level Fusion)：</b> 在感測器提取出基本特徵後進行融合。例如，從攝影機圖像中提取物件邊緣資訊，從光達數據中提取平面資訊，然後將這些特徵進行融合。</li>
+                <li><b>高層次融合 (Late Fusion)：</b> 在每個感測器獨立完成對環境的「理解」或「決策」後，再將這些結果進行融合。例如，攝影機識別出行人，雷達檢測到一個移動物體，然後透過融合演算法判斷這是否是同一個行人，並做出最終的判斷。</li>
+            </ul>
+
+            <img src="https://via.placeholder.com/1200x500?text=Sensor+Data+Processing+Flow" alt="感測器數據處理流程" class="image-full-width">
+            <p class="image-caption">從數據採集到融合處理，最終建立精準的環境模型。</p>
+
+            <h3>精準感知與環境建模的關鍵技術</h3>
+            <p>透過多模態感測器融合，先進感知系統能夠實現以下目標：</p>
+            <ul>
+                <li><b>精確定位與地圖構建 (SLAM)：</b> 結合 IMU、視覺、光達等數據，系統能夠在未知環境中精確地確定自身位置，並同時構建高精度的環境地圖，這對於自主導航至關重要。</li>
+                <li><b>動態物件追蹤與行為預測：</b> 透過融合視覺對物體類別的識別能力和雷達對速度、距離的精確測量，系統能穩定追蹤多個移動目標，並結合 AI 預測它們的未來行為軌跡（例如車輛變道、行人突然轉向）。</li>
+                <li><b>全天候與惡劣環境適應性：</b> 雷達和熱像儀等感測器在夜間、濃霧、大雨等極端條件下表現優異，與視覺數據融合後，可顯著提升系統在各種天氣和光照條件下的感知魯棒性。</li>
+                <li><b>語義理解與情境感知：</b> AI 結合多模態數據不僅能識別「這是輛車」，更能理解「這輛車正在高速駛來，可能需要避讓」，從而為決策提供更豐富的語義資訊。</li>
+                <li><b>冗餘性與安全性：</b> 當某個感測器失效或數據異常時，其他感測器仍能提供可靠資訊，提高系統的容錯能力和安全性。</li>
+            </ul>
+
+            <h3>未來展望與挑戰</h3>
+            <p>先進感知系統是實現完全自主化的關鍵。隨著感測器技術的進步（如更高解析度的光達、4D 成像雷達）和 AI 演算法的成熟（如基於Transformer 的多模態融合模型），其能力將持續提升。然而，挑戰依然存在，包括：</p>
+            <ul>
+                <li><b>數據同步與時間戳校準：</b> 不同感測器數據之間的時間同步是融合的難點。</li>
+                <li><b>感測器標定與校準：</b> 精確的感測器內參和外參標定至關重要。</li>
+                <li><b>計算資源消耗：</b> 處理和融合多模態大數據需要強大的邊緣計算能力。</li>
+                <li><b>未知與極端情境的魯棒性：</b> 如何讓系統在面對從未見過或極端危險的情境時，依然能做出可靠判斷，是未來研究的重點。</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 先進感知系統研究. All rights reserved.</p>
+            <p><a href="#">隱私權政策</a> | <a href="#">使用條款</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>
