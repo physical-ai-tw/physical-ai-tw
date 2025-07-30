@@ -269,6 +269,89 @@
             </ul>
             <p>隨著計算能力的提升和演算法的創新，實時決策與控制將持續推動 AI 系統向更高度的自主化和智能化發展。</p>
         </section>
+
+        <!-- 新增的課程安排區塊 -->
+        <section class="section">
+            <h2>實時決策與控制實戰課程：循序漸進的學習路徑</h2>
+            <p>本課程旨在引導學員從控制系統與最佳化基礎入門，逐步深入到強化學習與模型預測控制的進階理論與實踐，最終能夠設計並實作具備實時決策與控制能力的 AI 系統。</p>
+
+            <div class="curriculum-stage">
+                <h3>第一階段：控制系統與最佳化基礎 (入門級)</h3>
+                <p>建立對自動控制與最佳化理論的基本認識，為後續進階學習打下基礎。</p>
+                <ul>
+                    <li><b>課程目標：</b> 理解控制系統的基本概念、數學模型與基礎最佳化方法。</li>
+                    <li><b>內容概述：</b>
+                        <ul>
+                            <li><b>自動控制概論：</b> 開迴路/閉迴路控制、回饋控制原理。</li>
+                            <li><b>系統建模：</b> 狀態空間表示、傳遞函數、線性/非線性系統。</li>
+                            <li><b>基礎控制策略：</b> PID 控制器設計與調參。</li>
+                            <li><b>最佳化基礎：</b> 梯度下降、凸最佳化概念。</li>
+                            <li><b>實作練習：</b> 模擬 PID 控制器控制簡單系統 (如倒立擺、馬達速度)。</li>
+                        </ul>
+                    </li>
+                    <li><b>建議工具：</b> Python (NumPy, SciPy, Matplotlib), MATLAB/Simulink。</li>
+                </ul>
+            </div>
+
+            <div class="curriculum-stage">
+                <h3>第二階段：強化學習核心概念與演算法 (進階)</h3>
+                <p>深入學習強化學習的原理，掌握經典演算法及其應用。</p>
+                <ul>
+                    <li><b>課程目標：</b> 熟悉強化學習的框架，能夠實作並應用基礎 RL 演算法解決決策問題。</li>
+                    <li><b>內容概述：</b>
+                        <ul>
+                            <li><b>RL 框架：</b> 代理人、環境、狀態、行動、獎勵、策略、價值函數。</li>
+                            <li><b>馬可夫決策過程 (MDP)：</b> 定義與屬性。</li>
+                            <li><b>動態規劃：</b> 價值迭代 (Value Iteration)、策略迭代 (Policy Iteration)。</li>
+                            <li><b>蒙地卡羅方法：</b> 預測與控制。</li>
+                            <li><b>時序差分學習 (TD Learning)：</b> SARSA、Q-learning。</li>
+                            <li><b>深度強化學習入門：</b> DQN (Deep Q-Network) 概念。</li>
+                            <li><b>實作練習：</b> 解決經典控制問題 (如 CartPole、FrozenLake) 使用 Q-learning 或 DQN。</li>
+                        </ul>
+                    </li>
+                    <li><b>建議工具：</b> Python (Gym, Stable Baselines3), TensorFlow/PyTorch。</li>
+                </ul>
+            </div>
+
+            <div class="curriculum-stage">
+                <h3>第三階段：模型預測控制與進階最佳化 (專業級)</h3>
+                <p>學習模型預測控制的理論與實作，處理複雜系統約束。</p>
+                <ul>
+                    <li><b>課程目標：</b> 掌握 MPC 的核心原理，能夠設計並實現考慮約束的最佳化控制器。</li>
+                    <li><b>內容概述：</b>
+                        <ul>
+                            <li><b>MPC 原理：</b> 預測模型、成本函數、約束處理、最佳化問題。</li>
+                            <li><b>線性 MPC：</b> 線性系統的預測控制設計與實作。</li>
+                            <li><b>非線性 MPC (NMPC)：</b> 非線性系統的處理方法、最佳化求解器 (如 IPOPT, OSQP)。</li>
+                            <li><b>狀態估計與濾波：</b> 擴展卡爾曼濾波 (EKF)、無跡卡爾曼濾波 (UKF) 在狀態估計中的應用。</li>
+                            <li><b>實作練習：</b> 設計並實作一個簡單的車輛路徑追蹤 MPC 控制器，考慮速度和轉向約束。</li>
+                        </ul>
+                    </li>
+                    <li><b>建議工具：</b> Python (CasADi, CVXPY), C++ (Eigen, Ceres Solver), MATLAB (MPC Toolbox)。</li>
+                </ul>
+            </div>
+
+            <div class="curriculum-stage">
+                <h3>第四階段：實時系統整合與高階應用 (專家級)</h3>
+                <p>將所學知識應用於實際的實時系統，並探索前沿技術與挑戰。</p>
+                <ul>
+                    <li><b>課程目標：</b> 具備獨立設計、開發和調試複雜實時決策與控制系統的能力，理解產業最新趨勢。</li>
+                    <li><b>內容概述：</b>
+                        <ul>
+                            <li><b>RL 與 MPC 融合策略：</b> 分層控制架構、基於模型的強化學習 (Model-based RL)、RL for MPC (學習模型或控制器參數)。</li>
+                            <li><b>實時系統考量：</b> 計算效率、延遲管理、硬體加速 (GPU, FPGA)。</li>
+                            <li><b>安全與魯棒性：</b> 安全強化學習、故障診斷與容錯控制。</li>
+                            <li><b>多代理系統：</b> 多機器人協同控制、分散式決策。</li>
+                            <li><b>應用案例深入分析：</b> 自動駕駛決策堆疊、工業機器人協作、無人機自主飛行。</li>
+                            <li><b>實作專案：</b> 開發一個模擬或實際的自主導航系統，整合 RL 進行高層次決策，MPC 進行低層次控制。</li>
+                        </ul>
+                    </li>
+                    <li><b>建議工具：</b> ROS (Robot Operating System), 各種感測器與執行器硬體, 模擬器 (如 Gazebo, Carla), 邊緣計算平台。</li>
+                </ul>
+            </div>
+        </section>
+        <!-- 課程安排區塊結束 -->
+
     </main>
 
     <footer>

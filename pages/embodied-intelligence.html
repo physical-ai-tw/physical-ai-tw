@@ -155,6 +155,40 @@
             content: '';
         }
 
+        /* 課程建議區塊特別樣式 */
+        .curriculum-stage {
+            background-color: #f5f8fa; /* 淺灰藍背景 */
+            padding: 35px;
+            margin-bottom: 30px;
+            border-left: 12px solid #3498db; /* 亮藍色強調 */
+            border-radius: 18px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .curriculum-stage:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 50px rgba(0, 0, 0, 0.25);
+        }
+        .curriculum-stage h3 {
+            color: #1b262c;
+            font-size: 2.2em;
+            border-left: none;
+            padding-left: 0;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .curriculum-stage ul {
+            list-style-type: disc;
+            padding-left: 35px;
+        }
+        .curriculum-stage ul li {
+            padding-left: 0;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        .curriculum-stage ul li::before {
+            content: '';
+        }
+
         footer {
             background-color: #1b262c;
             color: white;
@@ -201,6 +235,9 @@
             }
             .platform-card h4 {
                 font-size: 1.6em;
+            }
+            .curriculum-stage h3 {
+                font-size: 1.8em;
             }
         }
     </style>
@@ -293,6 +330,90 @@
             <h3>未來展望</h3>
             <p>具身智慧平台是 Physical AI 實現的核心支撐。隨著半導體技術的進步，我們將看到更多具備強大 AI 運算能力且功耗更低的邊緣處理器出現。同時，標準化的軟體框架和易於使用的開發工具將加速具身智慧應用的普及。從智慧物聯網到全自主機器人，具身智慧平台將是推動下一波智慧化浪潮的關鍵驅動力。</p>
         </section>
+
+        <!-- 新增的課程安排區塊 -->
+        <section class="section">
+            <h2>具身智慧平台實戰課程：從硬體選型到 AI 部署</h2>
+            <p>本課程旨在引導學員從具身智慧的基本概念入門，逐步深入到不同硬體平台的選型、軟體開發與 AI 模型部署，最終能夠獨立設計和實現具備智慧能力的邊緣設備。</p>
+
+            <div class="curriculum-stage">
+                <h3>第一階段：具身智慧與微控制器基礎 (入門級)</h3>
+                <p>建立對具身智慧的宏觀理解，並掌握低功耗微控制器在邊緣 AI 中的應用基礎。</p>
+                <ul>
+                    <li><b>課程目標：</b> 理解具身智慧的意義，熟悉微控制器如 ESP32 的基本使用與程式設計。</li>
+                    <li><b>內容概述：</b>
+                        <ul>
+                            <li><b>具身智慧概論：</b> 什麼是具身智慧、邊緣 AI、物聯網 (IoT) 概念。</li>
+                            <li><b>微控制器基礎：</b> ESP32/ESP8266 硬體架構、GPIO、ADC、PWM 等基本功能。</li>
+                            <li><b>嵌入式程式設計：</b> Arduino IDE 或 ESP-IDF 環境搭建、C/C++ 基礎程式設計。</li>
+                            <li><b>感測器與執行器：</b> 連接並讀取簡單感測器 (溫濕度、光線)、控制 LED、馬達。</li>
+                            <li><b>無線通訊基礎：</b> Wi-Fi、藍牙 (BLE) 在 IoT 設備中的應用。</li>
+                            <li><b>實作練習：</b> 使用 ESP32 讀取感測器數據並透過 Wi-Fi 上傳至雲端平台。</li>
+                        </ul>
+                    </li>
+                    <li><b>建議工具：</b> ESP32 開發板、Arduino IDE / ESP-IDF、Python (用於數據監控)。</li>
+                </ul>
+            </div>
+
+            <div class="curriculum-stage">
+                <h3>第二階段：邊緣運算與 Linux 平台 (進階)</h3>
+                <p>探索基於 Linux 的單板電腦，學習其操作系統、系統程式設計與進階感測器集成。</p>
+                <ul>
+                    <li><b>課程目標：</b> 熟悉 Raspberry Pi 等 Linux 平台，掌握其系統管理、Python 程式設計與多感測器集成。</li>
+                    <li><b>內容概述：</b>
+                        <ul>
+                            <li><b>單板電腦概論：</b> Raspberry Pi、Jetson Nano (作為通用 SBC 使用) 等硬體介紹。</li>
+                            <li><b>Linux 基礎：</b> 命令列操作、檔案系統、網路配置、系統服務。</li>
+                            <li><b>Python 系統程式設計：</b> GPIO 控制、I2C/SPI 通訊、多執行緒。</li>
+                            <li><b>進階感測器集成：</b> USB 攝影機、IMU、GPS 等在 Linux 平台上的驅動與數據採集。</li>
+                            <li><b>網路與通訊：</b> SSH 遠端連線、MQTT/HTTP 協議應用。</li>
+                            <li><b>實作練習：</b> 在 Raspberry Pi 上設定攝影機串流，並透過 MQTT 發布數據。</li>
+                        </ul>
+                    </li>
+                    <li><b>建議工具：</b> Raspberry Pi 開發板、Linux 作業系統、Python、OpenCV。</li>
+                </ul>
+            </div>
+
+            <div class="curriculum-stage">
+                <h3>第三階段：AI 硬體加速與模型部署 (專業級)</h3>
+                <p>深入學習如何在邊緣設備上優化和部署 AI 模型，利用硬體加速器提升效能。</p>
+                <ul>
+                    <li><b>課程目標：</b> 掌握 AI 模型在邊緣設備上的部署流程，利用 GPU/NPU 進行高效推理。</li>
+                    <li><b>內容概述：</b>
+                        <ul>
+                            <li><b>邊緣 AI 模型優化：</b> 模型量化 (Quantization)、剪枝 (Pruning)、蒸餾 (Distillation)。</li>
+                            <li><b>AI 推理框架：</b> TensorFlow Lite、PyTorch Mobile、ONNX Runtime、TensorRT。</li>
+                            <li><b>硬體加速器：</b> GPU (NVIDIA Jetson 系列)、NPU (神經處理單元) 的原理與應用。</li>
+                            <li><b>視覺 AI 應用：</b> 物件偵測 (YOLO, SSD)、圖像分類、人臉識別在邊緣設備上的實作。</li>
+                            <li><b>語音 AI 應用：</b> 語音識別、關鍵詞喚醒在邊緣設備上的實作。</li>
+                            <li><b>實作練習：</b> 在 Jetson Nano 上部署一個預訓練的物件偵測模型，並進行實時推理。</li>
+                        </ul>
+                    </li>
+                    <li><b>建議工具：</b> NVIDIA Jetson 開發板、TensorFlow/PyTorch、TensorRT、ONNX。</li>
+                </ul>
+            </div>
+
+            <div class="curriculum-stage">
+                <h3>第四階段：具身智慧系統整合與高階應用 (專家級)</h3>
+                <p>將所學知識整合到複雜的具身智慧系統中，並探索自主機器人與 Physical AI 的前沿。</p>
+                <ul>
+                    <li><b>課程目標：</b> 具備獨立設計、開發和調試複雜具身智慧系統的能力，理解產業最新趨勢。</li>
+                    <li><b>內容概述：</b>
+                        <ul>
+                            <li><b>機器人操作系統 (ROS)：</b> ROS 基礎、節點通訊、服務、參數、Launch 檔案。</li>
+                            <li><b>多模態感測器融合：</b> 視覺、雷達、LiDAR、IMU 數據的融合策略與演算法。</li>
+                            <li><b>自主導航與路徑規劃：</b> SLAM (同步定位與地圖構建)、路徑規劃演算法。</li>
+                            <li><b>人機互動：</b> 語音助理、手勢識別、情感識別在具身 AI 中的應用。</li>
+                            <li><b>系統效能優化：</b> 延遲分析、功耗優化、熱管理。</li>
+                            <li><b>實作專案：</b> 開發一個小型自主移動機器人，整合感測器、AI 推理與運動控制。</li>
+                        </ul>
+                    </li>
+                    <li><b>建議工具：</b> ROS 環境、多種感測器 (深度攝影機、LiDAR)、機器人平台、模擬器 (如 Gazebo)。</li>
+                </ul>
+            </div>
+        </section>
+        <!-- 課程安排區塊結束 -->
+
     </main>
 
     <footer>

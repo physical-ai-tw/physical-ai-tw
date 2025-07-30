@@ -107,6 +107,40 @@
             font-size: 1em;
         }
 
+        /* 課程建議區塊特別樣式 */
+        .curriculum-stage {
+            background-color: #f0fdf0; /* 淺綠色背景 */
+            padding: 35px;
+            margin-bottom: 30px;
+            border-left: 12px solid #66bb6a; /* 亮綠色強調 */
+            border-radius: 18px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .curriculum-stage:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 50px rgba(0, 0, 0, 0.25);
+        }
+        .curriculum-stage h3 {
+            color: #388e3c;
+            font-size: 2.2em;
+            border-left: none;
+            padding-left: 0;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .curriculum-stage ul {
+            list-style-type: disc;
+            padding-left: 35px;
+        }
+        .curriculum-stage ul li {
+            padding-left: 0;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        .curriculum-stage ul li::before {
+            content: '';
+        }
+
         footer {
             background-color: #388e3c;
             color: white;
@@ -147,6 +181,9 @@
             }
             .image-full-width {
                 max-height: 350px;
+            }
+            .curriculum-stage h3 {
+                font-size: 1.8em;
             }
         }
     </style>
@@ -230,6 +267,88 @@
             </ul>
             <p>隨著這些技術的不斷成熟，我們將看到越來越多的機器人能夠在各種複雜環境中安全、高效地自主移動，極大改變我們的生活和工作方式。</p>
         </section>
+
+        <!-- 新增的課程安排區塊 -->
+        <section class="section">
+            <h2>智能路徑規劃與導航實戰課程：賦予機器人自主移動能力</h2>
+            <p>本課程旨在引導學員從移動機器人基礎入門，逐步深入到定位、地圖構建、路徑規劃與導航的進階理論與實踐，最終能夠設計並實現具備智能導航能力的自主移動系統。</p>
+
+            <div class="curriculum-stage">
+                <h3>第一階段：移動機器人基礎與環境感知 (入門級)</h3>
+                <p>建立對移動機器人基本組成與環境感知感測器的認識，為導航打下基礎。</p>
+                <ul>
+                    <li><b>課程目標：</b> 熟悉移動機器人類型，了解常見感測器在導航中的作用。</li>
+                    <li><b>內容概述：</b>
+                        <ul>
+                            <li><b>移動機器人概論：</b> 輪式、履帶式、足式機器人，運動學模型。</li>
+                            <li><b>感測器基礎：</b> 里程計、IMU (慣性測量單元)、GPS、超音波、紅外線感測器。</li>
+                            <li><b>環境感知入門：</b> 攝影機 (視覺感知)、雷射雷達 (LiDAR 掃描)。</li>
+                            <li><b>基礎數據處理：</b> 感測器數據讀取、噪聲處理、簡單視覺化。</li>
+                            <li><b>實作練習：</b> 搭建簡單移動機器人平台，讀取輪式編碼器和 IMU 數據。</li>
+                        </ul>
+                    </li>
+                    <li><b>建議工具：</b> Arduino/ESP32 開發板、簡單機器人底盤、Python、Matplotlib。</li>
+                </ul>
+            </div>
+
+            <div class="curriculum-stage">
+                <h3>第二階段：定位與地圖構建 (進階)</h3>
+                <p>深入學習機器人如何知道自己在哪裡，以及如何建立環境地圖。</p>
+                <ul>
+                    <li><b>課程目標：</b> 掌握機器人定位與地圖構建的基本原理與演算法。</li>
+                    <li><b>內容概述：</b>
+                        <ul>
+                            <li><b>里程計定位：</b> 輪式里程計、視覺里程計 (VO) 基礎。</li>
+                            <li><b>傳感器融合定位：</b> 卡爾曼濾波 (Kalman Filter)、擴展卡爾曼濾波 (EKF) 在融合里程計與 IMU 數據中的應用。</li>
+                            <li><b>地圖表示：</b> 柵格地圖 (Occupancy Grid Map)、點雲地圖。</li>
+                            <li><b>同步定位與地圖構建 (SLAM) 概論：</b> 基於 LiDAR 的 2D SLAM (如 GMapping)、基於視覺的 SLAM (如 ORB-SLAM 概念)。</li>
+                            <li><b>實作練習：</b> 在模擬器中實現基於里程計的定位，建立簡單的 2D 柵格地圖。</li>
+                        </ul>
+                    </li>
+                    <li><b>建議工具：</b> ROS (Robot Operating System)、Python/C++、Gazebo 模擬器、OpenCV、PCL。</li>
+                </ul>
+            </div>
+
+            <div class="curriculum-stage">
+                <h3>第三階段：路徑規劃演算法 (專業級)</h3>
+                <p>學習如何為機器人規劃安全、高效且最佳化的路徑。</p>
+                <ul>
+                    <li><b>課程目標：</b> 掌握全局與局部路徑規劃演算法，能夠處理靜態與動態障礙物。</li>
+                    <li><b>內容概述：</b>
+                        <ul>
+                            <li><b>圖搜索演算法：</b> Dijkstra、A*、D* Lite。</li>
+                            <li><b>採樣基演算法：</b> RRT (快速探索隨機樹)、PRM (機率路線圖)。</li>
+                            <li><b>基於最佳化的路徑平滑：</b> 曲線擬合、樣條曲線。</li>
+                            <li><b>局部路徑規劃與避障：</b> 動態窗口法 (DWA)、人工勢場法 (APF)、基於深度學習的避障策略。</li>
+                            <li><b>行為決策與任務規劃：</b> 有限狀態機 (FSM)、行為樹 (Behavior Tree) 基礎。</li>
+                            <li><b>實作練習：</b> 在模擬器中實現 A* 演算法進行全局路徑規劃，並應用 DWA 進行局部避障。</li>
+                        </ul>
+                    </li>
+                    <li><b>建議工具：</b> ROS Navigation Stack、Python/C++、Gazebo 模擬器。</li>
+                </ul>
+            </div>
+
+            <div class="curriculum-stage">
+                <h3>第四階段：導航系統整合與高階應用 (專家級)</h3>
+                <p>將定位、地圖構建、路徑規劃和運動控制整合為完整的自主導航系統，並探索前沿技術。</p>
+                <ul>
+                    <li><b>課程目標：</b> 具備獨立設計、開發和調試複雜自主導航系統的能力，理解產業最新趨勢。</li>
+                    <li><b>內容概述：</b>
+                        <ul>
+                            <li><b>ROS Navigation Stack 深入：</b> AMCL (自適應蒙地卡羅定位)、move_base 配置與調參。</li>
+                            <li><b>多機器人導航：</b> 多代理協同定位與規劃。</li>
+                            <li><b>非結構化環境導航：</b> 應對崎嶇地形、水下或空中環境的特殊挑戰。</li>
+                            <li><b>基於強化學習的導航：</b> 端到端導航、導航策略學習。</li>
+                            <li><b>安全與魯棒性：</b> 故障檢測、導航系統的容錯設計。</li>
+                            <li><b>實作專案：</b> 在實際移動機器人上實現自主導航，完成特定任務 (如巡邏、貨物運輸)。</li>
+                        </ul>
+                    </li>
+                    <li><b>建議工具：</b> 實際移動機器人平台、ROS、LiDAR/深度攝影機、高性能計算單元 (如 Jetson)。</li>
+                </ul>
+            </div>
+        </section>
+        <!-- 課程安排區塊結束 -->
+
     </main>
 
     <footer>
