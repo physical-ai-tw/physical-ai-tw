@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧型模型車課程 - 遙控與機器學習自動駕駛</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Light blue-gray background */
+            color: #334155; /* Darker text */
+        }
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(to right, #60a5fa, #3b82f6);
+            z-index: 1;
+        }
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .hero-section iframe {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: scale(1.5);
+            min-width: 100vw;
+            min-height: 56.25vw;
+            max-height: 100vh;
+            max-width: 177.78vh;
+        }
+
+        @media (min-aspect-ratio: 16/9) {
+            .hero-video iframe {
+                height: 100%;
+                width: auto;
+            }
+        }
+        @media (max-aspect-ratio: 16/9) {
+            .hero-video iframe {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .section-title {
+            color: #1e3a8a;
+        }
+        .card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #2563eb;
+        }
+        .testimonial-card {
+            background-color: white;
+            border-left: 4px solid #3b82f6;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section (Navigation Bar) -->
+    <header class="bg-white shadow-md py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <!-- Brand Logo -->
+            <a href="#" class="text-3xl font-bold text-gray-800">
+                <span class="text-blue-600">機器學習</span><span class="text-gray-800">酷達</span>
+            </a>
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex space-x-6">
+                <a href="#about" class="text-gray-600 hover:text-blue-600 font-semibold">關於課程</a>
+                <a href="#curriculum" class="text-gray-600 hover:text-blue-600 font-semibold">課程大綱</a>
+                <a href="#features" class="text-gray-600 hover:text-blue-600 font-semibold">課程特色</a>
+                <a href="#testimonials" class="text-gray-600 hover:text-blue-600 font-semibold">學員見證</a>
+                <a href="#enroll" class="btn-primary">立即報名</a>
+            </nav>
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button class="md:hidden text-gray-800 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-white py-20 md:py-32 rounded-b-lg">
+        <!-- Background Video (Placeholder) -->
+        <div class="hero-video">
+            <iframe
+                src="https://www.youtube.com/embed/eeSxKm0Tdb0?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&rel=0&playlist=MDMqTaEqGuE"
+                allow="autoplay; encrypted-media"
+                allowfullscreen
+            ></iframe>
+        </div>
+
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                <span class="text-yellow-300">機器學習無人車專案</span>
+            </h1>
+            <p class="text-lg md:text-2xl mb-10 max-w-3xl mx-auto opacity-90">
+                從 Wi-Fi 遙控到機器學習自動駕駛，打造你的智能模型車！
+            </p>
+            <a href="#enroll" class="btn-primary inline-block py-3 px-8 text-xl">
+                立即開啟你的酷達之旅！
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-gray-50 rounded-lg mx-6 md:mx-auto mt-[-50px] relative z-10 p-8 shadow-lg">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">
+                關於機器學習無人車課程
+            </h2>
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
+                <div class="md:w-1/2">
+                    <p class="text-lg leading-relaxed mb-6">
+                        本課程旨在引導學員，從現有的 Wi-Fi 遙控車基礎上，進一步探索機器學習在無人車控制上的應用。課程將專注於實作從感測器數據收集、模型訓練到最終將機器學習模型整合進車輛控制系統的完整流程。透過親手打造一輛具備基礎自動駕駛能力的無人車，學員將掌握機器學習在嵌入式系統上的基本概念，培養解決問題與系統整合的能力。
+                    </p>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <!-- Image of a smart RC car -->
+                    <img src="https://img.cloudimg.in/uploads/shops/15425/products/28/283d496d1c249bce85c39c3df651c184.jpg" alt="智慧型模型車課程概念圖" class="rounded-lg shadow-xl w-full max-w-md">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curriculum Section -->
+    <section id="curriculum" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">
+                10 堂課，打造你的智能模型車！
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Lesson 1 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 1 堂：硬體與 Wi-Fi 遙控快速回顧</h3>
+                    <p class="text-gray-700">快速複習硬體連接，並重新測試 Wi-Fi 遙控功能，確保開發環境正常運作。</p>
+                </div>
+                <!-- Lesson 2 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 2 堂：超音波與 IMU 感測器數據讀取</h3>
+                    <p class="text-gray-700">深入理解並實作超音波與 IMU 感測器數據讀取，為機器學習資料收集做準備。</p>
+                </div>
+                <!-- Lesson 3 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 3 堂：機器學習在無人車上的應用入門</h3>
+                    <p class="text-gray-700">介紹機器學習基礎概念，探討其在無人車感知與決策上的應用案例。</p>
+                </div>
+                <!-- Lesson 4 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 4 堂：數據收集與資料標記</h3>
+                    <p class="text-gray-700">學習如何為機器學習專案收集、記錄和標記數據，為模型訓練建立高品質資料集。</p>
+                </div>
+                <!-- Lesson 5 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 5 堂：障礙物偵測模型訓練與部署</h3>
+                    <p class="text-gray-700">使用收集到的超音波數據訓練一個簡單的模型，並將其部署到 ESP32-C3 上。</p>
+                </div>
+                <!-- Lesson 6 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 6 堂：視覺基礎：車道線辨識</h3>
+                    <p class="text-gray-700">認識電腦視覺並使用嵌入式相機進行車道線辨識的影像處理實作。</p>
+                </div>
+                <!-- Lesson 7 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 7 堂：深度學習：車道線追蹤模型訓練</h3>
+                    <p class="text-gray-700">了解 CNN 原理，並訓練一個基於影像的車道線追蹤深度學習模型。</p>
+                </div>
+                <!-- Lesson 8 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 8 堂：模型整合與決策邏輯</h3>
+                    <p class="text-gray-700">將多個模型整合，編寫決策邏輯，讓車輛能根據不同情況切換控制模式。</p>
+                </div>
+                <!-- Lesson 9 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 9 堂：高級主題與調試技巧</h3>
+                    <p class="text-gray-700">探索強化學習等進階概念，並學習系統調試與問題排除技巧。</p>
+                </div>
+                <!-- Lesson 10 -->
+                <div class="card bg-blue-50 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 10 堂：專案演示與成果分享</h3>
+                    <p class="text-gray-700">學員展示自己的無人車專案成果，並分享在專案中遇到的挑戰與解決方案。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">
+                課程特色
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div class="card bg-white p-8 rounded-lg text-center">
+                    <div class="text-blue-600 text-5xl mb-4">🧠</div>
+                    <h3 class="text-xl font-bold mb-3">AI 實戰與機器學習</h3>
+                    <p class="text-gray-700">不僅是理論，更透過實際動手訓練模型，將 AI 概念化為實體。</p>
+                </div>
+                <div class="card bg-white p-8 rounded-lg text-center">
+                    <div class="text-blue-600 text-5xl mb-4">🚀</div>
+                    <h3 class="text-xl font-bold mb-3">從數據到部署</h3>
+                    <p class="text-gray-700">學習完整的機器學習流程：從數據收集、訓練到模型部署到嵌入式裝置。</p>
+                </div>
+                <div class="card bg-white p-8 rounded-lg text-center">
+                    <div class="text-blue-600 text-5xl mb-4">🤖</div>
+                    <h3 class="text-xl font-bold mb-3">打造自主避障能力</h3>
+                    <p class="text-gray-700">利用感測器數據訓練模型，讓無人車能自主偵測並迴避障礙物。</p>
+                </div>
+                <div class="card bg-white p-8 rounded-lg text-center">
+                    <div class="text-blue-600 text-5xl mb-4">🛣️</div>
+                    <h3 class="text-xl font-bold mb-3">學習車道線追蹤</h3>
+                    <p class="text-gray-700">掌握電腦視覺技術，讓模型車能透過相機追蹤並沿著車道線行駛。</p>
+                </div>
+                <div class="card bg-white p-8 rounded-lg text-center">
+                    <div class="text-blue-600 text-5xl mb-4">💡</div>
+                    <h3 class="text-xl font-bold mb-3">Vibe Coding AI 輔助</h3>
+                    <p class="text-gray-700">運用 AI 輔助編程，讓學員專注於邏輯與概念，而非繁瑣的程式碼細節。</p>
+                </div>
+                <div class="card bg-white p-8 rounded-lg text-center">
+                    <div class="text-blue-600 text-5xl mb-4">🏆</div>
+                    <h3 class="text-xl font-bold mb-3">完成專案，成果豐碩</h3>
+                    <p class="text-gray-700">最終完成一個具備多項智能功能的模型車作品，並可進行展示。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-16 bg-blue-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">
+                學員見證
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="testimonial-card p-8 rounded-lg">
+                    <p class="text-gray-800 text-lg italic mb-4">
+                        「我本來以為機器學習只是理論，但透過這門課親手訓練模型並讓它在車上運作，真的超有成就感！這是一個讓理論與實作完美結合的課程！」
+                    </p>
+                    <p class="font-bold text-blue-800">- 小華 (高中生)</p>
+                </div>
+                <div class="testimonial-card p-8 rounded-lg">
+                    <p class="text-gray-800 text-lg italic mb-4">
+                        「這門課讓我對整個 AI 專案開發流程有了清晰的認識。從數據收集到模型部署，每一步都讓我學到寶貴的經驗，對未來的學習很有幫助！」
+                    </p>
+                    <p class="font-bold text-blue-800">- 大衛 (大學生)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action / Enrollment Section -->
+    <section id="enroll" class="py-16 bg-blue-600 text-white rounded-t-lg">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6">
+                準備好打造你的智慧型模型車了嗎？
+            </h2>
+            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">
+                名額有限，立即報名，探索物聯網、機器學習與程式設計的無限可能！
+            </p>
+            <a href="#" class="btn-primary inline-block py-3 px-8 text-xl bg-white text-blue-600 hover:bg-gray-200">
+                立即報名課程！
+            </a>
+            <p class="mt-4 text-sm opacity-80">早鳥優惠實施中，詳情請洽官方網站。</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center text-sm">
+            <p>&copy; 2025 機器學習無人車課程. 版權所有.</p>
+            <p class="mt-2">聯繫我們：info@physical-ai.tw | 電話：(02) 2213-1081</p>
+        </div>
+    </footer>
+
+</body>
+</html>
