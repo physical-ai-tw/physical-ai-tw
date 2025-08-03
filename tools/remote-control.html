@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32-C3 遙控器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .joystick-container {
+            width: 200px;
+            height: 200px;
+            background-color: #d1d5db;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+            touch-action: none;
+        }
+        .joystick-handle {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, #1d4ed8, #3b82f6);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            border: 2px solid #60a5fa;
+            cursor: grab;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="container mx-auto p-4 md:p-8 max-w-xl">
+        <!-- 主面板 -->
+        <div class="bg-white rounded-3xl shadow-xl p-6 md:p-10 text-center space-y-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800">ESP32-C3 虛擬遙控器</h1>
+            <p class="text-gray-600 text-lg">透過 Wi-Fi 控制您的模型車</p>
+
+            <!-- 遙控搖桿區域 -->
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
+                <!-- 左搖桿 (轉向) -->
+                <div class="flex flex-col items-center space-y-4">
+                    <label for="joystickLeft" class="text-xl font-bold text-gray-700">轉向 (Steer)</label>
+                    <div id="joystickLeft" class="joystick-container">
+                        <div id="joystickHandleLeft" class="joystick-handle"></div>
+                    </div>
+                    <div class="text-sm text-gray-500">X: <span id="xValueLeft">0</span>, Y: <span id="yValueLeft">0</span></div>
+                </div>
+
+                <!-- 右搖桿 (油門) -->
+                <div class="flex flex-col items-center space-y-4">
+                    <label for="joystickRight" class="text-xl font-bold text-gray-700">油門 (Throttle)</label>
+                    <div id="joystickRight" class="joystick-container">
+                        <div id="joystickHandleRight" class="joystick-handle"></div>
+                    </div>
+                    <div class="text-sm text-gray-500">X: <span id="xValueRight">0</span>, Y: <span id="yValueRight">0</span></div>
+                </div>
+            </div>
+
+            <!-- 控制資訊與狀態 -->
+            <div class="mt-8 space-y-4">
+                <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg" role="alert">
+                    <p class="font-bold">狀態資訊</p>
+                    <p>正在發送指令: <span id="statusMessage" class="font-semibold">等待操作...</span></p>
+                    <p>ESP32 IP: <span id="esp32Ip" class="font-semibold">192.168.4.1</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for joystick logic and sending data to ESP32
+        document.addEventListener('DOMContentLoaded', () => {
+            const esp32Ip = document.getElementById('esp32Ip').textContent; // ESP32 IP 位址
+
+            // 處理搖桿邏輯的函式
+            function setupJoystick(containerId, handleId, xValueId, yValueId, onMoveCallback) {
+                const container = document.getElementById(containerId);
+                const handle = document.getElementById(handleId);
+                const xValueSpan = document.getElementById(xValueId);
+                const yValueSpan = document.getElementById(yValueId);
+                
+                let isDragging = false;
+                const containerRect = container.getBoundingClientRect();
+                const containerCenterX = containerRect.left + container.offsetWidth / 2;
+                const containerCenterY = containerRect.top + container.offsetHeight / 2;
+                const maxRadius = (container.offsetWidth / 2) - (handle.offsetWidth / 2);
+
+                const getPosition = (event) => {
+                    // 根據是觸控或滑鼠事件來取得座標
+                    const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+                    const clientY = event.touches ? event.touches[0].clientY : event.clientY;
+                    
+                    let dx = clientX - containerCenterX;
+                    let dy = clientY - containerCenterY;
+
+                    // 限制搖桿在圓形容器內
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance > maxRadius) {
+                        dx *= maxRadius / distance;
+                        dy *= maxRadius / distance;
+                    }
+
+                    // 更新搖桿位置
+                    handle.style.left = `${50 + (dx / container.offsetWidth) * 100}%`;
+                    handle.style.top = `${50 + (dy / container.offsetHeight) * 100}%`;
+
+                    // 映射數值到 -100 到 100
+                    const x = Math.round((dx / maxRadius) * 100);
+                    const y = -Math.round((dy / maxRadius) * 100); // 讓 Y 軸向上為正
+
+                    xValueSpan.textContent = x;
+                    yValueSpan.textContent = y;
+
+                    onMoveCallback(x, y);
+                };
+
+                const stopDragging = () => {
+                    isDragging = false;
+                    handle.style.left = '50%';
+                    handle.style.top = '50%';
+                    xValueSpan.textContent = '0';
+                    yValueSpan.textContent = '0';
+                    onMoveCallback(0, 0); // 鬆開時傳送歸零指令
+                };
+
+                handle.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    e.preventDefault();
+                });
+
+                container.addEventListener('touchstart', (e) => {
+                    isDragging = true;
+                    e.preventDefault();
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (isDragging) {
+                        getPosition(e);
+                    }
+                });
+
+                document.addEventListener('touchmove', (e) => {
+                    if (isDragging) {
+                        getPosition(e);
+                    }
+                });
+
+                document.addEventListener('mouseup', stopDragging);
+                document.addEventListener('touchend', stopDragging);
+            }
+
+            // 傳送 HTTP GET 請求到 ESP32
+            const sendCommand = (steer, throttle) => {
+                const statusMessage = document.getElementById('statusMessage');
+                const url = `http://${esp32Ip}/control?steer=${steer}&throttle=${throttle}`;
+                
+                // 使用 fetch API 傳送指令
+                fetch(url, { method: 'GET' })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        statusMessage.textContent = `成功發送指令: 轉向=${steer}, 油門=${throttle}`;
+                    })
+                    .catch(error => {
+                        console.error('指令發送失敗:', error);
+                        statusMessage.textContent = '指令發送失敗，請檢查連線。';
+                    });
+            };
+
+            // 監聽搖桿移動並傳送指令
+            let steerValue = 0;
+            let throttleValue = 0;
+
+            setupJoystick('joystickLeft', 'joystickHandleLeft', 'xValueLeft', 'yValueLeft', (x, y) => {
+                steerValue = x;
+            });
+
+            setupJoystick('joystickRight', 'joystickHandleRight', 'xValueRight', 'yValueRight', (x, y) => {
+                throttleValue = y;
+            });
+
+            // 以固定頻率傳送指令，避免過度頻繁的請求
+            setInterval(() => {
+                sendCommand(steerValue, throttleValue);
+            }, 100); // 每 100 毫秒 (10Hz) 傳送一次
+        });
+    </script>
+</body>
+</html>
