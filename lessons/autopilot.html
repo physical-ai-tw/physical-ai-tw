@@ -118,8 +118,7 @@
         <!-- Background Video (Placeholder) -->
         <div class="hero-video">
             <iframe
-                src="https://www.youtube.com/embed/MDMqTaEqGuE?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&rel=0"
-                frameborder="0"
+                src="https://www.youtube.com/embed/MDMqTaEqGuE?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&rel=0&playlist=MDMqTaEqGuE"
                 allow="autoplay; encrypted-media"
                 allowfullscreen
             ></iframe>
@@ -151,6 +150,7 @@
                     </p>
                 </div>
                 <div class="md:w-1/2 flex justify-center">
+                    <!-- Image of a smart RC car -->
                     <img src="https://img.yec.tw/ob/image/c31d3ddc-de59-4f1e-95ea-a65e3437dbf4.jpg" alt="智慧型模型車課程概念圖" class="rounded-lg shadow-xl w-full max-w-md">
                 </div>
             </div>
@@ -166,53 +166,53 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 <!-- Lesson 1 -->
                 <div class="card bg-blue-50 p-8 rounded-lg">
-                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 1 堂：硬體核心與基本控制</h3>
-                    <p class="text-gray-700">認識模型車主要硬體組件，並完成基本的硬體連接，掌握 PWM 訊號基礎。</p>
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 1 堂：硬體核心與基本組裝</h3>
+                    <p class="text-gray-700">認識模型車主要硬體組件，並完成車體與電子模組的組裝與連接。</p>
                 </div>
                 <!-- Lesson 2 -->
                 <div class="card bg-blue-50 p-8 rounded-lg">
-                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 2 堂：PWM 基礎與單元測試</h3>
-                    <p class="text-gray-700">透過 Vibe Coding 實作 PWM 訊號產生，並進行單元測試，理解伺服機與 ESC 控制原理。</p>
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 2 堂：手動模式與 Wi-Fi 遙控</h3>
+                    <p class="text-gray-700">實作 PWM 訊號控制與網頁搖桿，實現手機或電腦的 Wi-Fi 遠端遙控。</p>
                 </div>
                 <!-- Lesson 3 -->
                 <div class="card bg-blue-50 p-8 rounded-lg">
-                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 3 堂：Wi-Fi 遙控與網路基礎</h3>
-                    <p class="text-gray-700">設定 ESP32-C3 為 Wi-Fi AP 模式，並建立網頁伺服器，了解網路通訊協定。</p>
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 3 堂：IMU 感測器與姿態穩定</h3>
+                    <p class="text-gray-700">學習 IMU 數據讀取與濾波概念，為更精準的姿態控制打下基礎。</p>
                 </div>
                 <!-- Lesson 4 -->
                 <div class="card bg-blue-50 p-8 rounded-lg">
-                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 4 堂：網頁搖桿介面設計與控制整合</h3>
-                    <p class="text-gray-700">編寫 HTML、CSS 和 JavaScript 虛擬搖桿，透過 HTTP 請求實現 Wi-Fi 遙控。</p>
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 4 堂：姿態模式與進階控制</h3>
+                    <p class="text-gray-700">結合 IMU 數據實作姿態模式，並實作定速與定高模式等進階控制功能。</p>
                 </div>
                 <!-- Lesson 5 -->
                 <div class="card bg-blue-50 p-8 rounded-lg">
-                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 5 堂：超音波感測器整合</h3>
-                    <p class="text-gray-700">學習超音波測距原理，並實作基礎的「近距離警告」功能。</p>
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 5 堂：超音波感測器與障礙物偵測</h3>
+                    <p class="text-gray-700">學習超音波測距原理，實作數據讀取與校準，為避障功能準備。</p>
                 </div>
                 <!-- Lesson 6 -->
                 <div class="card bg-blue-50 p-8 rounded-lg">
-                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 6 堂：IMU 感測器整合與數據讀取</h3>
-                    <p class="text-gray-700">了解 IMU (加速度計與陀螺儀) 的作用，讀取數據為姿態控制打下基礎。</p>
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 6 堂：智能避障邏輯與實作</h3>
+                    <p class="text-gray-700">利用超音波數據，設計並實作簡單的避障決策邏輯，避免碰撞。</p>
                 </div>
                 <!-- Lesson 7 -->
                 <div class="card bg-blue-50 p-8 rounded-lg">
-                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 7 堂：簡化版自動模式</h3>
-                    <p class="text-gray-700">強化手動控制邏輯，並透過程式邏輯實現類似開源飛控的「定速模式」。</p>
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 7 堂：自動駕駛核心：航點任務導航</h3>
+                    <p class="text-gray-700">理解航點概念，編寫程式讓模型車能自動依序前往預設的路徑。</p>
                 </div>
                 <!-- Lesson 8 -->
                 <div class="card bg-blue-50 p-8 rounded-lg">
-                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 8 堂：無實體線的循跡模式</h3>
-                    <p class="text-gray-700">學習如何利用感測器數據與編程，實現無實體線的路徑追蹤與導航。</p>
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 8 堂：進階自動駕駛：返航與循跡</h3>
+                    <p class="text-gray-700">實作自動返航模式與循跡模式，強化無人車的自主移動能力。</p>
                 </div>
                 <!-- Lesson 9 -->
                 <div class="card bg-blue-50 p-8 rounded-lg">
-                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 9 堂：循跡與避障整合應用</h3>
-                    <p class="text-gray-700">將無實體線循跡與超音波避障功能整合，打造更智能的導航與安全機制。</p>
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 9 堂：地理圍欄與數據記錄監控</h3>
+                    <p class="text-gray-700">實作地理圍欄安全機制，並建立一套完整的數據記錄與監控系統。</p>
                 </div>
                 <!-- Lesson 10 -->
                 <div class="card bg-blue-50 p-8 rounded-lg">
-                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 10 堂：專題實作與總結</h3>
-                    <p class="text-gray-700">整合所有學到的知識，完成一個具備 Wi-Fi 遙控與自動避障的完整專案。</p>
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">第 10 堂：電力管理與最終專案展示</h3>
+                    <p class="text-gray-700">學習自動回充邏輯，並整合所有功能，完成一個完整的專案作品。</p>
                 </div>
             </div>
         </div>
@@ -270,13 +270,13 @@
                     <p class="text-gray-800 text-lg italic mb-4">
                         「我本來以為程式很難，但透過控制模型車，讓我覺得寫程式就像在玩遊戲一樣有趣！現在我會自己做一個遙控器了！」
                     </p>
-                    <p class="font-bold text-blue-800">- 小明 (國中二年級)</p>
+                    <p class="font-bold text-blue-800">- 小明 (國小六年級)</p>
                 </div>
                 <div class="testimonial-card p-8 rounded-lg">
                     <p class="text-gray-800 text-lg italic mb-4">
                         「從硬體到軟體，這門課讓我對整個開發流程有了清晰的認識。特別是網頁控制介面的部分，真的很有成就感！」
                     </p>
-                    <p class="font-bold text-blue-800">- 小華 (高中一年級)</p>
+                    <p class="font-bold text-blue-800">- 小華 (國中一年級)</p>
                 </div>
             </div>
         </div>
