@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧型無人車控制模式深入課程</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f9;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Header & Hero Section -->
+    <header class="bg-blue-600 text-white py-16 px-4 md:px-8">
+        <div class="container mx-auto flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">
+                    掌握未來科技：智慧型無人車控制模式深入課程
+                </h1>
+                <p class="text-xl md:text-2xl mb-6 opacity-90">
+                    從手動控制到全自動駕駛，Vibe Coding 結合 ESP32-C3 實作，讓你親手打造最強地面無人載具！
+                </p>
+                <a href="#enroll" class="bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-yellow-500 transition-colors duration-300">
+                    立即報名
+                </a>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="https://doqvf81n9htmm.cloudfront.net/data/crop_article/161106/WAYMO%200626.jpg_1140x855.jpg" alt="自動駕駛無人車" class="rounded-xl shadow-2xl">
+            </div>
+        </div>
+    </header>
+
+    <!-- Course Introduction Section -->
+    <section class="py-16 px-4 md:px-8 bg-white">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-gray-900">課程簡介</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-6">
+                    <p class="text-lg leading-relaxed">
+                        這是一門為有志於進入無人車、機器人或物聯網領域的你所設計的實作課程。我們將帶你從零開始，深入淺出地講解無人車的 11 種核心控制模式。
+                    </p>
+                    <p class="text-lg leading-relaxed">
+                        課程獨家結合 <b>Vibe Coding</b> 指令與 <b>ESP32-C3</b> 晶片，讓你透過簡潔明瞭的指令，快速生成程式碼，並在真實硬體上驗證每一個控制邏輯。告別枯燥的理論，直接進入動手實作的樂趣！
+                    </p>
+                    <ul class="list-disc list-inside text-lg space-y-2">
+                        <li>專為地面無人載具設計的完整課程。</li>
+                        <li>涵蓋從基礎手動到進階自動駕駛的全部功能。</li>
+                        <li>強調動手實作，讓你真正掌握核心技術。</li>
+                    </ul>
+                </div>
+                <div>
+                    <img src="https://m.media-amazon.com/images/I/71jmh5-E1LL.jpg" alt="ESP32-C3開發板與程式碼" class="rounded-xl shadow-lg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features Section -->
+    <section class="py-16 px-4 md:px-8">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">課程核心內容</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1: Manual Mode -->
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center transition-transform transform hover:scale-105">
+                    <div class="text-blue-600 text-5xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 mx-auto"><path d="M11 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6"/><path d="M2 13h16"/><path d="m16 21 5-5m0 0 5 5m-5-5V11"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">手動模式</h3>
+                    <p class="text-gray-600">從基礎開始，學習 PWM 訊號控制，實作網頁搖桿，精準操控無人車。</p>
+                </div>
+
+                <!-- Feature 2: Acro Mode -->
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center transition-transform transform hover:scale-105">
+                    <div class="text-blue-600 text-5xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 mx-auto"><path d="M12 21.5V17m-6-1.5L2 19m4-14.5L2 5m8 16.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6"/><path d="M2 13h16"/><path d="m16 21 5-5m0 0 5 5m-5-5V11"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">姿態穩定模式</h3>
+                    <p class="text-gray-600">利用 IMU 感測器與 PID 控制器，讓車輛在不平坦的路面也能平穩行駛。</p>
+                </div>
+
+                <!-- Feature 3: Auto Mode -->
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center transition-transform transform hover:scale-105">
+                    <div class="text-blue-600 text-5xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 mx-auto"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">全自動駕駛</h3>
+                    <p class="text-gray-600">實作 GPS 航點導航，讓車輛能自主完成預設的任務路線，實現定點巡邏等功能。</p>
+                </div>
+
+                <!-- Feature 4: RTL -->
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center transition-transform transform hover:scale-105">
+                    <div class="text-blue-600 text-5xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 mx-auto"><path d="M12 2L2 12h5v8h10v-8h5L12 2z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">自動返航</h3>
+                    <p class="text-gray-600">編寫安全返航邏輯，當電量低或訊號斷線時，車輛自動返回起點。</p>
+                </div>
+
+                <!-- Feature 5: Obstacle Avoidance -->
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center transition-transform transform hover:scale-105">
+                    <div class="text-blue-600 text-5xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 mx-auto"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">障礙物迴避</h3>
+                    <p class="text-gray-600">使用超音波感測器，讓無人車在自動模式下能自主偵測並繞過障礙物。</p>
+                </div>
+
+                <!-- Feature 6: Power Management -->
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center transition-transform transform hover:scale-105">
+                    <div class="text-blue-600 text-5xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 mx-auto"><path d="M13 14h6"/><path d="M18 10h1"/><path d="M1 10h18"/><path d="M1 14h8"/><path d="M1 18h18"/><path d="M14 2h10l-2 4-2-4z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">自動回充</h3>
+                    <p class="text-gray-600">為 Robotaxi 設計的進階功能，當電量低時自動尋找充電站並進行對接。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Outline Section -->
+    <section class="py-16 px-4 md:px-8 bg-white" id="course-outline">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-gray-900">完整課程大綱</h2>
+            <div class="space-y-4">
+                <!-- Accordion Item 1 -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h3 class="text-xl font-semibold text-gray-900 cursor-pointer flex justify-between items-center" onclick="toggleAccordion('item1')">
+                        1. 手動模式 (Manual Mode)
+                        <span class="text-gray-500 transform transition-transform duration-300" id="arrow-item1">▼</span>
+                    </h3>
+                    <div class="mt-4 hidden" id="item1">
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li>PWM 基礎與伺服機控制</li>
+                            <li>ESC 控制與馬達驅動</li>
+                            <li>網頁搖桿介面設計</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Accordion Item 2 -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h3 class="text-xl font-semibold text-gray-900 cursor-pointer flex justify-between items-center" onclick="toggleAccordion('item2')">
+                        2. 姿態模式 (Acro Mode) / 循線模式
+                        <span class="text-gray-500 transform transition-transform duration-300" id="arrow-item2">▼</span>
+                    </h3>
+                    <div class="mt-4 hidden" id="item2">
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li>IMU 感測器數據讀取與濾波</li>
+                            <li>PID 控制器理論與實作</li>
+                            <li>姿態模式控制迴圈整合</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Accordion Item 3 -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h3 class="text-xl font-semibold text-gray-900 cursor-pointer flex justify-between items-center" onclick="toggleAccordion('item3')">
+                        3. 定速模式 (Hold Mode)
+                        <span class="text-gray-500 transform transition-transform duration-300" id="arrow-item3">▼</span>
+                    </h3>
+                    <div class="mt-4 hidden" id="item3">
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li>速度感測器原理與數據讀取</li>
+                            <li>速度 PID 控制器實作</li>
+                            <li>原地定速與急停邏輯</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Accordion Item 4 -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h3 class="text-xl font-semibold text-gray-900 cursor-pointer flex justify-between items-center" onclick="toggleAccordion('item4')">
+                        4. 定高模式 (Steer Mode)
+                        <span class="text-gray-500 transform transition-transform duration-300" id="arrow-item4">▼</span>
+                    </h3>
+                    <div class="mt-4 hidden" id="item4">
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li>航向感測器數據讀取</li>
+                            <li>航向 PID 控制器實作</li>
+                            <li>定高模式控制邏輯整合</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Accordion Item 5 -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h3 class="text-xl font-semibold text-gray-900 cursor-pointer flex justify-between items-center" onclick="toggleAccordion('item5')">
+                        5. 自動模式 (Auto Mode) / 任務模式 (Mission Mode)
+                        <span class="text-gray-500 transform transition-transform duration-300" id="arrow-item5">▼</span>
+                    </h3>
+                    <div class="mt-4 hidden" id="item5">
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li>GPS 模組讀取與航點設定</li>
+                            <li>循跡導航演算法實作</li>
+                            <li>任務指令處理</li>
+                        </ul>
+                    </div>
+                </div>
+                 <!-- Accordion Item 6 -->
+                 <div class="border border-gray-200 rounded-lg p-4">
+                    <h3 class="text-xl font-semibold text-gray-900 cursor-pointer flex justify-between items-center" onclick="toggleAccordion('item6')">
+                        6. 返航模式 (Return Mode) / RTL
+                        <span class="text-gray-500 transform transition-transform duration-300" id="arrow-item6">▼</span>
+                    </h3>
+                    <div class="mt-4 hidden" id="item6">
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li>起點位置記錄</li>
+                            <li>返航導航演算法</li>
+                            <li>抵達與停止邏輯</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Accordion Item 7 -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h3 class="text-xl font-semibold text-gray-900 cursor-pointer flex justify-between items-center" onclick="toggleAccordion('item7')">
+                        7. 循跡模式 (Follow Me Mode)
+                        <span class="text-gray-500 transform transition-transform duration-300" id="arrow-item7">▼</span>
+                    </h3>
+                    <div class="mt-4 hidden" id="item7">
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li>外部數據接收與處理</li>
+                            <li>跟隨導航演算法</li>
+                            <li>安全距離與速度控制</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Accordion Item 8 -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h3 class="text-xl font-semibold text-gray-900 cursor-pointer flex justify-between items-center" onclick="toggleAccordion('item8')">
+                        8. 地理圍欄模式 (Geofence Mode)
+                        <span class="text-gray-500 transform transition-transform duration-300" id="arrow-item8">▼</span>
+                    </h3>
+                    <div class="mt-4 hidden" id="item8">
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li>地理圍欄設定</li>
+                            <li>邊界判斷演算法</li>
+                            <li>安全動作處理</li>
+                        </ul>
+                    </div>
+                </div>
+                 <!-- Accordion Item 9 -->
+                 <div class="border border-gray-200 rounded-lg p-4">
+                    <h3 class="text-xl font-semibold text-gray-900 cursor-pointer flex justify-between items-center" onclick="toggleAccordion('item9')">
+                        9. 障礙物迴避 (Obstacle Avoidance)
+                        <span class="text-gray-500 transform transition-transform duration-300" id="arrow-item9">▼</span>
+                    </h3>
+                    <div class="mt-4 hidden" id="item9">
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li>超音波感測器數據讀取</li>
+                            <li>避障決策邏輯設計</li>
+                            <li>避障功能整合</li>
+                        </ul>
+                    </div>
+                </div>
+                 <!-- Accordion Item 10 -->
+                 <div class="border border-gray-200 rounded-lg p-4">
+                    <h3 class="text-xl font-semibold text-gray-900 cursor-pointer flex justify-between items-center" onclick="toggleAccordion('item10')">
+                        10. 數據記錄與即時監控
+                        <span class="text-gray-500 transform transition-transform duration-300" id="arrow-item10">▼</span>
+                    </h3>
+                    <div class="mt-4 hidden" id="item10">
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li>數據記錄實作</li>
+                            <li>即時監控網頁設計</li>
+                        </ul>
+                    </div>
+                </div>
+                 <!-- Accordion Item 11 -->
+                 <div class="border border-gray-200 rounded-lg p-4">
+                    <h3 class="text-xl font-semibold text-gray-900 cursor-pointer flex justify-between items-center" onclick="toggleAccordion('item11')">
+                        11. 電力管理員 - 自動回充
+                        <span class="text-gray-500 transform transition-transform duration-300" id="arrow-item11">▼</span>
+                    </h3>
+                    <div class="mt-4 hidden" id="item11">
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li>電量狀態模擬與監控</li>
+                            <li>自動回充決策邏輯</li>
+                            <li>充電對接與對準邏輯</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="bg-blue-600 text-white py-16 px-4 md:px-8 text-center" id="enroll">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">準備好迎接挑戰了嗎？</h2>
+            <p class="text-xl mb-8">
+                立即加入課程，親手打造你的第一台智慧型無人車！
+            </p>
+            <a href="#" class="bg-yellow-400 text-gray-900 font-bold py-4 px-12 rounded-full shadow-lg text-lg hover:bg-yellow-500 transition-colors duration-300">
+                立即報名，開啟你的自動化之旅！
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 px-4 md:px-8">
+        <div class="container mx-auto text-center text-gray-400">
+            &copy; 2023 智慧型無人車控制課程。保留所有權利。
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for accordion functionality
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const arrow = document.getElementById('arrow-' + id);
+
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                arrow.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+    </script>
+</body>
+</html>
