@@ -79,7 +79,9 @@
     <script>
         // JavaScript for joystick logic and sending data to ESP32
         document.addEventListener('DOMContentLoaded', () => {
-            const esp32Ip = document.getElementById('esp32Ip').textContent; // ESP32 IP 位址
+            //const esp32Ip = document.getElementById('esp32Ip').textContent; // ESP32 IP 位址
+            const esp32IpInput = document.getElementById('esp32Ip');
+            let esp32Ip = esp32IpInput.value;
 
             // 處理搖桿邏輯的函式
             function setupJoystick(containerId, handleId, xValueId, yValueId, onMoveCallback) {
