@@ -193,8 +193,14 @@
 
             // 以固定頻率傳送指令，避免過度頻繁的請求
             setInterval(() => {
+                esp32Ip = esp32IpInput.value; // 每次送出都抓最新 IP
+                sendCommand(steerValue, throttleValue);
+            }, 100);
+/*
+            setInterval(() => {
                 sendCommand(steerValue, throttleValue);
             }, 100); // 每 100 毫秒 (10Hz) 傳送一次
+*/            
         });
     </script>
 </body>
