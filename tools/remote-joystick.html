@@ -175,7 +175,11 @@ document.addEventListener('DOMContentLoaded', () => {
             onMove(0, 0);
         }
 
-        handle.addEventListener('mousedown', (e) => { isDragging = true; e.preventDefault(); });
+        //handle.addEventListener('mousedown', (e) => { isDragging = true; e.preventDefault(); });
+        //container.addEventListener('touchstart', (e) => { isDragging = true; e.preventDefault(); });
+
+        // 把 mousedown 和 touchstart 都綁在 container
+        container.addEventListener('mousedown', (e) => { isDragging = true; e.preventDefault(); });
         container.addEventListener('touchstart', (e) => { isDragging = true; e.preventDefault(); });
         document.addEventListener('mousemove', (e) => { if (isDragging) updatePosition(e); });
         document.addEventListener('touchmove', (e) => { if (isDragging) updatePosition(e); });
