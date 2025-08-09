@@ -76,7 +76,151 @@
         </div>
     </div>
 
+    <!-- 只顯示 <script> 內容（整個 HTML 可保留你原本的樣式/結構） -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const esp32IpInput = document.getElementById('esp32Ip');
+        let esp32Ip = esp32IpInput.value;
+    
+        // WebSocket
+        let ws = null;
+        let wsUrl = null;
+        let wsConnectedElem = null;
+        wsConnectedElem = document.getElementById('statusMessage');
+    
+        function connectWS() {
+            esp32Ip = esp32IpInput.value.trim();
+            if (!esp32Ip) return;
+    
+            // 用 port 81 為 WebSocket server（ESP 程式使用 81）
+            wsUrl = `ws://${esp32Ip}:81/`;
+            if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) {
+                // already connecting/open
+                return;
+            }
+            console.log("Connecting to", wsUrl);
+            ws = new WebSocket(wsUrl);
+    
+            ws.onopen = () => {
+                console.log("WebSocket open");
+                wsConnectedElem.textContent = `WebSocket connected to ${esp32Ip}`;
+            };
+            ws.onclose = () => {
+                console.log("WebSocket closed, retry in 1s");
+                wsConnectedElem.textContent = 'WebSocket disconnected, retrying...';
+                setTimeout(connectWS, 1000);
+            };
+            ws.onerror = (err) => {
+                console.warn("WebSocket error", err);
+                wsConnectedElem.textContent = 'WebSocket error';
+                // socket will fire close as well; let reconnect logic handle it
+            };
+            ws.onmessage = (evt) => {
+                // 如果需要從 ESP 回傳狀態可在這裡處理
+                console.log("WS msg:", evt.data);
+            };
+        }
+    
+        // 呼叫 connect 一次，並在 IP 改變時重連
+        connectWS();
+        esp32IpInput.addEventListener('change', () => {
+            if (ws) {
+                try { ws.close(); } catch(e) {}
+                ws = null;
+            }
+            connectWS();
+        });
+    
+        // joystick setup (與你原本相同，只是 onMoveCallback 儲存變數)
+        function setupJoystick(containerId, handleId, xValueId, yValueId, onMoveCallback) {
+            const container = document.getElementById(containerId);
+            const handle = document.getElementById(handleId);
+            const xValueSpan = document.getElementById(xValueId);
+            const yValueSpan = document.getElementById(yValueId);
+            
+            let isDragging = false;
+    
+            function calcCenter() {
+                const containerRect = container.getBoundingClientRect();
+                return {
+                    cx: containerRect.left + container.offsetWidth / 2,
+                    cy: containerRect.top + container.offsetHeight / 2,
+                    maxR: (container.offsetWidth / 2) - (handle.offsetWidth / 2),
+                    width: container.offsetWidth,
+                    height: container.offsetHeight
+                };
+            }
+    
+            const getPosition = (event) => {
+                const p = calcCenter();
+                const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+                const clientY = event.touches ? event.touches[0].clientY : event.clientY;
+                let dx = clientX - p.cx;
+                let dy = clientY - p.cy;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance > p.maxR) {
+                    dx *= p.maxR / distance;
+                    dy *= p.maxR / distance;
+                }
+                handle.style.left = `${50 + (dx / p.width) * 100}%`;
+                handle.style.top  = `${50 + (dy / p.height) * 100}%`;
+    
+                const x = Math.round((dx / p.maxR) * 100);
+                const y = -Math.round((dy / p.maxR) * 100); // Y up positive
+    
+                xValueSpan.textContent = x;
+                yValueSpan.textContent = y;
+                onMoveCallback(x, y);
+            };
+    
+            const stopDragging = () => {
+                isDragging = false;
+                handle.style.left = '50%';
+                handle.style.top = '50%';
+                xValueSpan.textContent = '0';
+                yValueSpan.textContent = '0';
+                onMoveCallback(0, 0);
+            };
+    
+            handle.addEventListener('mousedown', (e) => { isDragging = true; e.preventDefault(); });
+            container.addEventListener('touchstart', (e) => { isDragging = true; e.preventDefault(); });
+    
+            document.addEventListener('mousemove', (e) => { if (isDragging) getPosition(e); });
+            document.addEventListener('touchmove', (e) => { if (isDragging) getPosition(e); });
+    
+            document.addEventListener('mouseup', stopDragging);
+            document.addEventListener('touchend', stopDragging);
+        }
+    
+        let steerValue = 0;
+        let throttleValue = 0;
+    
+        setupJoystick('joystickLeft', 'joystickHandleLeft', 'xValueLeft', 'yValueLeft', (x, y) => { steerValue = x; });
+        setupJoystick('joystickRight','joystickHandleRight','xValueRight','yValueRight',(x, y) => { throttleValue = y; });
+    
+        // 定時推送到 WebSocket（50ms => 20Hz）
+        setInterval(() => {
+            // 若 IP 有變動，快速重連（簡單策略）
+            const newIp = esp32IpInput.value.trim();
+            if (newIp !== esp32Ip) {
+                esp32Ip = newIp;
+                if (ws) { try { ws.close(); } catch(e) {} ws = null; }
+                connectWS();
+            }
+    
+            if (!ws || ws.readyState !== WebSocket.OPEN) return;
+    
+            // send only when有變動 或 若需持續發送也可以不檢查
+            const payload = JSON.stringify({ steer: steerValue, throttle: throttleValue });
+            ws.send(payload);
+            // 更新狀態區塊
+            document.getElementById('statusMessage').textContent = `Sent: ${payload}`;
+        }, 50);
+    });
+    </script>
+    
     <script>
+/*        
         // JavaScript for joystick logic and sending data to ESP32
         document.addEventListener('DOMContentLoaded', () => {
             //const esp32Ip = document.getElementById('esp32Ip').textContent; // ESP32 IP 位址
@@ -200,12 +344,8 @@
                 esp32Ip = esp32IpInput.value; // 每次送出都抓最新 IP
                 sendCommand(steerValue, throttleValue);
             }, 100);
-/*
-            setInterval(() => {
-                sendCommand(steerValue, throttleValue);
-            }, 100); // 每 100 毫秒 (10Hz) 傳送一次
-*/            
         });
+*/
     </script>
 </body>
 </html>
