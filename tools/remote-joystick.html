@@ -1,136 +1,240 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<title>WebSocket Joystick</title>
-<style>
-body {
-    font-family: sans-serif;
-    background: #222;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-}
-#joystick {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    background: #444;
-    border-radius: 50%;
-    touch-action: none;
-}
-#handle {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background: #888;
-    border-radius: 50%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-#status {
-    margin-top: 20px;
-    font-size: 18px;
-}
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ESP32-C3 遙控器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .joystick-container {
+            width: 200px;
+            height: 200px;
+            background-color: #d1d5db;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+            touch-action: none;
+        }
+        .joystick-handle {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, #1d4ed8, #3b82f6);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            border: 2px solid #60a5fa;
+            cursor: grab;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="container mx-auto p-4 md:p-8 max-w-xl">
+        <div class="bg-white rounded-3xl shadow-xl p-6 md:p-10 text-center space-y-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800">虛擬遙控器</h1>
+            <p class="text-gray-600 text-lg">透過 Wi-Fi 控制您的無人車</p>
+            <label class="text-sm text-gray-600">IP 位址:
+                <input id="esp32Ip" type="text" value="car-esp32c3.local" class="border rounded px-2 py-1 ml-2 w-40 text-sm" />
+            </label>
 
-<div id="joystick">
-    <div id="handle"></div>
-</div>
-<div id="status">X: 0, Y: 0</div>
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
+                <div class="flex flex-col items-center space-y-4">
+                    <label for="joystickLeft" class="text-xl font-bold text-gray-700">轉向 (Steer)</label>
+                    <div id="joystickLeft" class="joystick-container">
+                        <div id="joystickHandleLeft" class="joystick-handle"></div>
+                    </div>
+                    <div class="text-sm text-gray-500">X: <span id="xValueLeft">0</span>, Y: <span id="yValueLeft">0</span></div>
+                </div>
+                <div class="flex flex-col items-center space-y-4">
+                    <label for="joystickRight" class="text-xl font-bold text-gray-700">油門 (Throttle)</label>
+                    <div id="joystickRight" class="joystick-container">
+                        <div id="joystickHandleRight" class="joystick-handle"></div>
+                    </div>
+                    <div class="text-sm text-gray-500">X: <span id="xValueRight">0</span>, Y: <span id="yValueRight">0</span></div>
+                </div>
+            </div>
+
+            <div class="mt-8 space-y-4">
+                <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg" role="alert">
+                    <p class="font-bold">狀態資訊</p>
+                    <p>正在發送指令: <span id="statusMessage" class="font-semibold">等待操作...</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <script>
-const container = document.getElementById('joystick');
-const handle = document.getElementById('handle');
-const statusEl = document.getElementById('status');
+document.addEventListener('DOMContentLoaded', () => {
+    const esp32IpInput = document.getElementById('esp32Ip');
+    let esp32Ip = esp32IpInput.value.trim();
+    let ws = null;
+    const statusElem = document.getElementById('statusMessage');
 
-let ws = null;
-let dragging = false;
+    let steerValue = 0;
+    let throttleValue = 0;
 
-// 建立 WebSocket 連線 (改成你的 ESP32 IP 或 wss://)
-function connectWS() {
-    ws = new WebSocket("ws://192.168.4.1:81"); // 範例 AP mode 位址
-    ws.onopen = () => console.log("WebSocket connected");
-    ws.onclose = () => console.log("WebSocket closed");
-    ws.onerror = err => console.error("WebSocket error:", err);
-}
+    // WebSocket 連線與重連
+    function connectWS() {
+        if (!esp32Ip) return;
+        const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const url = `${protocol}//${esp32Ip}:81/`;
+        //const url = `ws://${esp32Ip}:81/`;
+        if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) return;
+        ws = new WebSocket(url);
+        statusElem.textContent = `嘗試連線到 ${url}...`;
 
-connectWS();
-
-function calcCenter(container, handle) {
-    const rect = container.getBoundingClientRect();
-    return {
-        cx: rect.left + rect.width / 2,
-        cy: rect.top + rect.height / 2,
-        maxR: (rect.width / 2) - (handle.offsetWidth / 2),
-        width: rect.width,
-        height: rect.height
-    };
-}
-
-function updatePosition(e) {
-    const p = calcCenter(container, handle);
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    let dx = clientX - p.cx;
-    let dy = clientY - p.cy;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-    if (dist > p.maxR) {
-        dx = dx * p.maxR / dist;
-        dy = dy * p.maxR / dist;
+        ws.onopen = () => {
+            statusElem.textContent = `已連線至 ${esp32Ip}`;
+            console.log('WebSocket connected');
+        };
+        ws.onclose = () => {
+            statusElem.textContent = 'WebSocket 斷線，1秒後重連...';
+            console.log('WebSocket closed, reconnecting...');
+            setTimeout(connectWS, 1000);
+        };
+        ws.onerror = (err) => {
+            statusElem.textContent = 'WebSocket 錯誤';
+            console.warn('WebSocket error:', err);
+            // close 事件會觸發重連
+        };
+        ws.onmessage = (event) => {
+            console.log('WS message:', event.data);
+            // 若有需要可顯示 ESP 回傳狀態
+        };
     }
-    handle.style.left = `${50 + (dx / p.width) * 100}%`;
-    handle.style.top = `${50 + (dy / p.height) * 100}%`;
 
-    const xVal = Math.round((dx / p.maxR) * 100);
-    const yVal = -Math.round((dy / p.maxR) * 100);
+    // IP 變更時重新連線
+    esp32IpInput.addEventListener('change', () => {
+        const newIp = esp32IpInput.value.trim();
+        if (newIp !== esp32Ip) {
+            esp32Ip = newIp;
+            if (ws) {
+                try { ws.close(); } catch {}
+                ws = null;
+            }
+            connectWS();
+        }
+    });
 
-    statusEl.textContent = `X: ${xVal}, Y: ${yVal}`;
+    connectWS();
 
-    if (ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({x: xVal, y: yVal}));
+    // 搖桿初始化
+    function setupJoystick(containerId, handleId, xId, yId, onMove) {
+        const container = document.getElementById(containerId);
+        const handle = document.getElementById(handleId);
+        const xSpan = document.getElementById(xId);
+        const ySpan = document.getElementById(yId);
+
+        let isDragging = false;
+
+        function calcCenter(container, handle) {
+            const rect = container.getBoundingClientRect();
+            return {
+                cx: rect.left + rect.width / 2,
+                cy: rect.top + rect.height / 2,
+                maxR: (rect.width / 2) - (handle.offsetWidth / 2),
+                width: rect.width,
+                height: rect.height
+            };
+        }
+
+        function updatePosition(e) {
+            const p = calcCenter(container, handle);
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            let dx = clientX - p.cx;
+            let dy = clientY - p.cy;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist > p.maxR) {
+                dx = dx * p.maxR / dist;
+                dy = dy * p.maxR / dist;
+            }
+            handle.style.left = `${50 + (dx / p.width) * 100}%`;
+            handle.style.top = `${50 + (dy / p.height) * 100}%`;
+
+            const xVal = Math.round((dx / p.maxR) * 100);
+            const yVal = -Math.round((dy / p.maxR) * 100);
+
+            xSpan.textContent = xVal;
+            ySpan.textContent = yVal;
+
+            onMove(xVal, yVal);
+        }
+/*
+        function calcCenter() {
+            const rect = container.getBoundingClientRect();
+            return {
+                cx: rect.left + rect.width / 2,
+                cy: rect.top + rect.height / 2,
+                maxR: (rect.width / 2) - (handle.offsetWidth / 2),
+                width: rect.width,
+                height: rect.height
+            };
+        }
+
+        function updatePosition(e) {
+            const p = calcCenter();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            let dx = clientX - p.cx;
+            let dy = clientY - p.cy;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            if (dist > p.maxR) {
+                dx = dx * p.maxR / dist;
+                dy = dy * p.maxR / dist;
+            }
+            handle.style.left = `${50 + (dx / p.width) * 100}%`;
+            handle.style.top = `${50 + (dy / p.height) * 100}%`;
+
+            const xVal = Math.round((dx / p.maxR) * 100);
+            const yVal = -Math.round((dy / p.maxR) * 100);
+
+            xSpan.textContent = xVal;
+            ySpan.textContent = yVal;
+
+            onMove(xVal, yVal);
+        }
+*/
+        function stopDrag() {
+            isDragging = false;
+            handle.style.left = '50%';
+            handle.style.top = '50%';
+            xSpan.textContent = '0';
+            ySpan.textContent = '0';
+            onMove(0, 0);
+        }
+
+        // 將事件綁在 container
+        container.addEventListener('mousedown', (e) => { isDragging = true; e.preventDefault(); console.log('mousedown start'); });
+        container.addEventListener('touchstart', (e) => { isDragging = true; e.preventDefault(); console.log('touchstart start'); });
+        document.addEventListener('mousemove', (e) => { if (isDragging) updatePosition(e); });
+        document.addEventListener('touchmove', (e) => { if (isDragging) updatePosition(e); });
+        document.addEventListener('mouseup', stopDrag);
+        document.addEventListener('touchend', stopDrag);
     }
-}
 
-function resetHandle() {
-    handle.style.left = "50%";
-    handle.style.top = "50%";
-    statusEl.textContent = `X: 0, Y: 0`;
-    if (ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({x: 0, y: 0}));
-    }
-}
+    setupJoystick('joystickLeft', 'joystickHandleLeft', 'xValueLeft', 'yValueLeft', (x, y) => {
+        steerValue = x;
+    });
 
-// 滑鼠事件
-handle.addEventListener("mousedown", e => {
-    dragging = true;
-    updatePosition(e);
-});
-document.addEventListener("mousemove", e => {
-    if (dragging) updatePosition(e);
-});
-document.addEventListener("mouseup", () => {
-    dragging = false;
-    resetHandle();
-});
+    setupJoystick('joystickRight', 'joystickHandleRight', 'xValueRight', 'yValueRight', (x, y) => {
+        throttleValue = y;
+    });
 
-// 觸控事件
-handle.addEventListener("touchstart", e => {
-    dragging = true;
-    updatePosition(e);
-}, {passive: false});
-document.addEventListener("touchmove", e => {
-    if (dragging) updatePosition(e);
-}, {passive: false});
-document.addEventListener("touchend", () => {
-    dragging = false;
-    resetHandle();
+    // 定時傳送指令到 WebSocket
+    setInterval(() => {
+        if (!ws || ws.readyState !== WebSocket.OPEN) return;
+        const data = JSON.stringify({ steer: steerValue, throttle: throttleValue });
+        ws.send(data);
+        statusElem.textContent = `Sent: ${data}`;
+    }, 50);
 });
 </script>
 
