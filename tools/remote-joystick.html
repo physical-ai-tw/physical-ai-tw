@@ -183,73 +183,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('mouseup', stopDrag);
         document.addEventListener('touchend', stopDrag);
     }
-/*
-    function setupJoystick(containerId, handleId, xId, yId, onMove) {
-        const container = document.getElementById(containerId);
-        const handle = document.getElementById(handleId);
-        const xSpan = document.getElementById(xId);
-        const ySpan = document.getElementById(yId);
 
-        let isDragging = false;
-
-        function calcCenter() {
-            const rect = container.getBoundingClientRect();
-            return {
-                cx: rect.left + container.offsetWidth / 2,
-                cy: rect.top + container.offsetHeight / 2,
-                maxR: (container.offsetWidth / 2) - (handle.offsetWidth / 2),
-                width: container.offsetWidth,
-                height: container.offsetHeight
-            };
-        }
-
-        function updatePosition(e) {
-            const p = calcCenter();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            let dx = clientX - p.cx;
-            let dy = clientY - p.cy;
-            const dist = Math.sqrt(dx*dx + dy*dy);
-            if (dist > p.maxR) {
-                dx = dx * p.maxR / dist;
-                dy = dy * p.maxR / dist;
-            }
-            handle.style.left = `${50 + (dx / p.width) * 100}%`;
-            handle.style.top = `${50 + (dy / p.height) * 100}%`;
-
-            const xVal = Math.round((dx / p.maxR) * 100);
-            const yVal = -Math.round((dy / p.maxR) * 100); // Y軸向上為正
-
-            xSpan.textContent = xVal;
-            ySpan.textContent = yVal;
-
-            onMove(xVal, yVal);
-        }
-
-        function stopDrag() {
-            isDragging = false;
-            handle.style.left = '50%';
-            handle.style.top = '50%';
-            xSpan.textContent = '0';
-            ySpan.textContent = '0';
-            onMove(0, 0);
-        }
-
-        //handle.addEventListener('mousedown', (e) => { isDragging = true; e.preventDefault(); });
-        //container.addEventListener('touchstart', (e) => { isDragging = true; e.preventDefault(); });
-
-        // 把 mousedown 和 touchstart 都綁在 container
-        container.addEventListener('mousedown', (e) => { isDragging = true; e.preventDefault(); });
-        container.addEventListener('touchstart', (e) => { isDragging = true; e.preventDefault(); });
-        document.addEventListener('mousemove', (e) => { if (isDragging) updatePosition(e); });
-        document.addEventListener('touchmove', (e) => { if (isDragging) updatePosition(e); });
-        document.addEventListener('mouseup', stopDrag);
-        document.addEventListener('touchend', stopDrag);
-    }
-*/
     setupJoystick('joystickLeft', 'joystickHandleLeft', 'xValueLeft', 'yValueLeft', (x, y) => {
         steerValue = x;
     });
+
     setupJoystick('joystickRight', 'joystickHandleRight', 'xValueRight', 'yValueRight', (x, y) => {
         throttleValue = y;
     });
