@@ -83,7 +83,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // WebSocket 連線與重連
     function connectWS() {
         if (!esp32Ip) return;
-        const url = `ws://${esp32Ip}:81/`;
+        const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const url = `${protocol}//${esp32Ip}:81/`;
+        //const url = `ws://${esp32Ip}:81/`;
         if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) return;
         ws = new WebSocket(url);
         statusElem.textContent = `嘗試連線到 ${url}...`;
@@ -134,6 +136,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function calcCenter() {
             const rect = container.getBoundingClientRect();
+            let dx = clientX - (rect.left + rect.width / 2);
+            let dy = clientY - (rect.top + rect.height / 2);
+/*
+            const rect = container.getBoundingClientRect();
             return {
                 cx: rect.left + rect.width / 2,
                 cy: rect.top + rect.height / 2,
@@ -141,6 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 width: rect.width,
                 height: rect.height
             };
+*/            
         }
 
         function updatePosition(e) {
