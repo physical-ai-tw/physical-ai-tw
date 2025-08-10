@@ -79,6 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let steerValue = 0;
     let throttleValue = 0;
+    let lastSteer = 0;
+    let lastThrottle = 0;
+    let dirty = false;
 
     // WebSocket 連線與重連
     function connectWS() {
@@ -167,41 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             onMove(xVal, yVal);
         }
-/*
-        function calcCenter() {
-            const rect = container.getBoundingClientRect();
-            return {
-                cx: rect.left + rect.width / 2,
-                cy: rect.top + rect.height / 2,
-                maxR: (rect.width / 2) - (handle.offsetWidth / 2),
-                width: rect.width,
-                height: rect.height
-            };
-        }
 
-        function updatePosition(e) {
-            const p = calcCenter();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            let dx = clientX - p.cx;
-            let dy = clientY - p.cy;
-            const dist = Math.sqrt(dx*dx + dy*dy);
-            if (dist > p.maxR) {
-                dx = dx * p.maxR / dist;
-                dy = dy * p.maxR / dist;
-            }
-            handle.style.left = `${50 + (dx / p.width) * 100}%`;
-            handle.style.top = `${50 + (dy / p.height) * 100}%`;
-
-            const xVal = Math.round((dx / p.maxR) * 100);
-            const yVal = -Math.round((dy / p.maxR) * 100);
-
-            xSpan.textContent = xVal;
-            ySpan.textContent = yVal;
-
-            onMove(xVal, yVal);
-        }
-*/
         function stopDrag() {
             isDragging = false;
             handle.style.left = '50%';
@@ -221,19 +190,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     setupJoystick('joystickLeft', 'joystickHandleLeft', 'xValueLeft', 'yValueLeft', (x, y) => {
-        steerValue = x;
+        if (x !== steerValue || y !== 0) { // y在轉向搖桿中可能不重要
+            steerValue = x;
+            dirty = true;
+        }
     });
 
     setupJoystick('joystickRight', 'joystickHandleRight', 'xValueRight', 'yValueRight', (x, y) => {
-        throttleValue = y;
+        if (y !== throttleValue || x !== 0) {
+            throttleValue = y;
+            dirty = true;
+        }
     });
 
     // 定時傳送指令到 WebSocket
     setInterval(() => {
         if (!ws || ws.readyState !== WebSocket.OPEN) return;
+        if (!dirty) return; // 沒有變化就不傳
         const data = JSON.stringify({ steer: steerValue, throttle: throttleValue });
         ws.send(data);
         statusElem.textContent = `Sent: ${data}`;
+        dirty = false;
     }, 50);
 });
 </script>
