@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Camera + Dual Joysticks</title>
+  <style>
+    :root{
+      --ui-bg: rgba(0,0,0,.45);
+      --ui-fg: #eaf6ff;
+      --brand: #00bfff;
+      --warn: #ff5252;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0; background:#000; color:#fff; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      overscroll-behavior: none;
+      touch-action: none; /* avoid scroll while dragging */
+    }
+    /* Stage: video or img fills screen */
+    .stage{position:fixed; inset:0; background:#000;}
+    video, img.stream{
+      position:absolute; inset:0; width:100%; height:100%; object-fit:cover; background:#000;
+    }
+
+    /* Top controls overlay */
+    .topbar{
+      position:fixed; top:env(safe-area-inset-top,0); left:0; right:0;
+      display:flex; gap:.5rem; align-items:center; padding:.5rem calc(env(safe-area-inset-right,0) + .75rem) .5rem calc(env(safe-area-inset-left,0) + .75rem);
+      background: linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,0));
+      z-index:10; pointer-events:none; /* let clicks pass except on controls */
+    }
+    .panel{pointer-events:auto; display:flex; gap:.5rem; align-items:center; flex-wrap:wrap;}
+    .chip{background:var(--ui-bg); color:var(--ui-fg); border:1px solid rgba(255,255,255,.15); border-radius:999px; padding:.35rem .6rem; font-size:.9rem; display:flex; align-items:center; gap:.4rem;}
+    .chip input[type="text"]{background:transparent; color:var(--ui-fg); border:none; outline:none; min-width:10rem;}
+    .btn{cursor:pointer; border:1px solid rgba(255,255,255,.15); background:var(--ui-bg); color:#fff; padding:.45rem .7rem; border-radius:10px; font-size:.95rem;}
+    .btn:active{transform:scale(.98);}    
+
+    /* Status footer */
+    .status{
+      position:fixed; bottom:calc(env(safe-area-inset-bottom,0) + .5rem); left:50%; transform:translateX(-50%);
+      background:var(--ui-bg); border:1px solid rgba(255,255,255,.15); border-radius:12px; padding:.35rem .6rem; font-size:.95rem;
+      display:flex; gap:.8rem; z-index:10; align-items:center; backdrop-filter: blur(6px);
+    }
+    .dot{width:.55rem; height:.55rem; border-radius:50%; background:#999;}
+    .dot.ok{background:#22d3ee;} .dot.bad{background:var(--warn);}    
+
+    /* Joysticks (two zones) */
+    .zone{
+      position:fixed; top:0; bottom:0; width:28vw; max-width:220px; min-width:160px; display:flex; align-items:center; justify-content:center;
+      z-index:9; pointer-events:none; /* events handled inside canvas by nipple */
+    }
+    .zone.left{ left:0; }
+    .zone.right{ right:0; }
+    .hint{
+      position:absolute; bottom:calc(env(safe-area-inset-bottom,0) + .75rem); font-size:.85rem; color:#d0e8ff; opacity:.8;
+      background:rgba(0,0,0,.3); padding:.25rem .5rem; border-radius:8px; border:1px solid rgba(255,255,255,.12);
+    }
+    /* Invisible blockers under joysticks to improve touch capture */
+    .pad{
+      position:absolute; width:100%; height:70%; top:15%; left:0; pointer-events:auto;
+    }
+
+    /* Fullscreen helper button (only shown when not in fullscreen) */
+    .fs-btn{ position:fixed; right:calc(env(safe-area-inset-right,0) + .75rem); bottom:calc(env(safe-area-inset-bottom,0) + .75rem); z-index:10;}
+
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/nipplejs@0.9.0/dist/nipplejs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.8/dist/hls.min.js"></script>
+</head>
+<body>
+  <div class="stage">
+    <video id="video" playsinline autoplay muted></video>
+    <img id="mjpeg" class="stream" style="display:none"/>
+  </div>
+
+  <div class="topbar">
+    <div class="panel">
+      <span class="chip">來源：
+        <button class="btn" id="btnLocal">本地鏡頭</button>
+        <button class="btn" id="btnRemote">使用遠端 URL</button>
+      </span>
+      <span class="chip">
+        <span>URL</span>
+        <input id="remoteUrl" type="text" placeholder="m3u8 / mp4 / mjpg URL" />
+        <button class="btn" id="btnPlay">播放</button>
+      </span>
+      <span class="chip">
+        WebSocket：<span id="wsState">未連線</span>
+      </span>
+    </div>
+  </div>
+
+  <div class="zone left">
+    <div class="pad" id="zoneY"></div>
+    <div class="hint">上/下：油門(Throttle)</div>
+  </div>
+  <div class="zone right">
+    <div class="pad" id="zoneX"></div>
+    <div class="hint">左/右：轉向(Steer)</div>
+  </div>
+
+  <div class="status">
+    <div class="dot" id="wsDot"></div>
+    <div>steer: <span id="vSteer">0</span></div>
+    <div>throttle: <span id="vTh">0</span></div>
+    <div>| Motor A: <span id="mA">0</span></div>
+    <div>Motor B: <span id="mB">0</span></div>
+  </div>
+
+  <button id="btnFS" class="btn fs-btn">全螢幕</button>
+
+<script>
+(function(){
+  // ==== Video handling ====
+  const $video = document.getElementById('video');
+  const $mjpeg = document.getElementById('mjpeg');
+  const btnLocal = document.getElementById('btnLocal');
+  const btnRemote = document.getElementById('btnRemote');
+  const btnPlay = document.getElementById('btnPlay');
+  const urlInput = document.getElementById('remoteUrl');
+
+  let hls; // HLS instance
+
+  async function startLocal() {
+    try {
+      stopRemote();
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false });
+      $video.srcObject = stream;
+      $video.style.display = '';
+      $mjpeg.style.display = 'none';
+    } catch (err) {
+      alert('無法開啟本地相機：' + err.message);
+    }
+  }
+  function stopRemote(){
+    if (hls) { hls.destroy(); hls = null; }
+    $video.removeAttribute('src');
+    $video.srcObject = null;
+  }
+  function playRemote(){
+    const url = urlInput.value.trim();
+    if (!url) { alert('請輸入遠端串流 URL'); return; }
+    stopRemote();
+    if (url.endsWith('.m3u8')) {
+      if (Hls.isSupported()) {
+        hls = new Hls({ lowLatencyMode: true });
+        hls.loadSource(url);
+        hls.attachMedia($video);
+        $video.style.display = '';
+        $mjpeg.style.display = 'none';
+      } else if ($video.canPlayType('application/vnd.apple.mpegURL')) {
+        $video.src = url; $video.style.display=''; $mjpeg.style.display='none';
+      } else {
+        alert('此裝置不支援 HLS');
+      }
+    } else if (url.match(/\.mp4($|\?)/i)) {
+      $video.src = url; $video.style.display=''; $mjpeg.style.display='none';
+    } else { // assume MJPEG
+      $mjpeg.src = url; $mjpeg.style.display=''; $video.style.display='none';
+    }
+  }
+
+  btnLocal.addEventListener('click', startLocal);
+  btnRemote.addEventListener('click', () => urlInput.focus());
+  btnPlay.addEventListener('click', playRemote);
+
+  // ==== Fullscreen ====
+  const btnFS = document.getElementById('btnFS');
+  function updateFSBtn(){ btnFS.style.display = (document.fullscreenElement? 'none':''); }
+  btnFS.addEventListener('click', async ()=>{
+    try { await document.documentElement.requestFullscreen(); } catch {}
+    updateFSBtn();
+  });
+  document.addEventListener('fullscreenchange', updateFSBtn);
+  updateFSBtn();
+
+  // ==== WebSocket to ESP (same host default) ====
+  let ws;
+  const wsState = document.getElementById('wsState');
+  const wsDot = document.getElementById('wsDot');
+
+  function setWSState(txt, ok){
+    wsState.textContent = txt;
+    wsDot.classList.toggle('ok', !!ok);
+    wsDot.classList.toggle('bad', !ok);
+  }
+
+  function openWS(){
+    try {
+      const url = `ws://${location.hostname}:81`;
+      ws = new WebSocket(url);
+      ws.onopen = () => setWSState('已連線', true);
+      ws.onclose = () => setWSState('未連線', false);
+      ws.onerror = () => setWSState('錯誤', false);
+      ws.onmessage = (ev)=>{
+        try {
+          const data = JSON.parse(ev.data);
+          if (typeof data.motorA !== 'undefined') document.getElementById('mA').textContent = data.motorA;
+          if (typeof data.motorB !== 'undefined') document.getElementById('mB').textContent = data.motorB;
+        } catch {}
+      };
+    } catch(e){ setWSState('建立連線失敗', false); }
+  }
+  openWS();
+
+  // ==== Dual Joysticks ====
+  const zoneY = document.getElementById('zoneY'); // vertical throttle
+  const zoneX = document.getElementById('zoneX'); // horizontal steer
+  const vSteer = document.getElementById('vSteer');
+  const vTh = document.getElementById('vTh');
+
+  // helpers
+  const clamp = (v,min,max)=> Math.max(min, Math.min(max,v));
+  function sendCmd(obj){ if (ws && ws.readyState === 1) ws.send(JSON.stringify(obj)); }
+
+  let steer = 0, throttle = 0;
+  let lastSend = 0;
+  const SEND_MS = 50;
+
+  function maybeSend(){
+    const now = performance.now();
+    if (now - lastSend >= SEND_MS){
+      sendCmd({ steer, throttle });
+      lastSend = now;
+    }
+  }
+
+  // Right: horizontal only
+  const joyX = nipplejs.create({
+    zone: zoneX,
+    mode: 'dynamic',
+    color: '#00bfff',
+    size: Math.min(200, Math.max(120, window.innerWidth*0.2)),
+    restOpacity: 0.25,
+  });
+  joyX.on('move', (evt, data)=>{
+    if (!data || !data.vector) return;
+    const x = clamp(data.vector.x, -1, 1);
+    steer = Math.round(x * 255);
+    vSteer.textContent = steer;
+    maybeSend();
+  });
+  joyX.on('end', ()=>{ steer = 0; vSteer.textContent = '0'; sendCmd({steer, throttle}); });
+
+  // Left: vertical only
+  const joyY = nipplejs.create({
+    zone: zoneY,
+    mode: 'dynamic',
+    color: '#00bfff',
+    size: Math.min(200, Math.max(120, window.innerWidth*0.2)),
+    restOpacity: 0.25,
+  });
+  joyY.on('move', (evt, data)=>{
+    if (!data || !data.vector) return;
+    const y = clamp(data.vector.y, -1, 1);
+    throttle = Math.round(y * 255);
+    vTh.textContent = throttle;
+    maybeSend();
+  });
+  joyY.on('end', ()=>{ throttle = 0; vTh.textContent = '0'; sendCmd({steer, throttle}); });
+
+  // Optional: left side swipes only vertical, right side only horizontal
+  // (nipple already gives vector, we simply ignore other axis by taking only x or y)
+
+  // Prevent iOS tap-to-zoom on double-tap
+  let lastTouch=0; document.addEventListener('touchend', (e)=>{
+    const now = Date.now(); if (now - lastTouch < 350) e.preventDefault(); lastTouch = now;
+  }, {passive:false});
+
+  // Start with local cam for convenience
+  startLocal();
+})();
+</script>
+</body>
+</html>
